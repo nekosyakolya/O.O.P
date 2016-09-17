@@ -2,12 +2,22 @@
 #include <iostream>
 #include <fstream>
 #include <string>
+#define MAX_NUMBER_OF_ARGUMENT 5
 
 using namespace std;
+bool IsIdenticalString(const string &searchStr, const string &replaceStr);
+
+bool IsIdenticalString(const string &searchStr, const string &replaceStr)
+{
+	bool identicalStrings;
+	(searchStr == replaceStr) ? identicalStrings = true : identicalStrings = false;
+	return identicalStrings;
+}
+
 
 int main(int argc, char * argv[])
 {
-	if (argc != 5)
+	if (argc != MAX_NUMBER_OF_ARGUMENT)
 	{
 		cout << "Invalid arguments count\n"
 			<< "Usage: replace.exe <input file> <output file> <search string> <replace string>\n";
@@ -29,6 +39,7 @@ int main(int argc, char * argv[])
 	}
 
 	string strInFile, searchStr = argv[3], replaceStr = argv[4];
+
 	if ((searchStr.empty()) ||(replaceStr.empty()))
 	{
 		cout << "Empty line \n";
@@ -37,7 +48,7 @@ int main(int argc, char * argv[])
 	while (getline(input, strInFile))
 	{
 		size_t pos = strInFile.find(searchStr);
-		while (pos != string::npos)
+		while ((pos != string::npos) && !IsIdenticalString(searchStr, replaceStr))
 		{
 			strInFile.replace(pos, searchStr.length(), replaceStr);
 			pos = strInFile.find(searchStr, pos + replaceStr.length());
