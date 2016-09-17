@@ -39,12 +39,9 @@ int main(int argc, char * argv[])
 		size_t pos = strInFile.find(searchStr);
 		if (pos != string::npos)
 		{
-			
+			strInFile.replace(pos, searchStr.length(), replaceStr);
 		}
-		else
-		{
-			output << strInFile << "\n";
-		}
+		output << strInFile << "\n";
 		
 	}
 	if (!output.flush()) 
