@@ -7,10 +7,10 @@ using namespace std;
 
 int main(int argc, char * argv[])
 {
-	if (argc != 3)
+	if (argc != 5)
 	{
 		cout << "Invalid arguments count\n"
-			<< "Usage: laba1_1.exe <input file> <text to search>\n";
+			<< "Usage: replace.exe <input file> <output file> <search string> <replace string>\n";
 		return 1;
 	}
 
@@ -21,23 +21,39 @@ int main(int argc, char * argv[])
 		cout << "Failed to open " << argv[1] << " for reading\n";
 		return 1;
 	}
-	string strInFile, searchStr = argv[2];
-	if (searchStr.empty())
+	ofstream output(argv[2]);
+	if (!output.is_open())
+	{
+		cout << "Failed to open " << argv[2] << " for writing\n";
+		return 1;
+	}
+
+	string strInFile, searchStr = argv[3], replaceStr = argv[4];
+	if ((searchStr.empty()) ||(replaceStr.empty()))
 	{
 		cout << "Empty line \n";
 		return 1;
 	}
-	int i = 1;
 	while (getline(input, strInFile))
 	{
 		size_t pos = strInFile.find(searchStr);
-		if (pos != -1)
+		if (pos != string::npos)
 		{
-			cout << i << "\n";
+			
 		}
-		i++;
+		else
+		{
+			output << strInFile << "\n";
+		}
+		
+	}
+	if (!output.flush()) 
+	{
+		cout << "Failed to save data on disk\n";
+		return 1;
 	}
 	input.close();
+	output.close();
 
     return 0;
 }
