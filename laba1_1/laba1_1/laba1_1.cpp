@@ -37,12 +37,12 @@ int main(int argc, char * argv[])
 	while (getline(input, strInFile))
 	{
 		size_t pos = strInFile.find(searchStr);
-		if (pos != string::npos)
+		while (pos != string::npos)
 		{
 			strInFile.replace(pos, searchStr.length(), replaceStr);
+			pos = strInFile.find(searchStr, pos + replaceStr.length());
 		}
 		output << strInFile << "\n";
-		
 	}
 	if (!output.flush()) 
 	{
