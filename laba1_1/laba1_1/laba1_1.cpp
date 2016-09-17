@@ -7,6 +7,7 @@
 using namespace std;
 bool IsIdenticalString(const string &searchStr, const string &replaceStr);
 string ReplaceString(const string &strInFile, const string &searchStr, const string &replaceStr);
+void CopyStrings(ifstream &input, ofstream &output, const string &searchStr, const string &replaceStr);
 
 bool IsIdenticalString(const string &searchStr, const string &replaceStr)
 {
@@ -17,15 +18,28 @@ bool IsIdenticalString(const string &searchStr, const string &replaceStr)
 
 string ReplaceString(string &strInFile, const string &searchStr, const string &replaceStr)
 {
-	size_t pos = strInFile.find(searchStr);
-	while ((pos != string::npos) && !IsIdenticalString(searchStr, replaceStr))
+	size_t positionOfMatchedString = strInFile.find(searchStr);
+	while ((positionOfMatchedString != string::npos) && !IsIdenticalString(searchStr, replaceStr))
 	{
-		strInFile.replace(pos, searchStr.length(), replaceStr);
-		pos = strInFile.find(searchStr, pos + replaceStr.length());
+		strInFile.replace(positionOfMatchedString, searchStr.length(), replaceStr);
+		positionOfMatchedString = strInFile.find(searchStr, positionOfMatchedString + replaceStr.length());
 	}
 	return strInFile;
 }
 
+void CopyStrings(ifstream &input, ofstream &output, const string &searchStr, const string &replaceStr)
+{
+	string strInFile;
+	while (getline(input, strInFile))
+	{
+		if (!strInFile.empty())
+		{
+			strInFile = ReplaceString(strInFile, searchStr, replaceStr);
+			output << strInFile;
+		}
+		output << "\n";
+	}
+}
 
 int main(int argc, char * argv[])
 {
@@ -54,23 +68,13 @@ int main(int argc, char * argv[])
 
 	string searchStr = argv[3], replaceStr = argv[4];
 
-	if ((searchStr.empty()) ||(replaceStr.empty()))
+	if ((searchStr.empty()) || (replaceStr.empty()))
 	{
 		cout << "Empty line \n";
 		return 1;
 	}
 
-	string strInFile;
-	while (getline(input, strInFile))
-	{
-
-		if (!strInFile.empty())
-		{
-			strInFile = ReplaceString(strInFile, searchStr, replaceStr);
-			output << strInFile;
-		}
-		output << "\n";
-	}
+	CopyStrings(input, output, searchStr, replaceStr);
 
 	if (!output.flush()) 
 	{
