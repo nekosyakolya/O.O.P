@@ -6,7 +6,7 @@
 
 using namespace std;
 bool IsIdenticalString(const string &searchStr, const string &replaceStr);
-string ReplaceString(const string &strInFile, const string &searchStr, const string &replaceStr);
+string ReplaceString(string &strInFile, const string &searchStr, const string &replaceStr);
 void CopyStrings(ifstream &input, ofstream &output, const string &searchStr, const string &replaceStr);
 
 bool IsIdenticalString(const string &searchStr, const string &replaceStr)
@@ -68,7 +68,7 @@ int main(int argc, char * argv[])
 
 	string searchStr = argv[3], replaceStr = argv[4];
 
-	if ((searchStr.empty()) || (replaceStr.empty()))
+	if ((searchStr.empty()))
 	{
 		cout << "Empty line \n";
 		return 1;
@@ -76,7 +76,7 @@ int main(int argc, char * argv[])
 
 	CopyStrings(input, output, searchStr, replaceStr);
 
-	if (!output.flush()) 
+	if (!output.flush())
 	{
 		cout << "Failed to save data on disk\n";
 		return 1;
@@ -84,6 +84,8 @@ int main(int argc, char * argv[])
 	input.close();
 	output.close();
 
-    return 0;
+	return 0;
 }
+
+
 
