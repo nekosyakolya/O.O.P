@@ -9,10 +9,53 @@
 
 
 using namespace std;
-bool NeedReplaceSign(const int &a, const int &b);
-double FindDeterminant(const double &a11, const double &a12, const double &a13, const double &a14);
+typedef double Matrix[NUMBER_OF_ROWS_OF_MATRIX][NUMBER_OF_COLUMNS_OF_MATRIX];
+
+void ReadMatrixInFile(ifstream &input, Matrix &matrix);
+void FormingAnInverseMatrix(Matrix &matrix, Matrix &newMatrix, const double &determinant);
+void PrintAnInverseMatrix(Matrix &newMatrix);
+bool NeedReplaceSign(const int &numberOfColumn, const int &numberOfRow);
+double FindDeterminant(const double &a11, const double &a12, const double &a21, const double &a22);
 double FindMinor(const double matrix[NUMBER_OF_ROWS_OF_MATRIX][NUMBER_OF_COLUMNS_OF_MATRIX], const int &i, const int &j);
-double FindDeterminantOfOriginalMatrix(const double &a11, const double &a12, const double &a21, const double &a22);
+double FindDeterminantOfOriginalMatrix(const double matrix[NUMBER_OF_ROWS_OF_MATRIX][NUMBER_OF_COLUMNS_OF_MATRIX]);
+
+void ReadMatrixInFile(ifstream &input, Matrix &matrix)
+{
+	for (int i = 0; i < NUMBER_OF_ROWS_OF_MATRIX; ++i)
+	{
+		for (int j = 0; j < NUMBER_OF_COLUMNS_OF_MATRIX; ++j)
+		{
+			input >> matrix[i][j];
+		}
+	}
+}
+
+void FormingAnInverseMatrix(Matrix &matrix, Matrix &newMatrix, const double &determinant)
+{
+	for (int i = 0; i < NUMBER_OF_ROWS_OF_MATRIX; ++i)
+	{
+		for (int j = 0; j < NUMBER_OF_COLUMNS_OF_MATRIX; ++j)
+		{
+			newMatrix[j][i] = (1 / determinant) * FindMinor(matrix, i, j);
+			if (NeedReplaceSign(j, i))
+			{
+				newMatrix[j][i] = newMatrix[j][i] * (-1);
+			}
+		}
+	}
+}
+
+void PrintAnInverseMatrix(Matrix &newMatrix)
+{
+	for (int i = 0; i < NUMBER_OF_ROWS_OF_MATRIX; ++i)
+	{
+		for (int j = 0; j < NUMBER_OF_COLUMNS_OF_MATRIX; ++j)
+		{
+			cout << newMatrix[i][j] << ' ';
+		}
+		cout << endl;
+	}
+}
 
 double FindDeterminantOfOriginalMatrix(const double matrix[NUMBER_OF_ROWS_OF_MATRIX][NUMBER_OF_COLUMNS_OF_MATRIX])
 {
@@ -20,7 +63,6 @@ double FindDeterminantOfOriginalMatrix(const double matrix[NUMBER_OF_ROWS_OF_MAT
 	determinant += matrix[0][0] * FindMinor(matrix, 0, 0);
 	determinant -= matrix[0][1] * FindMinor(matrix, 0, 1);
 	determinant += matrix[0][2] * FindMinor(matrix, 0, 2);
-	cout << determinant;
 	return determinant;
 }
 
@@ -86,6 +128,7 @@ double FindMinor(const double matrix[NUMBER_OF_ROWS_OF_MATRIX][NUMBER_OF_COLUMNS
 
 int main(int argc, char * argv[])
 {
+	setlocale(LC_ALL, "rus");
 	if (argc != MAX_NUMBER_OF_ARGUMENT)
 	{
 		cout << "Invalid arguments count\n"
@@ -101,48 +144,21 @@ int main(int argc, char * argv[])
 		return EXIT_ERROR;
 	}
 
-	double matrix[NUMBER_OF_ROWS_OF_MATRIX][NUMBER_OF_COLUMNS_OF_MATRIX];
-
-	
-	for (int i = 0; i < NUMBER_OF_ROWS_OF_MATRIX; i++)
-	{
-		for (int j = 0; j < NUMBER_OF_COLUMNS_OF_MATRIX; j++)
-		{
-			input >> matrix[i][j];
-		}
-	}
+	Matrix matrix, newMatrix;
+	ReadMatrixInFile(input, matrix);
 	//determinant
 
 	double determinant = FindDeterminantOfOriginalMatrix(matrix);
-
-	cout << endl;
 	if (determinant == 0)
 	{
-		cout << "determinant = 0\n";
+		cout << "определитель равен 0,она не имеет обратной матрицы\n";
 		return EXIT_ERROR;
 	}
 	// new matrix 
-	double newMatrix[NUMBER_OF_ROWS_OF_MATRIX][NUMBER_OF_COLUMNS_OF_MATRIX];
-	for (int i = 0; i < NUMBER_OF_ROWS_OF_MATRIX; i++) 
-	{
-		for (int j = 0; j < NUMBER_OF_COLUMNS_OF_MATRIX; j++) 
-		{
-			newMatrix[j][i] =  (1/ determinant) * FindMinor(matrix, i, j);
-			if (NeedReplaceSign(j, i))
-			{
-				newMatrix[j][i] = newMatrix[j][i] * (-1);
-			}
-		}
-	}
+	FormingAnInverseMatrix(matrix, newMatrix, determinant);
 	
-	for (int i = 0; i < NUMBER_OF_ROWS_OF_MATRIX; i++)
-	{
-		for (int j = 0; j < NUMBER_OF_COLUMNS_OF_MATRIX; j++)
-		{
-			cout << newMatrix[i][j] << ' ';
-		}
-		cout << endl;
-	}
+	PrintAnInverseMatrix(newMatrix);
+	
 
 
     input.close();
