@@ -12,6 +12,18 @@ using namespace std;
 bool NeedReplaceSign(const int &a, const int &b);
 double FindDeterminant(const double &a11, const double &a12, const double &a13, const double &a14);
 double FindMinor(const double matrix[NUMBER_OF_ROWS_OF_MATRIX][NUMBER_OF_COLUMNS_OF_MATRIX], const int &i, const int &j);
+double FindDeterminantOfOriginalMatrix(const double &a11, const double &a12, const double &a21, const double &a22);
+
+double FindDeterminantOfOriginalMatrix(const double matrix[NUMBER_OF_ROWS_OF_MATRIX][NUMBER_OF_COLUMNS_OF_MATRIX])
+{
+	double determinant = 0;
+	determinant += matrix[0][0] * FindMinor(matrix, 0, 0);
+	determinant -= matrix[0][1] * FindMinor(matrix, 0, 1);
+	determinant += matrix[0][2] * FindMinor(matrix, 0, 2);
+	cout << determinant;
+	return determinant;
+}
+
 
 bool NeedReplaceSign(const int &numberOfColumn, const int &numberOfRow)
 {
@@ -91,34 +103,31 @@ int main(int argc, char * argv[])
 
 	double matrix[NUMBER_OF_ROWS_OF_MATRIX][NUMBER_OF_COLUMNS_OF_MATRIX];
 
-	double value = 0;
-	int rows = 0, columns = 0;
-	while (input >> value)
+	
+	for (int i = 0; i < NUMBER_OF_ROWS_OF_MATRIX; i++)
 	{
-		if (columns == NUMBER_OF_COLUMNS_OF_MATRIX)
+		for (int j = 0; j < NUMBER_OF_COLUMNS_OF_MATRIX; j++)
 		{
-			columns = 0;
-			rows++;
+			input >> matrix[i][j];
 		}
-		matrix[rows][columns] = value;
-		columns++;
 	}
-	//определитель матрицы
+	//determinant
 
-	double determinant = 0;
-	determinant += matrix[0][0] * FindMinor(matrix, 0, 0);
-	determinant -= matrix[0][1] * FindMinor(matrix, 0, 1);
-	determinant += matrix[0][2] * FindMinor(matrix, 0, 2);
-	cout << determinant;
+	double determinant = FindDeterminantOfOriginalMatrix(matrix);
 
 	cout << endl;
-	// определили трансп матрицу 
+	if (determinant == 0)
+	{
+		cout << "determinant = 0\n";
+		return EXIT_ERROR;
+	}
+	// new matrix 
 	double newMatrix[NUMBER_OF_ROWS_OF_MATRIX][NUMBER_OF_COLUMNS_OF_MATRIX];
 	for (int i = 0; i < NUMBER_OF_ROWS_OF_MATRIX; i++) 
 	{
 		for (int j = 0; j < NUMBER_OF_COLUMNS_OF_MATRIX; j++) 
 		{
-			newMatrix[j][i] =  (1/ determin) * FindMinor(matrix, i, j);
+			newMatrix[j][i] =  (1/ determinant) * FindMinor(matrix, i, j);
 			if (NeedReplaceSign(j, i))
 			{
 				newMatrix[j][i] = newMatrix[j][i] * (-1);
