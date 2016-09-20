@@ -16,8 +16,8 @@ void FormingAnInverseMatrix(Matrix &matrix, Matrix &newMatrix, const double &det
 void PrintAnInverseMatrix(Matrix &newMatrix);
 bool NeedReplaceSign(const int &numberOfColumn, const int &numberOfRow);
 double FindDeterminant(const double &a11, const double &a12, const double &a21, const double &a22);
-double FindMinor(const double matrix[NUMBER_OF_ROWS_OF_MATRIX][NUMBER_OF_COLUMNS_OF_MATRIX], const int &i, const int &j);
-double FindDeterminantOfOriginalMatrix(const double matrix[NUMBER_OF_ROWS_OF_MATRIX][NUMBER_OF_COLUMNS_OF_MATRIX]);
+double FindMinor(Matrix &matrix, const int &i, const int &j);
+double FindDeterminantOfOriginalMatrix(Matrix &matrix);
 
 void ReadMatrixInFile(ifstream &input, Matrix &matrix)
 {
@@ -57,7 +57,7 @@ void PrintAnInverseMatrix(Matrix &newMatrix)
 	}
 }
 
-double FindDeterminantOfOriginalMatrix(const double matrix[NUMBER_OF_ROWS_OF_MATRIX][NUMBER_OF_COLUMNS_OF_MATRIX])
+double FindDeterminantOfOriginalMatrix(Matrix &matrix)
 {
 	double determinant = 0;
 	determinant += matrix[0][0] * FindMinor(matrix, 0, 0);
@@ -83,45 +83,26 @@ double FindDeterminant(const double &a11, const double &a12, const double &a21, 
 }
 
 
-double FindMinor(const double matrix[NUMBER_OF_ROWS_OF_MATRIX][NUMBER_OF_COLUMNS_OF_MATRIX], const int &i, const int &j)
+double FindMinor(Matrix &matrix, const int &i, const int &j)
 {
 	double minor;
-	if ((i == 0) && (j == 0))
+	double value[4];
+	int count = 0;
+	for (int row = 0; row < NUMBER_OF_ROWS_OF_MATRIX; ++row)
 	{
-		minor = FindDeterminant(matrix[1][1], matrix[1][2], matrix[2][1], matrix[2][2]);
+		if (row != i)
+		{
+			for (int coloumn = 0; coloumn < NUMBER_OF_COLUMNS_OF_MATRIX; ++coloumn)
+			{
+				if (coloumn != j)
+				{
+					value[count] = matrix[row][coloumn];
+					count++;
+				}
+			}
+		}
 	}
-	if ((i == 0) && (j == 1))
-	{
-		minor = FindDeterminant(matrix[1][0], matrix[1][2], matrix[2][0], matrix[2][2]);
-	}
-	if ((i == 0) && (j == 2))
-	{
-		minor = FindDeterminant(matrix[1][0], matrix[1][1], matrix[2][0], matrix[2][1]);
-	}
-	if ((i == 1) && (j == 0))
-	{
-		minor = FindDeterminant(matrix[0][1], matrix[0][2], matrix[2][1], matrix[2][2]);
-	}
-	if ((i == 1) && (j == 1))
-	{
-		minor = FindDeterminant(matrix[0][0], matrix[0][2], matrix[2][0], matrix[2][2]);
-	}
-	if ((i == 1) && (j == 2))
-	{
-		minor = FindDeterminant(matrix[0][0], matrix[0][1], matrix[2][0], matrix[2][1]);
-	}
-	if ((i == 2) && (j == 0))
-	{
-		minor = FindDeterminant(matrix[0][1], matrix[0][2], matrix[1][1], matrix[1][2]);
-	}
-	if ((i == 2) && (j == 1))
-	{
-		minor = FindDeterminant(matrix[0][0], matrix[0][2], matrix[1][0], matrix[1][2]);
-	}
-	if ((i == 2) && (j == 2))
-	{
-		minor = FindDeterminant(matrix[0][0], matrix[0][1], matrix[1][0], matrix[1][1]);
-	}
+	minor = FindDeterminant(value[0], value[1], value[2], value[3]);
 	return minor;
 }
 
@@ -143,26 +124,17 @@ int main(int argc, char * argv[])
 		cout << "Failed to open " << argv[1] << " for reading\n";
 		return EXIT_ERROR;
 	}
-
 	Matrix matrix, newMatrix;
 	ReadMatrixInFile(input, matrix);
-	//determinant
-
 	double determinant = FindDeterminantOfOriginalMatrix(matrix);
 	if (determinant == 0)
 	{
 		cout << "определитель равен 0,она не имеет обратной матрицы\n";
 		return EXIT_ERROR;
 	}
-	// new matrix 
 	FormingAnInverseMatrix(matrix, newMatrix, determinant);
-	
 	PrintAnInverseMatrix(newMatrix);
-	
-
-
     input.close();
-
 	return EXIT_SUCCESS;
 }
 
