@@ -22,13 +22,11 @@ double FindDeterminantOfOriginalMatrix(Matrix &matrix);
 
 void ReadMatrixInFile(ifstream &input, Matrix &matrix)
 {
-	double value;
 	for (int i = 0; i < NUMBER_OF_ROWS_OF_MATRIX; ++i)
 	{
 		for (int j = 0; j < NUMBER_OF_COLUMNS_OF_MATRIX; ++j)
 		{
-			input >> value;
-		    matrix[i][j] = value;
+			input >> matrix[i][j];
 		}
 	}
 }
@@ -63,9 +61,18 @@ void PrintAnInverseMatrix(Matrix &newMatrix)
 double FindDeterminantOfOriginalMatrix(Matrix &matrix)
 {
 	double determinant = 0;
-	determinant += matrix[0][0] * FindMinor(matrix, 0, 0);
-	determinant -= matrix[0][1] * FindMinor(matrix, 0, 1);
-	determinant += matrix[0][2] * FindMinor(matrix, 0, 2);
+	int i = 0;
+	for (int j = 0; j < NUMBER_OF_COLUMNS_OF_MATRIX; ++j)
+	{
+		if (NeedReplaceSign(i, j))
+		{
+			determinant -= matrix[i][j] * FindMinor(matrix, i, j);
+		}
+		else
+		{
+			determinant += matrix[i][j] * FindMinor(matrix, i, j);
+		}
+	}
 	return determinant;
 }
 
