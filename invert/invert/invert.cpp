@@ -2,6 +2,7 @@
 #include <iostream>
 #include <fstream>
 #include <string>
+#include <iomanip>
 #define MAX_NUMBER_OF_ARGUMENT 2
 #define EXIT_ERROR 1
 #define NUMBER_OF_ROWS_OF_MATRIX 3
@@ -21,11 +22,13 @@ double FindDeterminantOfOriginalMatrix(Matrix &matrix);
 
 void ReadMatrixInFile(ifstream &input, Matrix &matrix)
 {
+	double value;
 	for (int i = 0; i < NUMBER_OF_ROWS_OF_MATRIX; ++i)
 	{
 		for (int j = 0; j < NUMBER_OF_COLUMNS_OF_MATRIX; ++j)
 		{
-			input >> matrix[i][j];
+			input >> value;
+		    matrix[i][j] = value;
 		}
 	}
 }
@@ -51,7 +54,7 @@ void PrintAnInverseMatrix(Matrix &newMatrix)
 	{
 		for (int j = 0; j < NUMBER_OF_COLUMNS_OF_MATRIX; ++j)
 		{
-			cout << newMatrix[i][j] << ' ';
+			cout << fixed << setprecision(3) << newMatrix[i][j] << ' ';
 		}
 		cout << endl;
 	}
@@ -85,8 +88,7 @@ double FindDeterminant(const double &a11, const double &a12, const double &a21, 
 
 double FindMinor(Matrix &matrix, const int &i, const int &j)
 {
-	double minor;
-	double value[4];
+	double minor, value[4];
 	int count = 0;
 	for (int row = 0; row < NUMBER_OF_ROWS_OF_MATRIX; ++row)
 	{
