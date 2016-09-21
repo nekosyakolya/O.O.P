@@ -2,8 +2,6 @@
 #include <iostream>
 #include <fstream>
 #include <string>
-#define MAX_NUMBER_OF_ARGUMENT 5
-#define EXIT_ERROR 1
 
 using namespace std;
 string ReplaceString(string &strInFile, const string &searchStr, const string &replaceStr);
@@ -43,11 +41,12 @@ void ProcessFile(ifstream &input, ofstream &output, const string &searchStr, con
 
 int main(int argc, char * argv[])
 {
-	if (argc != MAX_NUMBER_OF_ARGUMENT)
+	static const int maxNumberOfArgument = 5;
+	if (argc != maxNumberOfArgument)
 	{
 		cout << "Invalid arguments count\n"
 			<< "Usage: replace.exe <input file> <output file> <search string> <replace string>\n";
-		return EXIT_ERROR;
+		return EXIT_FAILURE;
 	}
 
 	ifstream input(argv[1]);
@@ -55,7 +54,7 @@ int main(int argc, char * argv[])
 	if (!input.is_open())
 	{
 		cout << "Failed to open " << argv[1] << " for reading\n";
-		return EXIT_ERROR;
+		return EXIT_FAILURE;
 	}
 
 	ofstream output(argv[2]);
@@ -63,15 +62,16 @@ int main(int argc, char * argv[])
 	if (!output.is_open())
 	{
 		cout << "Failed to open " << argv[2] << " for writing\n";
-		return EXIT_ERROR;
+		return EXIT_FAILURE;
 	}
 
-	string searchStr = argv[3], replaceStr = argv[4];
+	string searchStr = argv[3];
+	string replaceStr = argv[4];
 
 	if ((searchStr.empty()))
 	{
 		cout << "Empty line \n";
-		return EXIT_ERROR;
+		return EXIT_FAILURE;
 	}
 
 	ProcessFile(input, output, searchStr, replaceStr);
@@ -79,7 +79,7 @@ int main(int argc, char * argv[])
 	if (!output.flush())
 	{
 		cout << "Failed to save data on disk\n";
-		return EXIT_ERROR;
+		return EXIT_FAILURE;
 	}
 	input.close();
 	output.close();
