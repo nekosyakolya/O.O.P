@@ -3,7 +3,7 @@
 #include <fstream>
 #include <string>
 #include <iomanip>
-#define MAX_NUMBER_OF_ARGUMENT 2
+#define MAX_NUMBER_OF_ARGUMENT 3
 #define EXIT_ERROR 1
 #define NUMBER_OF_ROWS_OF_MATRIX 3
 #define NUMBER_OF_COLUMNS_OF_MATRIX 3
@@ -12,15 +12,15 @@
 using namespace std;
 typedef double Matrix[NUMBER_OF_ROWS_OF_MATRIX][NUMBER_OF_COLUMNS_OF_MATRIX];
 
-void ReadMatrixInFile(ifstream &input, Matrix &matrix);
-void FormingAnInverseMatrix(Matrix &matrix, Matrix &newMatrix, const double &determinant);
-void PrintAnInverseMatrix(Matrix &newMatrix);
-bool NeedReplaceSign(const int &numberOfColumn, const int &numberOfRow);
-double FindDeterminant(const double &a11, const double &a12, const double &a21, const double &a22);
+void ReadMatrixFromFile(ifstream &input, Matrix &matrix);
+void FormInverseMatrix(Matrix &matrix, Matrix &newMatrix, const double &determinant);
+void PrintInverseMatrix(Matrix &newMatrix, ofstream &output);
+bool IsSignReplaceNeeded(const int &numberOfColumn, const int &numberOfRow);
+double FindDeterminant(double a11, double a12, double a21, double a22);
 double FindMinor(Matrix &matrix, const int &i, const int &j);
 double FindDeterminantOfOriginalMatrix(Matrix &matrix);
 
-void ReadMatrixInFile(ifstream &input, Matrix &matrix)
+void ReadMatrixFromFile(ifstream &input, Matrix &matrix)
 {
 	for (int i = 0; i < NUMBER_OF_ROWS_OF_MATRIX; ++i)
 	{
@@ -31,14 +31,14 @@ void ReadMatrixInFile(ifstream &input, Matrix &matrix)
 	}
 }
 
-void FormingAnInverseMatrix(Matrix &matrix, Matrix &newMatrix, const double &determinant)
+void FormInverseMatrix(Matrix &matrix, Matrix &newMatrix, const double &determinant)
 {
 	for (int i = 0; i < NUMBER_OF_ROWS_OF_MATRIX; ++i)
 	{
 		for (int j = 0; j < NUMBER_OF_COLUMNS_OF_MATRIX; ++j)
 		{
 			newMatrix[j][i] = (1 / determinant) * FindMinor(matrix, i, j);
-			if (NeedReplaceSign(j, i))
+			if (IsSignReplaceNeeded(j, i))
 			{
 				newMatrix[j][i] = newMatrix[j][i] * (-1);
 			}
@@ -46,15 +46,15 @@ void FormingAnInverseMatrix(Matrix &matrix, Matrix &newMatrix, const double &det
 	}
 }
 
-void PrintAnInverseMatrix(Matrix &newMatrix)
+void PrintInverseMatrix(Matrix &newMatrix, ofstream &output)
 {
 	for (int i = 0; i < NUMBER_OF_ROWS_OF_MATRIX; ++i)
 	{
 		for (int j = 0; j < NUMBER_OF_COLUMNS_OF_MATRIX; ++j)
 		{
-			cout << fixed << setprecision(3) << newMatrix[i][j] << ' ';
+			output << fixed << setprecision(3) << newMatrix[i][j] << ' ';
 		}
-		cout << endl;
+		output << endl;
 	}
 }
 
@@ -64,7 +64,7 @@ double FindDeterminantOfOriginalMatrix(Matrix &matrix)
 	int i = 0;
 	for (int j = 0; j < NUMBER_OF_COLUMNS_OF_MATRIX; ++j)
 	{
-		if (NeedReplaceSign(i, j))
+		if (IsSignReplaceNeeded(i, j))
 		{
 			determinant -= matrix[i][j] * FindMinor(matrix, i, j);
 		}
@@ -77,15 +77,13 @@ double FindDeterminantOfOriginalMatrix(Matrix &matrix)
 }
 
 
-bool NeedReplaceSign(const int &numberOfColumn, const int &numberOfRow)
+bool IsSignReplaceNeeded(const int &numberOfColumn, const int &numberOfRow)
 {
-	bool replace;
 	int result = numberOfColumn + numberOfRow;
-	(result == 1 || result == 3) ? replace = true : replace = false;
-	return replace;
+	return (result == 1 || result == 3);
 }
 
-double FindDeterminant(const double &a11, const double &a12, const double &a21, const double &a22)
+double FindDeterminant(double a11, double a12, double a21, double a22)
 {
 	double determinant = 0;
 	determinant = (a11 * a22) - (a12 * a21);
@@ -122,7 +120,7 @@ int main(int argc, char * argv[])
 	if (argc != MAX_NUMBER_OF_ARGUMENT)
 	{
 		cout << "Invalid arguments count\n"
-			<< "Usage: replace.exe <input file>\n";
+			<< "Usage: invert.exe <input file>\n";
 		return EXIT_ERROR;
 	}
 
@@ -133,17 +131,30 @@ int main(int argc, char * argv[])
 		cout << "Failed to open " << argv[1] << " for reading\n";
 		return EXIT_ERROR;
 	}
+	ofstream output(argv[2]);
+
+	if (!output.is_open())
+	{
+		cout << "Failed to open " << argv[2] << " for writing\n";
+		return EXIT_ERROR;
+	}
 	Matrix matrix, newMatrix;
-	ReadMatrixInFile(input, matrix);
+	ReadMatrixFromFile(input, matrix);
 	double determinant = FindDeterminantOfOriginalMatrix(matrix);
 	if (determinant == 0)
 	{
 		cout << "определитель равен 0,она не имеет обратной матрицы\n";
 		return EXIT_ERROR;
 	}
-	FormingAnInverseMatrix(matrix, newMatrix, determinant);
-	PrintAnInverseMatrix(newMatrix);
-    input.close();
+	FormInverseMatrix(matrix, newMatrix, determinant);
+	PrintInverseMatrix(newMatrix, output);
+	if (!output.flush())
+	{
+		cout << "Failed to save data on disk\n";
+		return EXIT_ERROR;
+	}
+	input.close();
+	output.close();
 	return EXIT_SUCCESS;
 }
 

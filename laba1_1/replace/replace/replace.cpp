@@ -6,21 +6,14 @@
 #define EXIT_ERROR 1
 
 using namespace std;
-bool IsIdenticalString(const string &searchStr, const string &replaceStr);
 string ReplaceString(string &strInFile, const string &searchStr, const string &replaceStr);
-void CopyStrings(ifstream &input, ofstream &output, const string &searchStr, const string &replaceStr);
+void ProcessFile(ifstream &input, ofstream &output, const string &searchStr, const string &replaceStr);
 
-bool IsIdenticalString(const string &searchStr, const string &replaceStr)
-{
-	bool identicalStrings;
-	(searchStr == replaceStr) ? identicalStrings = true : identicalStrings = false;
-	return identicalStrings;
-}
 
 string ReplaceString(string &strInFile, const string &searchStr, const string &replaceStr)
 {
 	size_t positionOfMatchedString = strInFile.find(searchStr);
-	while ((positionOfMatchedString != string::npos) && !IsIdenticalString(searchStr, replaceStr))
+	while ((positionOfMatchedString != string::npos) && !(searchStr == replaceStr))
 	{
 		strInFile.replace(positionOfMatchedString, searchStr.length(), replaceStr);
 		positionOfMatchedString = strInFile.find(searchStr, positionOfMatchedString + replaceStr.length());
@@ -28,7 +21,7 @@ string ReplaceString(string &strInFile, const string &searchStr, const string &r
 	return strInFile;
 }
 
-void CopyStrings(ifstream &input, ofstream &output, const string &searchStr, const string &replaceStr)
+void ProcessFile(ifstream &input, ofstream &output, const string &searchStr, const string &replaceStr)
 {
 	string strInFile;
 	bool emptyFile = true;
@@ -81,7 +74,7 @@ int main(int argc, char * argv[])
 		return EXIT_ERROR;
 	}
 
-	CopyStrings(input, output, searchStr, replaceStr);
+	ProcessFile(input, output, searchStr, replaceStr);
 
 	if (!output.flush())
 	{
