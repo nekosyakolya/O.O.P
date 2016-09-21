@@ -1,4 +1,4 @@
-set PROGRAM="../Debug/replace.exe"
+set PROGRAM="%~1"
 
 rem check Invalid arguments count
 %PROGRAM% in1.txt %TEMP%\in.txt 
