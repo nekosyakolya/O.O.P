@@ -3,8 +3,6 @@
 #include <fstream>
 #include <string>
 #include <iomanip>
-#define MAX_NUMBER_OF_ARGUMENT 3
-#define EXIT_ERROR 1
 #define NUMBER_OF_ROWS_OF_MATRIX 3
 #define NUMBER_OF_COLUMNS_OF_MATRIX 3
 
@@ -93,7 +91,8 @@ double FindDeterminant(double a11, double a12, double a21, double a22)
 
 double FindMinor(Matrix &matrix, const int &i, const int &j)
 {
-	double minor, value[4];
+	double minor;
+	double value[4];
 	int count = 0;
 	for (int row = 0; row < NUMBER_OF_ROWS_OF_MATRIX; ++row)
 	{
@@ -117,11 +116,12 @@ double FindMinor(Matrix &matrix, const int &i, const int &j)
 int main(int argc, char * argv[])
 {
 	setlocale(LC_ALL, "rus");
-	if (argc != MAX_NUMBER_OF_ARGUMENT)
+	static const int maxNumberOfArgument = 3;
+	if (argc != maxNumberOfArgument)
 	{
 		cout << "Invalid arguments count\n"
 			<< "Usage: invert.exe <input file>\n";
-		return EXIT_ERROR;
+		return EXIT_FAILURE;
 	}
 
 	ifstream input(argv[1]);
@@ -129,29 +129,30 @@ int main(int argc, char * argv[])
 	if (!input.is_open())
 	{
 		cout << "Failed to open " << argv[1] << " for reading\n";
-		return EXIT_ERROR;
+		return EXIT_FAILURE;
 	}
 	ofstream output(argv[2]);
 
 	if (!output.is_open())
 	{
 		cout << "Failed to open " << argv[2] << " for writing\n";
-		return EXIT_ERROR;
+		return EXIT_FAILURE;
 	}
-	Matrix matrix, newMatrix;
+	Matrix matrix;
 	ReadMatrixFromFile(input, matrix);
 	double determinant = FindDeterminantOfOriginalMatrix(matrix);
 	if (determinant == 0)
 	{
 		cout << "определитель равен 0,она не имеет обратной матрицы\n";
-		return EXIT_ERROR;
+		return EXIT_FAILURE;
 	}
+	Matrix newMatrix;
 	FormInverseMatrix(matrix, newMatrix, determinant);
 	PrintInverseMatrix(newMatrix, output);
 	if (!output.flush())
 	{
 		cout << "Failed to save data on disk\n";
-		return EXIT_ERROR;
+		return EXIT_FAILURE;
 	}
 	input.close();
 	output.close();
