@@ -14,6 +14,7 @@ string ReplaceString(string &strInFile, const string &searchStr, const string &r
 	string newStr = "";
 	size_t positionOfBeginString = 0;
 	size_t positionOfMatchedString = strInFile.find(searchStr);
+
 	while ((positionOfMatchedString != string::npos) && !(searchStr == replaceStr))
 	{
 		newStr += strInFile.substr(positionOfBeginString, positionOfMatchedString - positionOfBeginString);
@@ -22,13 +23,13 @@ string ReplaceString(string &strInFile, const string &searchStr, const string &r
 		positionOfMatchedString = strInFile.find(searchStr, positionOfMatchedString + searchStr.length());
 	}
 
-	newStr += strInFile.substr(positionOfBeginString);
-	return newStr;
+	return newStr += strInFile.substr(positionOfBeginString);
 }
 
 void ProcessFile(ifstream &input, ofstream &output, const string &searchStr, const string &replaceStr)
 {
 	string strInFile;
+
 	while (getline(input, strInFile))
 	{
 		if (!strInFile.empty())
@@ -43,6 +44,7 @@ void ProcessFile(ifstream &input, ofstream &output, const string &searchStr, con
 int main(int argc, char * argv[])
 {
 	static const int maxNumberOfArgument = 5;
+
 	if (argc != maxNumberOfArgument)
 	{
 		cout << "Invalid arguments count\n"
