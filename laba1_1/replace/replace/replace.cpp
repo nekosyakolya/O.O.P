@@ -4,38 +4,39 @@
 #include <string>
 
 using namespace std;
+
 string ReplaceString(string &strInFile, const string &searchStr, const string &replaceStr);
 void ProcessFile(ifstream &input, ofstream &output, const string &searchStr, const string &replaceStr);
 
 
 string ReplaceString(string &strInFile, const string &searchStr, const string &replaceStr)
 {
+	string newStr = "";
+	size_t positionOfBeginString = 0;
 	size_t positionOfMatchedString = strInFile.find(searchStr);
 	while ((positionOfMatchedString != string::npos) && !(searchStr == replaceStr))
 	{
-		strInFile.replace(positionOfMatchedString, searchStr.length(), replaceStr);
-		positionOfMatchedString = strInFile.find(searchStr, positionOfMatchedString + replaceStr.length());
+		newStr += strInFile.substr(positionOfBeginString, positionOfMatchedString - positionOfBeginString);
+		newStr += replaceStr;
+		positionOfBeginString = positionOfMatchedString + searchStr.length();
+		positionOfMatchedString = strInFile.find(searchStr, positionOfMatchedString + searchStr.length());
 	}
-	return strInFile;
+
+	newStr += strInFile.substr(positionOfBeginString);
+	return newStr;
 }
 
 void ProcessFile(ifstream &input, ofstream &output, const string &searchStr, const string &replaceStr)
 {
 	string strInFile;
-	bool emptyFile = true;
 	while (getline(input, strInFile))
 	{
-		emptyFile = false;
 		if (!strInFile.empty())
 		{
 			strInFile = ReplaceString(strInFile, searchStr, replaceStr);
 			output << strInFile;
 		}
 		output << "\n";
-	}
-	if (emptyFile)
-	{
-		cout << "EMPTY FILE \n";
 	}
 }
 
@@ -54,6 +55,12 @@ int main(int argc, char * argv[])
 	if (!input.is_open())
 	{
 		cout << "Failed to open " << argv[1] << " for reading\n";
+		return EXIT_FAILURE;
+	}
+
+	if (input.eof())
+	{
+		cout << "EMPTY FILE \n";
 		return EXIT_FAILURE;
 	}
 
@@ -81,6 +88,7 @@ int main(int argc, char * argv[])
 		cout << "Failed to save data on disk\n";
 		return EXIT_FAILURE;
 	}
+
 	input.close();
 	output.close();
 
