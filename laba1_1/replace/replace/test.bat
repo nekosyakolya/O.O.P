@@ -19,23 +19,23 @@ fc.exe %TEMP%\empty.txt empty.txt
 if %ERRORLEVEL% EQU 1 goto err
 
 rem check empty line
-%PROGRAM% numTest.txt %TEMP%\numTest.txt "" "hi"
+%PROGRAM% in1.txt %TEMP%\in1.txt "" "hi"
 if %ERRORLEVEL% EQU 0 goto err
-fc.exe %TEMP%\numTest.txt numTest.txt
+fc.exe %TEMP%\in1.txt in1.txt
 if %ERRORLEVEL% EQU 0 goto err
 
-rem check lo lolo
-%PROGRAM% haplology.txt  %TEMP%\haplology.txt "lo" "lolo"
+rem check ma mama
+%PROGRAM% in1.txt  %TEMP%\in1.txt "ma" "mama"
 if %ERRORLEVEL% EQU 1 goto err
-fc.exe %TEMP%\haplology.txt haplology.txt
+fc.exe %TEMP%\in1.txt in1.txt
 if %ERRORLEVEL% EQU 0 goto err
+
 
 rem check 1231234
-%PROGRAM% numTest.txt %TEMP%\numTest.txt "1231234" "perfect"
+%PROGRAM% in2.txt %TEMP%\in2.txt "1231234" "hi"
 if %ERRORLEVEL% EQU 1 goto err
-fc.exe %TEMP%\numTest.txt numTest.txt
+fc.exe %TEMP%\in2.txt in2.txt
 if %ERRORLEVEL% EQU 0 goto err
-
 
 echo Program testing succeeded
 exit 0
