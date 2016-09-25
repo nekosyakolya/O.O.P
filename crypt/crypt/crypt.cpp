@@ -6,8 +6,6 @@
 using namespace std;
 
 static const int MAX_NUM_OF_ARGUMENTS = 5;
-static const int MAX_KEY = 255;
-static const int MIN_KEY = 0;
 static const string OPERATION_CRYPT = "crypt";
 static const string OPERATION_DECRYPT = "decrypt";
 
@@ -94,6 +92,8 @@ bool AreValidInputAndOutputFiles(char * argv[], ifstream &input, ofstream &outpu
 
 bool IsValidKey(const int &key)
 {
+	static const int MAX_KEY = 255;
+	static const int MIN_KEY = 0;
 	if ((key < MIN_KEY) || (key > MAX_KEY))
 	{
 		cout << "Failed key: " << key << "\n";
