@@ -5,9 +5,67 @@
 
 using namespace std;
 
+static const int MAX_NUM_OF_ARGUMENTS = 5;
+static const int MAX_KEY = 255;
+static const int MIN_KEY = 0;
+static const string OPERATION_CRYPT = "crypt";
+static const string OPERATION_DECRYPT = "decrypt";
+
 void Crypt(ifstream &, ofstream &, const int &);
 void Decrypt(ifstream &, ofstream &, const int &);
+bool IsValidNumOfArguments(const int &);
+bool AreValidOperations(const string &);
+bool IsValidKey(const int &);
+bool AreValidInputOutputFiles(char * [], ifstream &, ofstream &);
 
+bool IsValidNumOfArguments(const int &argc)
+{
+	if (argc != MAX_NUM_OF_ARGUMENTS)
+	{
+		cout << "Invalid arguments count\n"
+			<< "Usage: crypt.exe (crypt/decrypt) <input file> <output file> <key> \n";
+	}
+	return (argc == MAX_NUM_OF_ARGUMENTS);
+}
+
+bool AreValidOperations(const string &operation)
+{
+	if ((operation != OPERATION_CRYPT) && (operation != OPERATION_DECRYPT))
+	{
+		cout << "Invalid operation\n";
+	}
+	return (operation == OPERATION_CRYPT) || (operation == OPERATION_DECRYPT);
+}
+
+bool AreValidInputOutputFiles(char * argv[], ifstream &input, ofstream &output)
+{
+	bool success = true;
+	if (!input.is_open())
+	{
+		cout << "Failed to open " << argv[2] << " for reading\n";
+		success = false;
+	}
+	if (input.eof())
+	{
+		cout << "File " << argv[2] << " is empty" << "\n";
+		success = false;
+	}
+	if (!output.is_open())
+	{
+		cout << "Failed to open " << argv[3] << " for writing" << "\n";
+		success = false;
+	}
+	return success;
+}
+
+bool IsValidKey(const int &key)
+{
+	if ((key < MIN_KEY) || (key > MAX_KEY))
+	{
+		cout << "Failed key: " << key << "\n";
+	}
+	return ((key >= MIN_KEY) && (key <= MAX_KEY));
+}
 
 void Crypt(ifstream &input, ofstream &output, const int &key)
 {
@@ -15,24 +73,23 @@ void Crypt(ifstream &input, ofstream &output, const int &key)
 	while (input.read(&value, sizeof value))
 	{
 		value ^= key;
-		char temp = '\0';
 		char newValue = '\0';
-		newValue += temp | ((value & 0x80) >> 2);
+		int temp = 0x80;
+		newValue += ((value & (temp)) >> 2);
 
-		newValue += temp | ((value & 0x40) >> 5);
+		newValue += ((value & (temp >>= 1)) >> 5);
 
-		newValue += temp | ((value & 0x20) >> 5);
+		newValue += ((value & (temp >>= 1)) >> 5);
 
-		newValue += temp | ((value & 0x10) << 3);
+		newValue += ((value & (temp >>= 1)) << 3);
 
+		newValue += ((value & (temp >>= 1)) << 3);
 
-		newValue += temp | ((value & 0x08) << 3);
+		newValue += ((value & (temp >>= 1)) << 2);
 
-		newValue += temp | ((value & 0x04) << 2);
+		newValue += ((value & (temp >>= 1)) << 2);
 
-		newValue += temp | ((value & 0x02) << 2);
-
-		newValue += temp | ((value & 0x01) << 2);
+		newValue += ((value & (temp >>= 1)) << 2);
 
 		value = newValue;
 
@@ -45,23 +102,23 @@ void Decrypt(ifstream &input, ofstream &output, const int &key)
 	char value;
 	while (input.read(&value, sizeof value))
 	{
-		char temp = '\0';
 		char newValue = '\0';
-		newValue += temp | ((value & 0x01) << 5);
+		int temp = 0x01;
+		newValue += ((value & (temp)) << 5);
 
-		newValue += temp | ((value & 0x02) << 5);
+		newValue += ((value & (temp <<= 1)) << 5);
 
-		newValue += temp | ((value & 0x04) >> 2);
+		newValue += ((value & (temp <<= 1)) >> 2);
 
-		newValue += temp | ((value & 0x08) >> 2);
+		newValue += ((value & (temp <<= 1)) >> 2);
 
-		newValue += temp | ((value & 0x10) >> 2);
+		newValue += ((value & (temp <<= 1)) >> 2);
 
-		newValue += temp | ((value & 0x20) << 2);
+		newValue += ((value & (temp <<= 1)) << 2);
 
-		newValue += temp | ((value & 0x40) >> 3);
+		newValue += ((value & (temp <<= 1)) >> 3);
 
-		newValue += temp | ((value & 0x80) >> 3);
+		newValue += ((value & (temp <<= 1)) >> 3);
 
 		value = newValue;
 		value ^= key;
@@ -72,50 +129,32 @@ void Decrypt(ifstream &input, ofstream &output, const int &key)
 
 int main(int argc, char * argv[])
 {
-
-	static const int maxNumberOfArgument = 5;
-	static const string operationCrypt = "crypt";
-	static const string operationDecrypt = "decrypt";
-
-
-	if (argc != maxNumberOfArgument)
+	if (!IsValidNumOfArguments(argc))
 	{
-		cout << "Invalid arguments count\n"
-			<< "Usage: crypt.exe crypt <input file> <output file> <key> \n";
 		return EXIT_FAILURE;
 	}
 
 	string operation = argv[1];
-
-	if ((operation != operationCrypt) && (operation != operationDecrypt))
+	if (!AreValidOperations(operation))
 	{
-		cout << "Invalid operation\n";
 		return EXIT_FAILURE;
 	}
 
 	ifstream input(argv[2], ios::binary | ios::in);
-
-	if (!input.is_open())
-	{
-		cout << "Failed to open " << argv[2] << " for reading\n";
-		return EXIT_FAILURE;
-	}
 	ofstream output(argv[3], ios::binary | ios::out);
 
-	if (!output.is_open())
+	if (!AreValidInputOutputFiles(argv, input, output))
 	{
-		cout << "Failed to open " << argv[3] << " for writing\n";
 		return EXIT_FAILURE;
 	}
 
 	int key = atoi(argv[4]);
-
-	if ((key < 0) || (key > 255))
+	if (!IsValidKey(key))
 	{
-		cout << "Failed key\n";
 		return EXIT_FAILURE;
 	}
-	(operation == operationCrypt) ? Crypt(input, output, key) : Decrypt(input, output, key);
+
+	(operation == OPERATION_CRYPT) ? Crypt(input, output, key) : Decrypt(input, output, key);
 
 	input.close();
 	output.close();
