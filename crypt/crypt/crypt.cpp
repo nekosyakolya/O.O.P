@@ -14,9 +14,44 @@ static const string OPERATION_DECRYPT = "decrypt";
 void Crypt(ifstream &, ofstream &, const int &);
 void Decrypt(ifstream &, ofstream &, const int &);
 bool IsValidNumOfArguments(const int &);
-bool AreValidOperations(const string &);
+bool IsValidOperation(const string &);
 bool IsValidKey(const int &);
-bool AreValidInputOutputFiles(char * [], ifstream &, ofstream &);
+bool AreValidInputAndOutputFiles(char * [], ifstream &, ofstream &);
+
+int main(int argc, char * argv[])
+{
+	if (!IsValidNumOfArguments(argc))
+	{
+		return EXIT_FAILURE;
+	}
+
+	string operation = argv[1];
+	if (!IsValidOperation(operation))
+	{
+		return EXIT_FAILURE;
+	}
+
+	ifstream input(argv[2], ios::binary | ios::in);
+	ofstream output(argv[3], ios::binary | ios::out);
+
+	if (!AreValidInputAndOutputFiles(argv, input, output))
+	{
+		return EXIT_FAILURE;
+	}
+
+	int key = atoi(argv[4]);
+	if (!IsValidKey(key))
+	{
+		return EXIT_FAILURE;
+	}
+
+	(operation == OPERATION_CRYPT) ? Crypt(input, output, key) : Decrypt(input, output, key);
+
+	input.close();
+	output.close();
+
+    return EXIT_SUCCESS;
+}
 
 bool IsValidNumOfArguments(const int &argc)
 {
@@ -28,7 +63,7 @@ bool IsValidNumOfArguments(const int &argc)
 	return (argc == MAX_NUM_OF_ARGUMENTS);
 }
 
-bool AreValidOperations(const string &operation)
+bool IsValidOperation(const string &operation)
 {
 	if ((operation != OPERATION_CRYPT) && (operation != OPERATION_DECRYPT))
 	{
@@ -37,9 +72,9 @@ bool AreValidOperations(const string &operation)
 	return (operation == OPERATION_CRYPT) || (operation == OPERATION_DECRYPT);
 }
 
-bool AreValidInputOutputFiles(char * argv[], ifstream &input, ofstream &output)
+bool AreValidInputAndOutputFiles(char * argv[], ifstream &input, ofstream &output)
 {
-	if (!input.is_open())
+	if (!input.good())
 	{
 		cout << "Failed to open " << argv[2] << " for reading\n";
 		return  false;
@@ -69,29 +104,31 @@ bool IsValidKey(const int &key)
 void Crypt(ifstream &input, ofstream &output, const int &key)
 {
 	char value;
+	char newValue;
+	int currentRank;
 	while (input.read(&value, sizeof value))
 	{
 		value ^= key;
-		char newValue = '\0';
-		int temp = 0x80;
-		newValue += ((value & (temp)) >> 2);
+		newValue = '\0';
+		currentRank = 0x80;
 
-		newValue += ((value & (temp >>= 1)) >> 5);
+		newValue += ((value & (currentRank)) >> 2);
 
-		newValue += ((value & (temp >>= 1)) >> 5);
+		newValue += ((value & (currentRank >>= 1)) >> 5);
 
-		newValue += ((value & (temp >>= 1)) << 3);
+		newValue += ((value & (currentRank >>= 1)) >> 5);
 
-		newValue += ((value & (temp >>= 1)) << 3);
+		newValue += ((value & (currentRank >>= 1)) << 3);
 
-		newValue += ((value & (temp >>= 1)) << 2);
+		newValue += ((value & (currentRank >>= 1)) << 3);
 
-		newValue += ((value & (temp >>= 1)) << 2);
+		newValue += ((value & (currentRank >>= 1)) << 2);
 
-		newValue += ((value & (temp >>= 1)) << 2);
+		newValue += ((value & (currentRank >>= 1)) << 2);
+
+		newValue += ((value & (currentRank >>= 1)) << 2);
 
 		value = newValue;
-
 		output << value;
 	}
 }
@@ -99,65 +136,31 @@ void Crypt(ifstream &input, ofstream &output, const int &key)
 void Decrypt(ifstream &input, ofstream &output, const int &key)
 {
 	char value;
+	char newValue;
+	int currentRank;
 	while (input.read(&value, sizeof value))
 	{
-		char newValue = '\0';
-		int temp = 0x01;
-		newValue += ((value & (temp)) << 5);
+		newValue = '\0';
+		currentRank = 0x01;
 
-		newValue += ((value & (temp <<= 1)) << 5);
+		newValue += ((value & (currentRank)) << 5);
 
-		newValue += ((value & (temp <<= 1)) >> 2);
+		newValue += ((value & (currentRank <<= 1)) << 5);
 
-		newValue += ((value & (temp <<= 1)) >> 2);
+		newValue += ((value & (currentRank <<= 1)) >> 2);
 
-		newValue += ((value & (temp <<= 1)) >> 2);
+		newValue += ((value & (currentRank <<= 1)) >> 2);
 
-		newValue += ((value & (temp <<= 1)) << 2);
+		newValue += ((value & (currentRank <<= 1)) >> 2);
 
-		newValue += ((value & (temp <<= 1)) >> 3);
+		newValue += ((value & (currentRank <<= 1)) << 2);
 
-		newValue += ((value & (temp <<= 1)) >> 3);
+		newValue += ((value & (currentRank <<= 1)) >> 3);
+
+		newValue += ((value & (currentRank <<= 1)) >> 3);
 
 		value = newValue;
 		value ^= key;
-
 		output << value;
 	}
 }
-
-int main(int argc, char * argv[])
-{
-	if (!IsValidNumOfArguments(argc))
-	{
-		return EXIT_FAILURE;
-	}
-
-	string operation = argv[1];
-	if (!AreValidOperations(operation))
-	{
-		return EXIT_FAILURE;
-	}
-
-	ifstream input(argv[2], ios::binary | ios::in);
-	ofstream output(argv[3], ios::binary | ios::out);
-
-	if (!AreValidInputOutputFiles(argv, input, output))
-	{
-		return EXIT_FAILURE;
-	}
-
-	int key = atoi(argv[4]);
-	if (!IsValidKey(key))
-	{
-		return EXIT_FAILURE;
-	}
-
-	(operation == OPERATION_CRYPT) ? Crypt(input, output, key) : Decrypt(input, output, key);
-
-	input.close();
-	output.close();
-
-    return EXIT_SUCCESS;
-}
-
