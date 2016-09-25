@@ -94,7 +94,7 @@
       <GenerateDebugInformation>true</GenerateDebugInformation>
     </Link>
     <PostBuildEvent>
-      <Command>test.bat "$(TaregetPuth)</Command>
+      <Command>test.bat "$(TaregetPuth)"</Command>
     </PostBuildEvent>
     <PostBuildEvent>
       <Message>Running tests</Message>
@@ -113,7 +113,7 @@
       <GenerateDebugInformation>true</GenerateDebugInformation>
     </Link>
     <PostBuildEvent>
-      <Command>test.bat "$(TaregetPuth)</Command>
+      <Command>test.bat "$(TaregetPuth)"</Command>
     </PostBuildEvent>
     <PostBuildEvent>
       <Message>Running tests</Message>
