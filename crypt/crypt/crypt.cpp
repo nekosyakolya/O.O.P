@@ -6,7 +6,7 @@
 using namespace std;
 
 void Crypt(ifstream &, ofstream &, const int &);
-//void Decrypt(ifstream &, ofstream &, const int &);
+void Decrypt(ifstream &, ofstream &, const int &);
 
 
 void Crypt(ifstream &input, ofstream &output, const int &key)
@@ -15,10 +15,59 @@ void Crypt(ifstream &input, ofstream &output, const int &key)
 	while (input.read(&value, sizeof value))
 	{
 		value ^= key;
+		char temp = '\0';
+		char newValue = '\0';
+		newValue += temp | ((value & 0x80) >> 2);
+
+		newValue += temp | ((value & 0x40) >> 5);
+
+		newValue += temp | ((value & 0x20) >> 5);
+
+		newValue += temp | ((value & 0x10) << 3);
+
+
+		newValue += temp | ((value & 0x08) << 3);
+
+		newValue += temp | ((value & 0x04) << 2);
+
+		newValue += temp | ((value & 0x02) << 2);
+
+		newValue += temp | ((value & 0x01) << 2);
+
+		value = newValue;
+
 		output << value;
 	}
-	input.close();
-	output.close();
+}
+
+void Decrypt(ifstream &input, ofstream &output, const int &key)
+{
+	char value;
+	while (input.read(&value, sizeof value))
+	{
+		char temp = '\0';
+		char newValue = '\0';
+		newValue += temp | ((value & 0x01) << 5);
+
+		newValue += temp | ((value & 0x02) << 5);
+
+		newValue += temp | ((value & 0x04) >> 2);
+
+		newValue += temp | ((value & 0x08) >> 2);
+
+		newValue += temp | ((value & 0x10) >> 2);
+
+		newValue += temp | ((value & 0x20) << 2);
+
+		newValue += temp | ((value & 0x40) >> 3);
+
+		newValue += temp | ((value & 0x80) >> 3);
+
+		value = newValue;
+		value ^= key;
+
+		output << value;
+	}
 }
 
 int main(int argc, char * argv[])
@@ -51,7 +100,7 @@ int main(int argc, char * argv[])
 		cout << "Failed to open " << argv[2] << " for reading\n";
 		return EXIT_FAILURE;
 	}
-	ofstream output(argv[3]);
+	ofstream output(argv[3], ios::binary | ios::out);
 
 	if (!output.is_open())
 	{
@@ -61,9 +110,15 @@ int main(int argc, char * argv[])
 
 	int key = atoi(argv[4]);
 
+	if ((key < 0) || (key > 255))
+	{
+		cout << "Failed key\n";
+		return EXIT_FAILURE;
+	}
+	(operation == operationCrypt) ? Crypt(input, output, key) : Decrypt(input, output, key);
 
-	//(operation == operationCrypt) ? 
-	Crypt(input, output, key);// : Decrypt(input, output, key);
+	input.close();
+	output.close();
 
     return EXIT_SUCCESS;
 }
