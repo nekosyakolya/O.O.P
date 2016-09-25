@@ -39,23 +39,22 @@ bool AreValidOperations(const string &operation)
 
 bool AreValidInputOutputFiles(char * argv[], ifstream &input, ofstream &output)
 {
-	bool success = true;
 	if (!input.is_open())
 	{
 		cout << "Failed to open " << argv[2] << " for reading\n";
-		success = false;
+		return  false;
 	}
-	if (input.eof())
+	if (input.peek() == ifstream::traits_type::eof())
 	{
 		cout << "File " << argv[2] << " is empty" << "\n";
-		success = false;
+		return  false;
 	}
 	if (!output.is_open())
 	{
 		cout << "Failed to open " << argv[3] << " for writing" << "\n";
-		success = false;
+		return false;
 	}
-	return success;
+	return true;
 }
 
 bool IsValidKey(const int &key)
