@@ -26,7 +26,7 @@ int main(int argc, char * argv[])
 	int firstPartOfNumber = ReversBits(value & currentRank) << SHIFT_VALUE;
 	int secondPartOfNumber = ReversBits((value & (~currentRank)) >> SHIFT_VALUE);
 	value = (firstPartOfNumber | secondPartOfNumber);
-	cout << value;
+	cout << value << endl;
     return EXIT_SUCCESS;
 }
 
