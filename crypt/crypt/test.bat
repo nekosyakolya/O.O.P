@@ -44,6 +44,13 @@ fc.exe  out.bin in.bin
 if %ERRORLEVEL% EQU 1 goto err
 
 
+rem filled test          
+%PROGRAM% crypt in.bin %TEMP%\outFilled.bin hi
+if %ERRORLEVEL% EQU 0 goto err
+fc.exe %TEMP%\outFilled.bin in.bin 
+if %ERRORLEVEL% EQU 0 goto err
+
+
 echo Program testing succeeded
 exit 0
 

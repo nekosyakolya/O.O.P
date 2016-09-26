@@ -116,7 +116,11 @@ bool IsValidKey(const int &key)
 	{
 		cout << "Failed key: " << key << "\n";
 	}
-	return ((key >= MIN_KEY) && (key <= MAX_KEY));
+	if (key == 0)
+	{
+		cout << "Incorrect value" << endl;
+	}
+	return ((key > MIN_KEY) && (key <= MAX_KEY));
 }
 
 char MixBitsForCrypt(const char &value)
