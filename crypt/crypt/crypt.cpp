@@ -17,6 +17,7 @@ bool IsValidKey(const int &);
 bool AreValidInputAndOutputFiles(char * [], ifstream &, ofstream &);
 char MixBitsForCrypt(const char &);
 char MixBitsForDecrypt(const char &);
+bool FailedToSaveData(ofstream &);
 
 int main(int argc, char * argv[])
 {
@@ -47,10 +48,25 @@ int main(int argc, char * argv[])
 
 	(operation == OPERATION_CRYPT) ? Crypt(input, output, key) : Decrypt(input, output, key);
 
+	if (FailedToSaveData(output))
+	{
+		return EXIT_FAILURE;
+	}
+
 	input.close();
 	output.close();
 
     return EXIT_SUCCESS;
+}
+
+
+bool FailedToSaveData(ofstream &output)
+{
+	if (!output.flush())
+	{
+		cout << "Failed to save data on disk\n";
+	}
+	return (!output.flush());
 }
 
 bool IsValidNumOfArguments(const int &argc)
