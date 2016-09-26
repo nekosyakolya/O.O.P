@@ -56,7 +56,7 @@ bool IsValidNumOfArguments(const int &argc)
 	if (argc != MAX_NUM_OF_ARGUMENTS)
 	{
 		cout << "Invalid arguments count\n"
-			<< "Usage: crypt.exe (crypt/decrypt) <input file> <output file> <key> \n";
+			<< "Usage: replace.exe <input file> <output file> <search string> <replace string> \n";
 	}
 	return (argc == MAX_NUM_OF_ARGUMENTS);
 }
