@@ -74,7 +74,7 @@ bool IsValidOperation(const string &operation)
 
 bool AreValidInputAndOutputFiles(char * argv[], ifstream &input, ofstream &output)
 {
-	if (!input.good())
+	if (!input.is_open())
 	{
 		cout << "Failed to open " << argv[2] << " for reading\n";
 		return  false;
