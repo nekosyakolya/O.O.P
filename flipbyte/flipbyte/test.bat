@@ -14,6 +14,12 @@ rem successful test
 %PROGRAM% 34
 if %ERRORLEVEL% EQU 1 goto err 
 
+
+rem filled test          
+%PROGRAM% hi
+if %ERRORLEVEL% EQU 0 goto err 
+
+
 echo Program testing succeeded
 exit 0
 

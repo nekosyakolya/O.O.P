@@ -17,6 +17,7 @@ int main(int argc, char * argv[])
 		return EXIT_FAILURE;
 	}
 	int value = atoi(argv[1]);
+
 	if (!IsValidValue(value))
 	{
 		return EXIT_FAILURE;
@@ -47,7 +48,7 @@ bool IsValidNumOfArguments(const int &argc)
 	if (argc != MAX_NUM_OF_ARGUMENTS)
 	{
 		cout << "Invalid arguments count\n"
-			<< "Usage: flipbyte.exe <входной байт> \n";
+			<< "Usage: flipbyte.exe <input bit> \n";
 	}
 	return (argc == MAX_NUM_OF_ARGUMENTS);
 }
@@ -61,5 +62,9 @@ bool IsValidValue(const int &key)
 	{
 		cout << "Failed key: " << key << "\n";
 	}
-	return ((key >= MIN_KEY) && (key <= MAX_KEY));
+	if (key == 0)
+	{
+		cout << "Incorrect value" << endl;
+	}
+	return ((key > MIN_KEY) && (key <= MAX_KEY));
 }
