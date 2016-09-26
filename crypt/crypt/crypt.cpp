@@ -15,6 +15,8 @@ bool IsValidNumOfArguments(const int &);
 bool IsValidOperation(const string &);
 bool IsValidKey(const int &);
 bool AreValidInputAndOutputFiles(char * [], ifstream &, ofstream &);
+char MixBitsForCrypt(const char &);
+char MixBitsForDecrypt(const char &);
 
 int main(int argc, char * argv[])
 {
@@ -101,65 +103,70 @@ bool IsValidKey(const int &key)
 	return ((key >= MIN_KEY) && (key <= MAX_KEY));
 }
 
+char MixBitsForCrypt(const char &value)
+{
+	char newValue = '\0';
+	int currentRank = 0x80;
+
+	newValue += ((value & (currentRank)) >> 2);
+
+	newValue += ((value & (currentRank >>= 1)) >> 5);
+
+	newValue += ((value & (currentRank >>= 1)) >> 5);
+
+	newValue += ((value & (currentRank >>= 1)) << 3);
+
+	newValue += ((value & (currentRank >>= 1)) << 3);
+
+	newValue += ((value & (currentRank >>= 1)) << 2);
+
+	newValue += ((value & (currentRank >>= 1)) << 2);
+
+	newValue += ((value & (currentRank >>= 1)) << 2);
+	return newValue;
+}
+
 void Crypt(ifstream &input, ofstream &output, const int &key)
 {
 	char value;
-	char newValue;
-	int currentRank;
 	while (input.read(&value, sizeof value))
 	{
 		value ^= key;
-		newValue = '\0';
-		currentRank = 0x80;
-
-		newValue += ((value & (currentRank)) >> 2);
-
-		newValue += ((value & (currentRank >>= 1)) >> 5);
-
-		newValue += ((value & (currentRank >>= 1)) >> 5);
-
-		newValue += ((value & (currentRank >>= 1)) << 3);
-
-		newValue += ((value & (currentRank >>= 1)) << 3);
-
-		newValue += ((value & (currentRank >>= 1)) << 2);
-
-		newValue += ((value & (currentRank >>= 1)) << 2);
-
-		newValue += ((value & (currentRank >>= 1)) << 2);
-
-		value = newValue;
+		value = MixBitsForCrypt(value);
 		output << value;
 	}
+}
+
+
+char MixBitsForDecrypt(const char &value)
+{
+	char newValue = '\0';
+	int currentRank = 0x01;
+
+	newValue += ((value & (currentRank)) << 5);
+
+	newValue += ((value & (currentRank <<= 1)) << 5);
+
+	newValue += ((value & (currentRank <<= 1)) >> 2);
+
+	newValue += ((value & (currentRank <<= 1)) >> 2);
+
+	newValue += ((value & (currentRank <<= 1)) >> 2);
+
+	newValue += ((value & (currentRank <<= 1)) << 2);
+
+	newValue += ((value & (currentRank <<= 1)) >> 3);
+
+	newValue += ((value & (currentRank <<= 1)) >> 3);
+	return newValue;
 }
 
 void Decrypt(ifstream &input, ofstream &output, const int &key)
 {
 	char value;
-	char newValue;
-	int currentRank;
 	while (input.read(&value, sizeof value))
 	{
-		newValue = '\0';
-		currentRank = 0x01;
-
-		newValue += ((value & (currentRank)) << 5);
-
-		newValue += ((value & (currentRank <<= 1)) << 5);
-
-		newValue += ((value & (currentRank <<= 1)) >> 2);
-
-		newValue += ((value & (currentRank <<= 1)) >> 2);
-
-		newValue += ((value & (currentRank <<= 1)) >> 2);
-
-		newValue += ((value & (currentRank <<= 1)) << 2);
-
-		newValue += ((value & (currentRank <<= 1)) >> 3);
-
-		newValue += ((value & (currentRank <<= 1)) >> 3);
-
-		value = newValue;
+		value = MixBitsForDecrypt(value);
 		value ^= key;
 		output << value;
 	}
