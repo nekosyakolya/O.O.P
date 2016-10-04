@@ -9,11 +9,11 @@ static const int MAX_NUM_OF_ARGUMENTS = 5;
 static const string OPERATION_CRYPT = "crypt";
 static const string OPERATION_DECRYPT = "decrypt";
 
-void Crypt(ifstream &, ofstream &, const int &);
-void Decrypt(ifstream &, ofstream &, const int &);
-bool IsValidNumOfArguments(const int &);
+void Crypt(ifstream &, ofstream &, int);
+void Decrypt(ifstream &, ofstream &, int);
+bool IsValidNumArguments(int);
 bool IsValidOperation(const string &);
-bool IsValidKey(const int &);
+bool IsValidKey(int);
 bool AreValidInputAndOutputFiles(char * [], ifstream &, ofstream &);
 char MixBitsForCrypt(const char &);
 char MixBitsForDecrypt(const char &);
@@ -21,7 +21,7 @@ bool FailedToSaveData(ofstream &);
 
 int main(int argc, char * argv[])
 {
-	if (!IsValidNumOfArguments(argc))
+	if (!IsValidNumArguments(argc))
 	{
 		return EXIT_FAILURE;
 	}
@@ -62,30 +62,36 @@ int main(int argc, char * argv[])
 
 bool FailedToSaveData(ofstream &output)
 {
+	bool error = false;
 	if (!output.flush())
 	{
 		cout << "Failed to save data on disk\n";
+		error = true;
 	}
-	return (!output.flush());
+	return error;
 }
 
-bool IsValidNumOfArguments(const int &argc)
+bool IsValidNumArguments(int argc)
 {
+	bool success = true;
 	if (argc != MAX_NUM_OF_ARGUMENTS)
 	{
 		cout << "Invalid arguments count\n"
 			<< "Usage: crypt.exe (crypt/decrypt) <input file> <output file> <key> \n";
+		success = false;
 	}
-	return (argc == MAX_NUM_OF_ARGUMENTS);
+	return success;
 }
 
 bool IsValidOperation(const string &operation)
 {
+	bool success = true;
 	if ((operation != OPERATION_CRYPT) && (operation != OPERATION_DECRYPT))
 	{
 		cout << "Invalid operation\n";
+		success = false;
 	}
-	return (operation == OPERATION_CRYPT) || (operation == OPERATION_DECRYPT);
+	return success;
 }
 
 bool AreValidInputAndOutputFiles(char * argv[], ifstream &input, ofstream &output)
@@ -108,19 +114,22 @@ bool AreValidInputAndOutputFiles(char * argv[], ifstream &input, ofstream &outpu
 	return true;
 }
 
-bool IsValidKey(const int &key)
+bool IsValidKey(int key)
 {
 	static const int MAX_KEY = 255;
 	static const int MIN_KEY = 0;
+	bool success = true;
 	if ((key < MIN_KEY) || (key > MAX_KEY))
 	{
 		cout << "Failed key: " << key << "\n";
+		success = false;
 	}
 	if (key == 0)
 	{
 		cout << "Incorrect value" << endl;
+		success = false;
 	}
-	return ((key > MIN_KEY) && (key <= MAX_KEY));
+	return success;
 }
 
 char MixBitsForCrypt(const char &value)
@@ -146,7 +155,7 @@ char MixBitsForCrypt(const char &value)
 	return newValue;
 }
 
-void Crypt(ifstream &input, ofstream &output, const int &key)
+void Crypt(ifstream &input, ofstream &output, int key)
 {
 	char value;
 	while (input.read(&value, sizeof value))
@@ -181,7 +190,7 @@ char MixBitsForDecrypt(const char &value)
 	return newValue;
 }
 
-void Decrypt(ifstream &input, ofstream &output, const int &key)
+void Decrypt(ifstream &input, ofstream &output, int key)
 {
 	char value;
 	while (input.read(&value, sizeof value))
