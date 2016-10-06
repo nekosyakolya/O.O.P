@@ -5,7 +5,7 @@
 
 using namespace std;
 
-static const int MAX_NUM_OF_ARGUMENTS = 5;
+static const int ARGUMENTS_COUNT = 5;
 static const string OPERATION_CRYPT = "crypt";
 static const string OPERATION_DECRYPT = "decrypt";
 
@@ -74,7 +74,7 @@ bool FailedToSaveData(ofstream &output)
 bool IsValidNumArguments(int argc)
 {
 	bool success = true;
-	if (argc != MAX_NUM_OF_ARGUMENTS)
+	if (argc != ARGUMENTS_COUNT)
 	{
 		cout << "Invalid arguments count\n"
 			<< "Usage: crypt.exe (crypt/decrypt) <input file> <output file> <key> \n";

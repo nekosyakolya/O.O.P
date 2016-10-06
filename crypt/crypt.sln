@@ -5,6 +5,8 @@ VisualStudioVersion = 14.0.25420.1
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "crypt", "crypt\crypt.vcxproj", "{833F9B9F-CE7A-4FE9-89E5-4C6538DF5ACB}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "flipbyte", "..\flipbyte\flipbyte\flipbyte.vcxproj", "{E5BC9153-B379-454C-8D52-E58B461BE994}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x64 = Debug|x64
@@ -21,6 +23,14 @@ Global
 		{833F9B9F-CE7A-4FE9-89E5-4C6538DF5ACB}.Release|x64.Build.0 = Release|x64
 		{833F9B9F-CE7A-4FE9-89E5-4C6538DF5ACB}.Release|x86.ActiveCfg = Release|Win32
 		{833F9B9F-CE7A-4FE9-89E5-4C6538DF5ACB}.Release|x86.Build.0 = Release|Win32
+		{E5BC9153-B379-454C-8D52-E58B461BE994}.Debug|x64.ActiveCfg = Debug|x64
+		{E5BC9153-B379-454C-8D52-E58B461BE994}.Debug|x64.Build.0 = Debug|x64
+		{E5BC9153-B379-454C-8D52-E58B461BE994}.Debug|x86.ActiveCfg = Debug|Win32
+		{E5BC9153-B379-454C-8D52-E58B461BE994}.Debug|x86.Build.0 = Debug|Win32
+		{E5BC9153-B379-454C-8D52-E58B461BE994}.Release|x64.ActiveCfg = Release|x64
+		{E5BC9153-B379-454C-8D52-E58B461BE994}.Release|x64.Build.0 = Release|x64
+		{E5BC9153-B379-454C-8D52-E58B461BE994}.Release|x86.ActiveCfg = Release|Win32
+		{E5BC9153-B379-454C-8D52-E58B461BE994}.Release|x86.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
