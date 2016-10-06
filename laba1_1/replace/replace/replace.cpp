@@ -4,31 +4,24 @@
 #include <string>
 
 using namespace std;
-static const int MAX_NUM_OF_ARGUMENTS = 5;
+
+static const int ARGUMENTS_COUNT = 5;
+
 string ReplaceString(string &, const string &, const string &);
 void ProcessFile(ifstream &, ofstream &, const string &, const string &);
-bool IsValidNumOfArguments(const int &);
+bool IsValidNumOfArguments(int);
 bool AreValidInputAndOutputFiles(char *[], ifstream &, ofstream &);
-bool IsEmptyString(const string &);
 bool FailedToSaveData(ofstream &);
-
-bool IsEmptyString(const string &retrievedString)
-{
-	if (retrievedString.empty())
-	{
-		cout << "Empty line \n";
-	}
-	return retrievedString.empty();
-
-}
 
 bool FailedToSaveData(ofstream &output)
 {
+	bool error = false;
 	if (!output.flush())
 	{
 		cout << "Failed to save data on disk\n";
+		error = true;
 	}
-	return (!output.flush());
+	return error;
 }
 
 bool AreValidInputAndOutputFiles(char * argv[], ifstream &input, ofstream &output)
@@ -40,7 +33,7 @@ bool AreValidInputAndOutputFiles(char * argv[], ifstream &input, ofstream &outpu
 	}
 	if (input.peek() == ifstream::traits_type::eof())
 	{
-		cout << "EMPTY FILE " << argv[1] << "\n";
+		cout << "Empty file " << argv[1] << "\n";
 		return false;
 	}
 	if (!output.is_open())
@@ -51,14 +44,16 @@ bool AreValidInputAndOutputFiles(char * argv[], ifstream &input, ofstream &outpu
 	return true;
 }
 
-bool IsValidNumOfArguments(const int &argc)
+bool IsValidNumOfArguments(int argc)
 {
-	if (argc != MAX_NUM_OF_ARGUMENTS)
+	bool success = true;
+	if (argc != ARGUMENTS_COUNT)
 	{
 		cout << "Invalid arguments count\n"
 			<< "Usage: replace.exe <input file> <output file> <search string> <replace string> \n";
+		success = false;
 	}
-	return (argc == MAX_NUM_OF_ARGUMENTS);
+	return success;
 }
 
 string ReplaceString(string &strInFile, const string &searchStr, const string &replaceStr)
@@ -110,8 +105,9 @@ int main(int argc, char * argv[])
 	string searchStr = argv[3];
 	string replaceStr = argv[4];
 
-	if (IsEmptyString(searchStr))
+	if (searchStr.size() == 0)
 	{
+		cout << "Empty line \n";
 		return EXIT_FAILURE;
 	}
 

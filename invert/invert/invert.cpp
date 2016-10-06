@@ -143,7 +143,7 @@ int main(int argc, char * argv[])
 	double determinant = FindDeterminantOfOriginalMatrix(matrix);
 	if (determinant == 0)
 	{
-		cout << "îïğåäåëèòåëü ğàâåí 0,îíà íå èìååò îáğàòíîé ìàòğèöû\n";
+		cout << "Ğ¾Ğ¿Ñ€ĞµĞ´ĞµĞ»Ğ¸Ñ‚ĞµĞ»ÑŒ Ñ€Ğ°Ğ²ĞµĞ½ 0,Ğ¾Ğ½Ğ° Ğ½Ğµ Ğ¸Ğ¼ĞµĞµÑ‚ Ğ¾Ğ±Ñ€Ğ°Ñ‚Ğ½Ğ¾Ğ¹ Ğ¼Ğ°Ñ‚Ñ€Ğ¸Ñ†Ñ‹\n";
 		return EXIT_FAILURE;
 	}
 	Matrix newMatrix;
