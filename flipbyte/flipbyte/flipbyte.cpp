@@ -1,14 +1,16 @@
 #include "stdafx.h"
 #include <iostream>
 #include <string>
+#include <fstream>
 
 using namespace std;
-static const int MAX_NUM_OF_ARGUMENTS = 2;
+static const int ARGUMENTS_COUNT = 3;
 static const int SHIFT_VALUE = 4;
 
-bool IsValidNumOfArguments(const int &);
-bool IsValidValue(const int &);
-int ReversBits(int);
+bool IsValidNumOfArguments(int);
+bool IsValidValue(int);
+int ReverseBits(int);
+bool IsValidOutputFile(char *[], ofstream &);
 
 int main(int argc, char * argv[])
 {
@@ -18,20 +20,26 @@ int main(int argc, char * argv[])
 	}
 	int value = atoi(argv[1]);
 
-	if (!IsValidValue(value))
+	if (!IsValidValue(value) && argv[1] != "0")
 	{
 		return EXIT_FAILURE;
 	}	
 
+	ofstream output(argv[2]);
+	if (!IsValidOutputFile(argv, output))
+	{
+		return EXIT_FAILURE;
+	}
+
 	int currentRank = 0x0F;
-	int firstPartOfNumber = ReversBits(value & currentRank) << SHIFT_VALUE;
-	int secondPartOfNumber = ReversBits((value & (~currentRank)) >> SHIFT_VALUE);
+	int firstPartOfNumber = ReverseBits(value & currentRank) << SHIFT_VALUE;
+	int secondPartOfNumber = ReverseBits((value & (~currentRank)) >> SHIFT_VALUE);
 	value = (firstPartOfNumber | secondPartOfNumber);
-	cout << value << endl;
+	output << value << endl;
     return EXIT_SUCCESS;
 }
 
-int ReversBits(int value)
+int ReverseBits(int value)
 {
 	int base = SHIFT_VALUE * SHIFT_VALUE;
 	int newValue = 0;
@@ -43,28 +51,43 @@ int ReversBits(int value)
 	return newValue;
 }
 
-bool IsValidNumOfArguments(const int &argc)
+bool IsValidNumOfArguments(int argc)
 {
-	if (argc != MAX_NUM_OF_ARGUMENTS)
+	bool success = true;
+	if (argc != ARGUMENTS_COUNT)
 	{
 		cout << "Invalid arguments count\n"
-			<< "Usage: flipbyte.exe <input bit> \n";
+			<< "Usage: flipbyte.exe <input bit> <output file>\n";
+		success = false;
 	}
-	return (argc == MAX_NUM_OF_ARGUMENTS);
+	return success;
 }
 
 
-bool IsValidValue(const int &key)
+bool IsValidValue(int key)
 {
 	static const int MAX_KEY = 255;
 	static const int MIN_KEY = 0;
+	bool success = true;
 	if ((key < MIN_KEY) || (key > MAX_KEY))
 	{
 		cout << "Failed key: " << key << "\n";
+		success = false;
 	}
 	if (key == 0)
 	{
 		cout << "Incorrect value" << endl;
+		success = false;
 	}
-	return ((key > MIN_KEY) && (key <= MAX_KEY));
+	return success;
+}
+
+bool IsValidOutputFile(char * argv[], ofstream &output)
+{
+	if (!output.is_open())
+	{
+		cout << "Failed to open " << argv[2] << " for writing" << "\n";
+		return false;
+	}
+	return true;
 }
