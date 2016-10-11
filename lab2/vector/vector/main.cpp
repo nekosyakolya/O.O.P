@@ -7,7 +7,7 @@ using namespace std;
 
 void ReadArray(vector<double> &array)
 {
-	float value;
+	double value;
 
 	while (cin >> value)
 	{
@@ -17,8 +17,8 @@ void ReadArray(vector<double> &array)
 
 void ChangeArray(vector<double> &array)
 {
-	float min = *min_element(array.begin(), array.end());
-	float max = *max_element(array.begin(), array.end());
+	double min = *min_element(array.begin(), array.end());
+	double max = *max_element(array.begin(), array.end());
 
 	for (unsigned int i = 0; i < array.size(); ++i)
 	{
@@ -40,6 +40,11 @@ int main()
 
 	ReadArray(array);
 	
+	if (array.size() == 0)
+	{
+		cout << "Incorrect input\n";
+		return EXIT_FAILURE;
+	}
 	ChangeArray(array);
 
 	OutArray(array);
