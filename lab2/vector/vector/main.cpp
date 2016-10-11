@@ -5,7 +5,7 @@
 
 using namespace std;
 
-void ReadArray(vector<float> &array)
+void ReadArray(vector<double> &array)
 {
 	float value;
 
@@ -15,7 +15,7 @@ void ReadArray(vector<float> &array)
 	}
 }
 
-void ChangeArray(vector<float> &array)
+void ChangeArray(vector<double> &array)
 {
 	float min = *min_element(array.begin(), array.end());
 	float max = *max_element(array.begin(), array.end());
@@ -28,15 +28,15 @@ void ChangeArray(vector<float> &array)
 	sort(array.begin(), array.end());
 }
 
-void OutArray(vector<float> &array)
+void OutArray(vector<double> &array)
 {
-	copy(array.begin(), array.end(), ostream_iterator<float>(cout, " "));
+	copy(array.begin(), array.end(), ostream_iterator<double>(cout, " "));
 	cout << endl;
 }
 
 int main()
 {
-	vector<float> array;
+	vector<double> array;
 
 	ReadArray(array);
 	
