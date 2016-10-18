@@ -10,12 +10,14 @@ bool StringsAreEqual(string const& x, string const& y)
 }
 
 BOOST_AUTO_TEST_SUITE(ProcessDecodeTest)
+    //строка,которая не содержит кодированных данных
 	BOOST_AUTO_TEST_CASE(string_no_change)
 	{
 	    string str = "Cat";
 		str = HtmlDecode(str);
 		BOOST_CHECK(StringsAreEqual(str, "Cat"));
 	}
+    //строка,которая содержит все кодированные данные
 
 	BOOST_AUTO_TEST_CASE(string_with_all_symbols)
 	{
@@ -23,6 +25,7 @@ BOOST_AUTO_TEST_SUITE(ProcessDecodeTest)
 		str = HtmlDecode(str);
 		BOOST_CHECK(StringsAreEqual(str, "Cat <says> \"Meow\". M&M's"));
 	}
+	//пустая строка
 
 	BOOST_AUTO_TEST_CASE(string_empty)
 	{
@@ -30,6 +33,7 @@ BOOST_AUTO_TEST_SUITE(ProcessDecodeTest)
 		str = HtmlDecode(str);
 		BOOST_CHECK(StringsAreEqual(str, ""));
 	}
+	//строка,которая содержит повторяющиеся кодированные данные
 
 	BOOST_AUTO_TEST_CASE(string_repeated_symbol)
 	{
