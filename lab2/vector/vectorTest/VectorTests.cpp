@@ -1,7 +1,4 @@
 #include "stdafx.h"
-
-
-
 #include "../vector/vector.h"
 
 using namespace std;
