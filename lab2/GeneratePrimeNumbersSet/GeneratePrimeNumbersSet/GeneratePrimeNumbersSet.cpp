@@ -27,7 +27,7 @@ void ScreenNumbers(unsigned upperLimitNumbers, vector<bool> &isPrimeNumbers)
 set<unsigned> AddPrimeNumbers(unsigned upperLimitNumbers, const vector<bool> &isPrimeNumbers)
 {
 	set<unsigned>PrimeNumbersSet;
-	for (unsigned i = MIN_PRIME_NUMBER; i <= upperLimitNumbers; ++i)
+	for (unsigned i = MIN_PRIME_NUMBER; i <= upperLimitNumbers; i == MIN_PRIME_NUMBER ? ++i : i += MIN_PRIME_NUMBER)
 	{
 		if (isPrimeNumbers[i])
 		{
