@@ -1,12 +1,6 @@
 #include "stdafx.h"
-#include <iostream>
-#include <iterator>
-#include <vector>
-#include <set>
-#include <cmath>
-
+#include "prime.h"
 using namespace std;
-const static unsigned MIN_PRIME_NUMBER = 2;
 
 void ScreenNumbers(unsigned upperLimitNumbers, vector<bool> &isPrimeNumbers)
 {
@@ -60,20 +54,5 @@ bool IsCorrectNumber(unsigned upperLimitNumbers)
 	return (upperLimitNumbers <= 100000000);
 }
 
-int main()
-{
-	unsigned upperLimitNumbers;
-	cin >> upperLimitNumbers;
-	if (!IsCorrectNumber(upperLimitNumbers))
-	{
-		cout << "incorrect number\n";
-		return EXIT_FAILURE;
-	}
 
-	set<unsigned>PrimeNumbersSet = GeneratePrimeNumbersSet(upperLimitNumbers);
-
-	copy(PrimeNumbersSet.begin(), PrimeNumbersSet.end(), ostream_iterator<double>(cout, " "));
-
-	return EXIT_SUCCESS;
-}
 
