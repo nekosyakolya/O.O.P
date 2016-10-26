@@ -2,7 +2,13 @@
 #include "prime.h"
 using namespace std;
 
-void ScreenNumbers(unsigned upperLimitNumbers, vector<bool> &isPrimeNumbers)
+namespace
+{
+	const static unsigned MIN_PRIME_NUMBER = 2;
+	const static unsigned MAX_LIMIT = 100000000;
+}
+
+void SieveNumbers(unsigned upperLimitNumbers, vector<bool> &isPrimeNumbers)
 {
 	isPrimeNumbers[0] = false;
 	if (upperLimitNumbers != 0)
@@ -10,13 +16,11 @@ void ScreenNumbers(unsigned upperLimitNumbers, vector<bool> &isPrimeNumbers)
 		isPrimeNumbers[1] = false;
 	}
 
-	for (unsigned i = MIN_PRIME_NUMBER; i <= sqrt(upperLimitNumbers);
-		        i == MIN_PRIME_NUMBER ? ++i : i += MIN_PRIME_NUMBER)
+	for (unsigned i = MIN_PRIME_NUMBER; i <= sqrt(upperLimitNumbers); i == MIN_PRIME_NUMBER ? ++i : i += MIN_PRIME_NUMBER)
 	{
 		if (isPrimeNumbers[i])
 		{
-			for (unsigned j = i * i; j <= upperLimitNumbers;
-				i == MIN_PRIME_NUMBER ? (j += i) : (j = j + MIN_PRIME_NUMBER * i))
+			for (unsigned j = i * i; j <= upperLimitNumbers; i == MIN_PRIME_NUMBER ? (j += i) : (j = j + MIN_PRIME_NUMBER * i))
 			{
 				isPrimeNumbers[j] = false;
 			}
@@ -42,16 +46,14 @@ set<unsigned> GeneratePrimeNumbersSet(unsigned upperLimitNumbers)
 {
 
 	vector<bool> isPrimeNumbers(upperLimitNumbers + 1, true);
-	ScreenNumbers(upperLimitNumbers, isPrimeNumbers);
+	SieveNumbers(upperLimitNumbers, isPrimeNumbers);
 
-	set<unsigned>PrimeNumbersSet;
-
-	return PrimeNumbersSet = AddPrimeNumbers(upperLimitNumbers, isPrimeNumbers);
+	return AddPrimeNumbers(upperLimitNumbers, isPrimeNumbers);
 }
 
 bool IsCorrectNumber(unsigned upperLimitNumbers)
 {
-	return (upperLimitNumbers <= 100000000);
+	return (upperLimitNumbers <= MAX_LIMIT);
 }
 
 
