@@ -3,38 +3,33 @@
 
 using namespace std;
 
-void ReadDigits(vector<double> &digits)
+void ReadNumbers(vector<double> &numbers)
 {
     double value;
 
     while (cin >> value)
     {
-        digits.insert(digits.end(), value);
+        numbers.insert(numbers.end(), value);
     }
 }
 
-void ChangeDigits(vector<double> &digits)
+void ChangeNumbers(vector<double> &numbers)
 {
-	if (digits.size() != 0)
+	if (numbers.size() != 0)
 	{
-		double min = *min_element(digits.begin(), digits.end());
-		double max = *max_element(digits.begin(), digits.end());
+		double min = *min_element(numbers.begin(), numbers.end());
+		double max = *max_element(numbers.begin(), numbers.end());
 
-		double index;
+		double k = (min != 0) ? max / min : 0;
 
-		(min != 0) ? index = max / min : index = 0;
-
-		for (unsigned i = 0; i < digits.size(); ++i)
-		{
-			digits[i] *= index;
-		}
-
-		sort(digits.begin(), digits.end());
+		std::transform(numbers.begin(), numbers.end(), numbers.begin(), [k](double val){
+			return val * k;
+		});
 	}
 }
 
-void OutDigits(vector<double> &digits)
+void OutputNumbers(const vector<double> &numbers)
 {
-    copy(digits.begin(), digits.end(), ostream_iterator<double>(cout, " "));
+    copy(numbers.cbegin(), numbers.cend(), ostream_iterator<double>(cout, " "));
     cout << endl;
 }

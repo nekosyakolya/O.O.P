@@ -4,6 +4,6 @@
 #include <iterator>
 #include <algorithm>
 
-void ReadDigits(std::vector<double> &digits);
-void OutDigits(std::vector<double> &digits);
-void ChangeDigits(std::vector<double> &digits);
+void ReadNumbers(std::vector<double> &digits);
+void OutputNumbers(const std::vector<double> &digits);
+void ChangeNumbers(std::vector<double> &digits);

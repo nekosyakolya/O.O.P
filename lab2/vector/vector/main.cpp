@@ -5,12 +5,14 @@ using namespace std;
 
 int main()
 {
-	vector<double> digits;
-	ReadDigits(digits);
+	vector<double> numbers;
+	ReadNumbers(numbers);
 	
-	ChangeDigits(digits);
+	ChangeNumbers(numbers);
 
-	OutDigits(digits);
+	sort(numbers.begin(), numbers.end());
+
+	OutputNumbers(numbers);
 
 	return EXIT_SUCCESS;
 }
