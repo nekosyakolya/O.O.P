@@ -40,4 +40,10 @@ BOOST_AUTO_TEST_SUITE(ProcessDecodeTest)
 		str = HtmlDecode(str);
 		BOOST_CHECK(StringsAreEqual(str, "atom << human"));
 	}
+	BOOST_AUTO_TEST_CASE(string_repeated_symbol2)
+	{
+		string str = "atom &amp;amp; human";
+		str = HtmlDecode(str);
+		BOOST_CHECK(StringsAreEqual(str, "atom &amp; human"));
+	}
 BOOST_AUTO_TEST_SUITE_END()

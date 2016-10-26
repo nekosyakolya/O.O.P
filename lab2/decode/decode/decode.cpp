@@ -3,33 +3,34 @@
 
 using namespace std;
 
-string ReplaceString(string &strInFile, const string &searchStr, const string &replaceStr)
+string ReplaceString(string const& strInFile, const string &searchStr, const string &replaceStr)
 {
 	string newStr = "";
-	size_t positionOfBeginString = 0;
-	size_t positionOfMatchedString = strInFile.find(searchStr);
+	size_t beginPosition = 0;
+	size_t matchEndPosition = strInFile.find(searchStr);
 
-	while (positionOfMatchedString != string::npos)
+	while (matchEndPosition != string::npos)
 	{
-		newStr += strInFile.substr(positionOfBeginString, positionOfMatchedString - positionOfBeginString);
+		newStr += strInFile.substr(beginPosition, matchEndPosition - beginPosition);
 		newStr += replaceStr;
-		positionOfBeginString = positionOfMatchedString + searchStr.length();
-		positionOfMatchedString = strInFile.find(searchStr, positionOfMatchedString + searchStr.length());
+		beginPosition = matchEndPosition + searchStr.length();
+		matchEndPosition = strInFile.find(searchStr, matchEndPosition + searchStr.length());
 	}
 
-	return newStr += strInFile.substr(positionOfBeginString);
+	return newStr += strInFile.substr(beginPosition);
 }
 
 
+// const& arg
 string HtmlDecode(string & htmlString)
 {
-	map <string, string> mapDecode = { { "&quot;", "\"" },
+	map <string, string> decodeMap = { { "&quot;", "\"" },
 	{ "&apos;", "'" },
 	{ "&lt;", "<" },
 	{ "&gt;", ">" },
 	{ "&amp;", "&" } };
 
-	for (auto i = mapDecode.begin(); i != mapDecode.end(); ++i)
+	for (auto i = decodeMap.begin(); i != decodeMap.end(); ++i)
 	{
 		htmlString = ReplaceString(htmlString, i->first, i->second);
 	}
