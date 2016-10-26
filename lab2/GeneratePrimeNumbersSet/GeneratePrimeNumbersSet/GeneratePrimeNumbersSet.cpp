@@ -35,7 +35,7 @@ set<unsigned> AddPrimeNumbers(unsigned upperLimitNumbers, const vector<bool> &is
 	{
 		if (isPrimeNumbers[i])
 		{
-			PrimeNumbersSet.insert(i);
+			PrimeNumbersSet.emplace(i);
 		}
 	}
 	return PrimeNumbersSet;
