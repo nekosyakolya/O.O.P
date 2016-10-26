@@ -9,7 +9,7 @@ string ReplaceString(string &strInFile, const string &searchStr, const string &r
 	size_t positionOfBeginString = 0;
 	size_t positionOfMatchedString = strInFile.find(searchStr);
 
-	while ((positionOfMatchedString != string::npos) && !(searchStr == replaceStr))
+	while (positionOfMatchedString != string::npos)
 	{
 		newStr += strInFile.substr(positionOfBeginString, positionOfMatchedString - positionOfBeginString);
 		newStr += replaceStr;
