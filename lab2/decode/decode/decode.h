@@ -7,4 +7,4 @@
 #include <iterator> 
 #include "stdafx.h"
 
-std::string HtmlDecode(std::string & htmlString);
+std::string HtmlDecode(const std::string & htmlString);

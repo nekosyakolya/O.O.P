@@ -21,9 +21,9 @@ string ReplaceString(string const& strInFile, const string &searchStr, const str
 }
 
 
-// const& arg
-string HtmlDecode(string & htmlString)
+string HtmlDecode(const string & htmlString)
 {
+	string newHtmlString = htmlString;
 	map <string, string> decodeMap = { { "&quot;", "\"" },
 	{ "&apos;", "'" },
 	{ "&lt;", "<" },
@@ -32,7 +32,7 @@ string HtmlDecode(string & htmlString)
 
 	for (auto i = decodeMap.begin(); i != decodeMap.end(); ++i)
 	{
-		htmlString = ReplaceString(htmlString, i->first, i->second);
+		newHtmlString = ReplaceString(newHtmlString, i->first, i->second);
 	}
-	return htmlString;
+	return newHtmlString;
 }
