@@ -20,15 +20,6 @@
 
 using  Dictionary = std::map<std::string, std::string>;
 
-Dictionary GetDictionaryFromFile(std::ifstream &dictionary);//b
-
-bool FoundTransfer(Dictionary & myFirstMap, const std::string &key);//b
-
-bool IsValidNumArguments(int argc);//b
-
-void StorageChanges(Dictionary & dictionary, const std::string &nameFile);//b
 void ProcessExit(Dictionary & dictionary, const std::string &nameFile);
-void ProcessTranslation(const std::string &nameFile, Dictionary &dictionary);
-bool FoundWord(Dictionary &dictionary, std::string & key);//b
 
-void AddNewWord(Dictionary &dictionary, const std::string & value, const std::string & key);
+void AskedToSave(Dictionary &dictionary, bool & wasNewWord, const std::string & key);

@@ -4,7 +4,7 @@
 
 
 class SpecLogFormatter :
-	public boost::unit_test::output::compiler_log_formatter
+public boost::unit_test::output::compiler_log_formatter
 {
 	virtual void test_unit_start(std::ostream &os, boost::unit_test::test_unit const& tu) override
 	{

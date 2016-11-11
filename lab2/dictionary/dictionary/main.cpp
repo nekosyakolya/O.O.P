@@ -3,21 +3,22 @@
 
 using namespace std;
 
+// use wstring
 int main(int argc, char * argv[])
 {
-	SetConsoleCP(1251);
-	SetConsoleOutputCP(1251);
-	if (argc != 2)
+	if (!IsValidNumArguments(argc))
 	{
-		cout << "Invalid arguments count\n"
-			<< "Usage: dictionary.exe <dictionary file>\n";
 		return EXIT_FAILURE;
 	}
-	ifstream dictionary(argv[1]);
+	SetConsoleCP(1251);
+	SetConsoleOutputCP(1251);
+	const string nameFile = argv[1];
+	ifstream dictionaryFile(nameFile);
 
-	map <string, string> myFirstMap;
+	Dictionary dictionary = GetDictionaryFromFile(dictionaryFile);
 
-	ReadDictionary(dictionary, myFirstMap);
+	ProcessTranslation(nameFile, dictionary);
+	
 	return EXIT_SUCCESS;
 }
 
