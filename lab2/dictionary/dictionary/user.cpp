@@ -6,32 +6,59 @@ using namespace std;
 
 void ProcessExit(Dictionary & dictionary, const std::string &nameFile)
 {
-	cout << "В словарь были внесены изменения. Введите Y или y для сохранения перед выходом." << endl;
-	cout << "> ";
-	string value = "";
-	getline(cin, value);
-	if (value == "Y" || value == "y")
+	wcout << "В словарь были внесены изменения. Введите Y или y для сохранения перед выходом.\n";
+	wcout << L"> ";
+	wstring value = L"";
+	getline(wcin, value);
+	if (value == L"Y" || value == L"y")
 	{
 		StorageChanges(dictionary, nameFile);
-		cout << "Изменения сохранены.До свидания." << endl;
+		wcout << "Изменения сохранены.До свидания.\n";
 	}
 }
 
-void AskedToSave(Dictionary &dictionary, bool & wasNewWord, const string & key)
+void AskedToSave(Dictionary &dictionary, bool & wasNewWord, const wstring & key)
 {
-	string value = "";
-	cout << "> ";
-	getline(cin, value);
+	wstring value = L"";
+	wcout << L"> ";
+	getline(wcin, value);
 	if (value.empty())
 	{
-		cout << "Слово \"" << key << "\" проигнорировано." << endl;
+		wcout << "Слово \"" << key << "\" проигнорировано.\n";
 	}
 	else
 	{
-		cout << "Слово \"" << key << "\" сохранено в словаре как \"" << value << "\"." << endl;
+		wcout << "Слово \"" << key << "\" сохранено в словаре как \"" << value << "\".\n";
 		dictionary.emplace(key, value);
         
 		AddNewWord(dictionary, value, key);
 		wasNewWord = true;
+	}
+}
+
+
+void ProcessTranslation(const std::string &nameFile, Dictionary &dictionary)
+{
+	bool wasNewWord = false;
+	wstring  key = OUT_OF_DIALOGUE;
+
+	do
+	{
+		wcout << L"> ";
+		getline(wcin, key);
+
+		if (key == OUT_OF_DIALOGUE)
+		{
+			break;
+		}
+		GetTranslation(dictionary, wasNewWord, key);
+
+	} while (true);
+
+	if (wasNewWord)
+	{
+
+		ProcessExit(dictionary, nameFile);
+
 	}
 }

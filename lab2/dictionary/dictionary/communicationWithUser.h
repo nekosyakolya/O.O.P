@@ -11,15 +11,12 @@
 #include <Windows.h>
 #include "const.h"
 
-/*
-Разбить на два логических модуля:
-* Словарь - предоставляет бизнес-логику (сохранение, загрузка, добавление/получение перевода)
-* Контроллер - общение с пользователем, управление словарем
-*/
 
 
-using  Dictionary = std::map<std::string, std::string>;
+using  Dictionary = std::map<std::wstring, std::wstring>;
 
-void ProcessExit(Dictionary & dictionary, const std::string &nameFile);
+void ProcessExit(Dictionary & , const std::string &);
 
-void AskedToSave(Dictionary &dictionary, bool & wasNewWord, const std::string & key);
+void AskedToSave(Dictionary &, bool & , const std::wstring & );
+
+void ProcessTranslation(const std::string &, Dictionary &);

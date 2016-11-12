@@ -11,24 +11,16 @@
 #include <Windows.h>
 #include "const.h"
 
-/*
-Разбить на два логических модуля:
-* Словарь - предоставляет бизнес-логику (сохранение, загрузка, добавление/получение перевода)
-* Контроллер - общение с пользователем, управление словарем
-*/
+using  Dictionary = std::map<std::wstring, std::wstring>;
 
+Dictionary GetDictionaryFromFile(std::wifstream &);
 
-using  Dictionary = std::map<std::string, std::string>;
+bool FoundTransfer(Dictionary &, const std::wstring &);
 
-Dictionary GetDictionaryFromFile(std::ifstream &dictionary);//b
+bool IsValidNumArguments(int argc);
 
-bool FoundTransfer(Dictionary & myFirstMap, const std::string &key);//b
+void StorageChanges(Dictionary &, const std::string &);
+bool FoundWord(Dictionary &, std::wstring &);
 
-bool IsValidNumArguments(int argc);//b
-
-void StorageChanges(Dictionary & dictionary, const std::string &nameFile);//b
-void ProcessExit(Dictionary & dictionary, const std::string &nameFile);
-void ProcessTranslation(const std::string &nameFile, Dictionary &dictionary);
-bool FoundWord(Dictionary &dictionary, std::string & key);//b
-
-void AddNewWord(Dictionary &dictionary, const std::string & value, const std::string & key);
+void AddNewWord(Dictionary &, const std::wstring &, const std::wstring &);
+void  GetTranslation(Dictionary &, bool & , std::wstring &);
