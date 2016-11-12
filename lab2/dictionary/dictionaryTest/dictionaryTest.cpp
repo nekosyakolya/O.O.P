@@ -43,7 +43,7 @@ BOOST_AUTO_TEST_SUITE(ProcessDictionaryTest)
 		wifstream dictionaryFile("dictionary.txt");
 		Dictionary dictionary =
 		{
-			{ L"cat", L"кошка" }
+			{ boost::lexical_cast<std::wstring>("cat"), boost::lexical_cast<std::wstring>("кошка") }
 		};
 		Dictionary receivedDictionary = GetDictionaryFromFile(dictionaryFile);
 		BOOST_CHECK(dictionary == receivedDictionary);
