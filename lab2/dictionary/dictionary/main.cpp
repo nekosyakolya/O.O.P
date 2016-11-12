@@ -1,6 +1,7 @@
 #include "stdafx.h"
 #include "dictionary.h"
 #include "communicationWithUser.h"
+
 using namespace std;
 
 // use wstring

@@ -15,7 +15,7 @@ Dictionary GetDictionaryFromFile(std::wifstream &dictionaryFile)
 		boost::split(translationWord, word, boost::is_any_of(SEPARATE));
 		if (translationWord.size() != 0)
 		{
-			transform(translationWord[0].begin(), translationWord[0].end(), translationWord[0].begin(), tolower);
+			transform(translationWord[0].begin(), translationWord[0].end(), translationWord[0].begin(), std::bind2nd(std::ptr_fun(&std::tolower<wchar_t>), std::locale("")));
 			dictionary.emplace(translationWord[0], translationWord[1]);
 		}
 	}
@@ -40,7 +40,7 @@ bool FoundTransfer(Dictionary & dictionary, const wstring &key)
 	bool isFound = false;
 	for (auto it = dictionary.begin(); it != dictionary.end(); ++it)
 	{
-		transform(it->second.begin(), it->second.end(), it->second.begin(), tolower);
+		transform(it->second.begin(), it->second.end(), it->second.begin(), std::bind2nd(std::ptr_fun(&std::tolower<wchar_t>), std::locale("")));
 		if (it->second == key)
 		{
 			wcout << it->first << "\n";
@@ -70,7 +70,7 @@ void AddNewWord(Dictionary &dictionary, const wstring & value, const wstring & k
 
 bool FoundWord(Dictionary &dictionary, wstring & key)
 {
-	transform(key.begin(), key.end(), key.begin(), tolower);
+	transform(key.begin(), key.end(), key.begin(), std::bind2nd(std::ptr_fun(&std::tolower<wchar_t>), std::locale("")));
 	auto it = dictionary.find(key);
 	bool isFound = false;
 	if (it != dictionary.end())

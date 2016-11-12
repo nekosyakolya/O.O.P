@@ -9,6 +9,8 @@
 #include <algorithm>
 #include <string> 
 #include <Windows.h>
+#include <locale>
+#include <functional>
 #include "const.h"
 
 

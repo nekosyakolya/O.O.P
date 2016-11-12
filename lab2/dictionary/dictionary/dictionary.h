@@ -10,6 +10,8 @@
 #include <string> 
 #include <Windows.h>
 #include "const.h"
+#include <locale>
+#include <functional>
 
 using  Dictionary = std::map<std::wstring, std::wstring>;
 

@@ -28,25 +28,25 @@ BOOST_AUTO_TEST_SUITE(ProcessDictionaryTest)
 		wstring key = L"CaT";
 		BOOST_CHECK(FoundWord(dictionary, key));
 	}
-	/*
-	BOOST_AUTO_TEST_CASE(get_dictionary_from_file)
-	{
-		wifstream dictionaryFile("dictionary.txt");
-		Dictionary dictionary =
-		{
-			{ L"cat", L"кошка" },
-			{ L"the red square", L"Красная площадь" }
-		};
-		Dictionary receivedDictionary = GetDictionaryFromFile(dictionaryFile);
-		BOOST_CHECK(dictionary == receivedDictionary);
-	}
 
+	
 	BOOST_AUTO_TEST_CASE(get_dictionary_from_empty_file)
 	{
 		wifstream dictionaryFile("empty.txt");
 		Dictionary dictionary = {};
 		Dictionary receivedDictionary = GetDictionaryFromFile(dictionaryFile);
 		BOOST_CHECK(dictionary == receivedDictionary);
-	}*/
+	}
+
+	BOOST_AUTO_TEST_CASE(get_dictionary_from_file)
+	{
+		wifstream dictionaryFile("dictionary.txt");
+		Dictionary dictionary =
+		{
+			{ L"cat", L"кошка" }
+		};
+		Dictionary receivedDictionary = GetDictionaryFromFile(dictionaryFile);
+		BOOST_CHECK(dictionary == receivedDictionary);
+	}
 
 BOOST_AUTO_TEST_SUITE_END()
