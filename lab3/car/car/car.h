@@ -44,6 +44,7 @@ static const SpeedRange speedRange = {
 class CCar
 {
 public:
+	CCar();
 	bool IsTurnedOn()const;
 	bool TurnOnEngine();
 	bool TurnOffEngine();
@@ -52,11 +53,12 @@ public:
 	int GetSpeed()const;
 	Direction SetDirection(int speed);
 	int GetDirection() const;
+	int GetGear() const;
 	~CCar();
 private:
-	bool m_isOn = false;
-	Gear m_currentGear = Gear::NEUTRAL_GEAR;
-	Direction m_direction = Direction::STAY;
-	int m_currentSpeed = MIN_SPEED;
+	bool m_isOn;
+	Gear m_currentGear;
+	Direction m_direction;
+	int m_currentSpeed;
 };
 

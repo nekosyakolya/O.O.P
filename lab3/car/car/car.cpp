@@ -1,5 +1,3 @@
-// car.cpp: определяет точку входа для консольного приложения.
-//
 
 #include "stdafx.h"
 #include "car.h"
@@ -16,6 +14,13 @@ bool IsValidSpeed(const Gear &gear, int currentSpeed)
 	return ((currentSpeed >= range.first) && (currentSpeed <= range.second));
 }
 
+CCar::CCar()
+{
+	m_isOn = false;
+	m_currentGear = Gear::NEUTRAL_GEAR;
+	m_direction = Direction::STAY;
+	m_currentSpeed = MIN_SPEED;
+}
 
 bool CCar::IsTurnedOn() const
 {
@@ -81,6 +86,12 @@ bool CCar::SetSpeed(int speed)
 int CCar::GetSpeed() const
 {
 	return m_currentSpeed;
+}
+
+
+int CCar::GetGear() const
+{
+	return static_cast<int>(m_currentGear);
 }
 
 int CCar::GetDirection() const
