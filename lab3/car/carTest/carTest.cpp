@@ -1,5 +1,3 @@
-// carTest.cpp: определяет точку входа для консольного приложения.
-//
 
 #include "stdafx.h"
 #include "../car/car.h"

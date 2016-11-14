@@ -35,30 +35,32 @@ bool CCarController::HandleCommand()
 	return false;
 }
 
-string ConvertToString(int direction)
+
+
+string CCarController::GetCurrentDirection() const
 {
-	string directionStr = "";
-	switch (direction)
+	string direction = "";
+	switch (m_car.GetDirection())
 	{
 	case 1:
-		directionStr = "forward";
+		direction = "forward";
 		break;
 	case 0:
-		directionStr = "stay";
+		direction = "stay";
 		break;
 	case -1:
-		directionStr = "backward";
+		direction = "backward";
 		break;
 	}
-
-	return directionStr;
+	return direction;
 }
 
 bool CCarController::Info(std::istream & args)
 {
 	string info = (m_car.IsTurnedOn())
-		? ("Engine is turned on\nDirection is: " + ConvertToString(m_car.GetDirection()) + "\nGear is: " + to_string(m_car.GetGear()) +
-			"\nSpeed is: " + to_string(m_car.GetSpeed()) + "\n")
+		? ("Engine is turned on\nGear is: " + to_string(m_car.GetGear()) + 
+		   "\nSpeed is: " + to_string(m_car.GetSpeed()) + 
+		   "\nDirection is: " + GetCurrentDirection() + "\n")
 		: "Engine is turned off\n";
 
 	m_output << info;
@@ -69,13 +71,15 @@ bool CCarController::Info(std::istream & args)
 
 bool CCarController::EngineOn(std::istream & args)
 {
-	m_car.TurnOnEngine();
+	string info = (m_car.TurnOnEngine()) ? "Engine is turned on\n" : "Engine is already on!\n";
+	m_output << info;
 	return true;
 }
 
 bool CCarController::EngineOff(std::istream & args)
 {
-	m_car.TurnOffEngine();
+	string info = (m_car.TurnOffEngine()) ? "Engine is turned off\n" : "Engine is already off, not on neutral gear or not zero speed!\n";
+	m_output << info;
 	return true;
 }
 
@@ -84,10 +88,8 @@ bool CCarController::SetGear(std::istream & args)
 	int gear = 0;
 	args >> gear;
 
-	if (!m_car.SetGear(gear))
-	{
-		m_output << "Engine is turned off or gear does not match current speed\n";
-	}
+	string info = (!m_car.SetGear(gear)) ? "Engine is turned off or gear does not match current speed\n" : "Gear is changed\n";
+	m_output << info;
 	return true;
 }
 
@@ -95,12 +97,12 @@ bool CCarController::SetSpeed(std::istream & args)
 {
 	int speed = 0;
 	args >> speed;
-	if (!m_car.SetSpeed(speed))
-	{
-		m_output << "Engine is turned off or gear does not match current gear\n";
-	}
+	string info = (!m_car.SetSpeed(speed)) ? "Engine is turned off or gear does not match current gear\n" : "Speed is changed\n";
+	m_output << info;
 	return true;
 }
+
+
 
 
 

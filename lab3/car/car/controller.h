@@ -18,8 +18,8 @@ private:
 	bool EngineOff(std::istream & args);
 	bool SetGear(std::istream & args);
 	bool SetSpeed(std::istream & args);
-
-	using ActionMap = std::map < std::string, std::function<bool(std::istream & args)>>;
+	std::string GetCurrentDirection()const;
+	using ActionMap = std::map<std::string, std::function<bool(std::istream & args)>>;
 
 	CCar & m_car;
 	std::istream & m_input;

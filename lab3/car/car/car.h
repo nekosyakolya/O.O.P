@@ -60,5 +60,7 @@ private:
 	Gear m_currentGear;
 	Direction m_direction;
 	int m_currentSpeed;
+	bool IsValidGear(int gear)const;
+	bool IsValidSpeed(const Gear &gear, int currentSpeed)const;
 };
 
