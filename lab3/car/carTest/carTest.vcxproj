@@ -74,6 +74,8 @@
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <LinkIncremental>true</LinkIncremental>
+    <IncludePath>d:\boost_1_61_0;D:\SFML-2.4.0\include;$(IncludePath)</IncludePath>
+    <LibraryPath>d:\boost_1_61_0\stage\lib;$(LibraryPath);$(VC_LibraryPath_x64);$(WindowsSDK_LibraryPath_x64);$(NETFXKitsDir)Lib\um\x64</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LinkIncremental>false</LinkIncremental>
@@ -152,12 +154,16 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\car\car.h" />
+    <ClInclude Include="..\car\const.h" />
+    <ClInclude Include="..\car\controller.h" />
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="targetver.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\car\car.cpp" />
+    <ClCompile Include="..\car\controller.cpp" />
     <ClCompile Include="carTest.cpp" />
+    <ClCompile Include="controllerTest.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
