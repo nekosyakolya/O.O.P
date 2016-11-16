@@ -13,6 +13,12 @@ bool CCar::IsValidSpeed(const Gear & gear, int currentSpeed) const
     return ((currentSpeed >= range.first) && (currentSpeed <= range.second));
 }
 
+bool CCar::CanSetGear(const Gear & gear) const
+{
+	return (((m_currentGear == Gear::FIRST_GEAR || m_currentGear == Gear::NEUTRAL_GEAR || m_currentGear == Gear::REVERSE_GEAR) && m_currentSpeed == 0) ||
+		(m_currentGear != Gear::REVERSE_GEAR) && (gear != Gear::REVERSE_GEAR));
+}
+
 
 CCar::CCar()
 {
@@ -47,8 +53,7 @@ bool CCar::SetGear(int gear)
 {
     if (IsValidGear(gear) && ((m_isOn && IsValidSpeed(static_cast<Gear>(gear), m_currentSpeed)) || (!m_isOn && static_cast<Gear>(gear) == Gear::NEUTRAL_GEAR)))
     {
-        if (((m_currentGear == Gear::FIRST_GEAR || m_currentGear == Gear::NEUTRAL_GEAR || m_currentGear == Gear::REVERSE_GEAR)  && m_currentSpeed == 0) ||
-           (m_currentGear != Gear::REVERSE_GEAR) && (static_cast<Gear>(gear) != Gear::REVERSE_GEAR))
+		if (CanSetGear(static_cast<Gear>(gear)))
         {
             m_currentGear = static_cast<Gear>(gear);
             return true;
