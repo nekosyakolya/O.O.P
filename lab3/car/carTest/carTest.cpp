@@ -146,7 +146,7 @@ BOOST_FIXTURE_TEST_SUITE(CarTest, CarSetFixture)
         BOOST_AUTO_TEST_SUITE_END()
         
 
-        BOOST_AUTO_TEST_SUITE(Turn_off_function)
+        BOOST_AUTO_TEST_SUITE(turn_off_test)
 
             BOOST_AUTO_TEST_CASE(engine_can_be_turned_off_at_neutral_gear_and_with_speed_is_equal_to_zero)
             {

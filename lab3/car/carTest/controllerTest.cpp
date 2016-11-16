@@ -37,22 +37,21 @@ struct CarControllerFixture : CCarControllerDependencies
 
 BOOST_FIXTURE_TEST_SUITE(Car_controller, CarControllerFixture)
 
+	BOOST_AUTO_TEST_CASE(can_handle_Info_command)
+	{
+		VerifyCommandHandling("Info", "Engine is turned off\n");
+	}
     BOOST_AUTO_TEST_CASE(can_handle_EngineOn_command)
     {
         VerifyCommandHandling("EngineOn", "Engine is turned on\n");
     }
-
-
+	
     BOOST_AUTO_TEST_CASE(cant_handle_EngineOn_command)
     {
         car.TurnOnEngine();
         VerifyCommandHandling("EngineOn", "Engine is already on!\n");
     }
 
-    BOOST_AUTO_TEST_CASE(can_handle_Info_command)
-    {
-        VerifyCommandHandling("Info", "Engine is turned off\n");
-    }
 
     BOOST_AUTO_TEST_CASE(can_print_errors_message)
     {
