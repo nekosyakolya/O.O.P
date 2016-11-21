@@ -1,4 +1,4 @@
-// test.cpp: определяет точку входа для консольного приложения.
+// test.cpp: РѕРїСЂРµРґРµР»СЏРµС‚ С‚РѕС‡РєСѓ РІС…РѕРґР° РґР»СЏ РєРѕРЅСЃРѕР»СЊРЅРѕРіРѕ РїСЂРёР»РѕР¶РµРЅРёСЏ.
 //
 
 #include "stdafx.h"
@@ -17,34 +17,34 @@ struct Sphere_
 		: sphere(expectedRadius, expectedDensity)
 	{}
 };
-// Сфера
+// РЎС„РµСЂР°
 BOOST_FIXTURE_TEST_SUITE(Sphere, Sphere_)
-// является объемным телом
+// СЏРІР»СЏРµС‚СЃСЏ РѕР±СЉРµРјРЅС‹Рј С‚РµР»РѕРј
 BOOST_AUTO_TEST_CASE(is_a_body)
 {
 	BOOST_CHECK(static_cast<const CBody*>(&sphere));
 }
-// имеет радиус
+// РёРјРµРµС‚ СЂР°РґРёСѓСЃ
 BOOST_AUTO_TEST_CASE(has_a_radius)
 {
 	BOOST_CHECK_EQUAL(sphere.GetRadius(), expectedRadius);
 }
-// имеет плотность
+// РёРјРµРµС‚ РїР»РѕС‚РЅРѕСЃС‚СЊ
 BOOST_AUTO_TEST_CASE(has_a_density)
 {
 	BOOST_CHECK_EQUAL(static_cast<const CBody &>(sphere).GetDensity(), expectedDensity);
 }
-// имеет объем
+// РёРјРµРµС‚ РѕР±СЉРµРј
 BOOST_AUTO_TEST_CASE(has_a_volume)
 {
 	BOOST_CHECK_CLOSE_FRACTION(static_cast<const CBody &>(sphere).GetVolume(), expectedVolume, 1e-7);
 }
-// имеет массу
+// РёРјРµРµС‚ РјР°СЃСЃСѓ
 BOOST_AUTO_TEST_CASE(has_a_mass)
 {
 	BOOST_CHECK_CLOSE_FRACTION(static_cast<const CBody &>(sphere).GetMass(), expectedVolume * expectedDensity, 1e-7);
 }
-// имеет строковое представление
+// РёРјРµРµС‚ СЃС‚СЂРѕРєРѕРІРѕРµ РїСЂРµРґСЃС‚Р°РІР»РµРЅРёРµ
 BOOST_AUTO_TEST_CASE(can_be_converted_to_string)
 {
 	const auto expectedString = R"(sphere:
