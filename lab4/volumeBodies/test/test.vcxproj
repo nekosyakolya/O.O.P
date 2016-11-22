@@ -154,6 +154,8 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\volumeBodies\Body.h" />
+    <ClInclude Include="..\volumeBodies\Cone.h" />
+    <ClInclude Include="..\volumeBodies\Cylinder.h" />
     <ClInclude Include="..\volumeBodies\Parallelepiped.h" />
     <ClInclude Include="..\volumeBodies\Sphere.h" />
     <ClInclude Include="stdafx.h" />
@@ -161,8 +163,12 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\volumeBodies\Body.cpp" />
+    <ClCompile Include="..\volumeBodies\Cone.cpp" />
+    <ClCompile Include="..\volumeBodies\Cylinder.cpp" />
     <ClCompile Include="..\volumeBodies\Parallelepiped.cpp" />
     <ClCompile Include="..\volumeBodies\Sphere.cpp" />
+    <ClCompile Include="ConeTest.cpp" />
+    <ClCompile Include="CylinderTest.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="ParallelepipedTest.cpp" />
     <ClCompile Include="stdafx.cpp">
