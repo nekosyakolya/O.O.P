@@ -2,15 +2,26 @@
 //
 
 #include "stdafx.h"
+#include "Controller.h"
 
+using namespace std;
 
 int main()
 {
-	/*
-		std::vector<std::shared_ptr<CBody>> items;
-		shared_ptr<CSphere> sphere = make_shared<CSphere>(1, 1);
-		items.push_back(sphere);
-	*/
-	return 0;
+	vector<shared_ptr<CBody>> bodies;
+	CBodyController controller(bodies, cin, cout);
+	controller.Info();
+	while (cin)
+	{
+		cout << "> ";
+		if (!controller.HandleCommand() && !cin.eof())
+		{
+			cout << "Error in command!" << endl;
+		}
+	}
+	controller.PrintBodies(bodies, cout);
+	controller.FindBodyWithMaxMass(bodies, cout);
+	controller.FindBodyWithMinWeightInWater(bodies, cout);
+	return EXIT_SUCCESS;
 }
 
