@@ -430,23 +430,21 @@ BOOST_AUTO_TEST_SUITE_END()
 			BOOST_CHECK(input.fail());
 		}
 	}
-	BOOST_AUTO_TEST_CASE(can_be_converted_to_a_mixed_fraction)
+	BOOST_AUTO_TEST_CASE(can_be_converted_to_compound_fraction)
 	{
 		{
-			CRational rationalF(9, 2);
-			std::pair <int, CRational> result = rationalF.ToCompoundFraction();
+			CRational rational(9, 2);
+			std::pair <int, CRational> result = rational.ToCompoundFraction();
 
-			CRational rational(1, 2);
-			std::pair <int, CRational> exResult = std::make_pair(4, rational);
-			BOOST_CHECK(result == exResult);
+			std::pair <int, CRational> receivedResult = std::make_pair(4, CRational(1, 2));
+			BOOST_CHECK(result == receivedResult);
 		}
 		{
-			CRational rationalF(-9, 2);
-			std::pair <int, CRational> result = rationalF.ToCompoundFraction();
+			CRational rational(-9, 2);
+			std::pair <int, CRational> result = rational.ToCompoundFraction();
 
-			CRational rational(1, 2);
-			std::pair <int, CRational> exResult = std::make_pair(-4, rational);
-			BOOST_CHECK(result == exResult);
+			std::pair <int, CRational> receivedResult = std::make_pair(-4, CRational(1, 2));
+			BOOST_CHECK(result == receivedResult);
 		}
 	}
 
