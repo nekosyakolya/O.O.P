@@ -239,10 +239,23 @@ BOOST_AUTO_TEST_SUITE(Rational_number)
 	BOOST_AUTO_TEST_SUITE(has_operation_of_division_with_assignment)
 		BOOST_AUTO_TEST_CASE(cant_have_zero_numerator)
 		{
-			CRational rational(2, 13);
-			VerifyRational(rational /= 0, 1, 0);
-			//BOOST_REQUIRE_THROW(CRational(1, 1) /= 0, std::invalid_argument);
+			BOOST_REQUIRE_THROW(CRational(1, 1) /= 0, std::invalid_argument);
 		}
+		BOOST_AUTO_TEST_CASE(with_positive_argument)
+		{
+			CRational rational(1, 2);
+			VerifyRational(rational /= CRational(2, 3), 3, 4);
+			VerifyRational(rational /= CRational(3, 8), 2, 1);
+			VerifyRational(CRational(1, 2) /= 3, 1, 6);
+		}
+		BOOST_AUTO_TEST_CASE(with_negative_argument)
+		{
+			CRational rational(-1, 2);
+			VerifyRational(rational /= CRational(-2, 3), 3, 4);
+			VerifyRational(rational /= CRational(-3, 8), -2, 1);
+			VerifyRational(CRational(1, 2) /= -3, -1, 6);
+		}
+
 	BOOST_AUTO_TEST_SUITE_END()
 
 

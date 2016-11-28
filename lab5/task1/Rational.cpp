@@ -121,13 +121,24 @@ const CRational & CRational::operator-=(const CRational & subtrahend)
 //////////////////////////////////////////////////////////////////////////
 // TODO: 7. Реализовать оператор *
 //////////////////////////////////////////////////////////////////////////
-
+CRational const operator*(const CRational & firstFactor, const CRational & secondFactor)
+{
+	int numerator = firstFactor.GetNumerator() * secondFactor.GetNumerator();
+	int denominator = firstFactor.GetDenominator() * secondFactor.GetDenominator();
+	return CRational(numerator, denominator);
+}
 
 
 
 //////////////////////////////////////////////////////////////////////////
 // TODO: 8. Реализовать оператор /
 //////////////////////////////////////////////////////////////////////////
+CRational const operator/(const CRational & dividend, const CRational & divider)
+{
+	int numerator = dividend.GetNumerator() * divider.GetDenominator();
+	int denominator = dividend.GetDenominator() * divider.GetNumerator();
+	return CRational(numerator, denominator);
+}
 
 
 
@@ -137,9 +148,7 @@ const CRational & CRational::operator-=(const CRational & subtrahend)
 //////////////////////////////////////////////////////////////////////////
 const CRational & CRational::operator*=(const CRational & factor)
 {
-	m_numerator *= factor.GetNumerator();
-	m_denominator *= factor.GetDenominator();
-	Normalize();
+	*this = *this * factor;
 	return *this;
 }
 
@@ -148,7 +157,11 @@ const CRational & CRational::operator*=(const CRational & factor)
 //////////////////////////////////////////////////////////////////////////
 // TODO: 10. Реализовать оператор /=
 //////////////////////////////////////////////////////////////////////////
-
+const CRational & CRational::operator/=(const CRational & divider)
+{
+	*this = *this / divider;
+	return *this;
+}
 
 //////////////////////////////////////////////////////////////////////////
 // TODO: 11. Реализовать операторы == и !=

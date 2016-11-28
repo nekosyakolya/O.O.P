@@ -105,7 +105,6 @@ public:
 
 
 
-
 	//////////////////////////////////////////////////////////////////////////
 	// TODO: 8. Реализовать оператор /
 	// Возвращает частное двух рациональных чисел, 
@@ -196,3 +195,5 @@ private:
 
 // Вычисляет наибольший общий делитель (greatest common denominator) чисел a и b
 unsigned GCD(unsigned a, unsigned b);
+const CRational operator*(const CRational &, const CRational &);
+const CRational operator/(const CRational &, const CRational &);
