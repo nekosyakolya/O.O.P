@@ -14,6 +14,7 @@ public:
 
 	// Возвращает знаменатель
 	int GetDenominator() const;
+	std::pair<int, CRational> ToCompoundFraction()const;
 
 	//////////////////////////////////////////////////////////////////////////
 	// TODO: 1. Реализовать метод ToDouble() согласно заданию
@@ -195,5 +196,17 @@ private:
 
 // Вычисляет наибольший общий делитель (greatest common denominator) чисел a и b
 unsigned GCD(unsigned a, unsigned b);
+
 const CRational operator*(const CRational &, const CRational &);
 const CRational operator/(const CRational &, const CRational &);
+const CRational operator+(const CRational &, const CRational &);
+const CRational operator-(const CRational &, const CRational &);
+const bool operator==(const CRational &, const CRational &);
+const bool operator!=(const CRational &, const CRational &);
+const bool operator<(const CRational &, const CRational &);
+const bool operator>(const CRational &, const CRational &);
+const bool operator<=(const CRational &, const CRational &);
+const bool operator>=(const CRational &, const CRational &);
+std::ostream & operator << (std::ostream & output, const CRational & rational);
+std::istream & operator >> (std::istream & output, CRational & rational);
+

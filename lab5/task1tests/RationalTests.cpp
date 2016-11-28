@@ -130,7 +130,28 @@ BOOST_AUTO_TEST_SUITE(Rational_number)
 //	(1/2) + 1     = (3/2)
 //	1 + (1/2)     = (3/2)
 //////////////////////////////////////////////////////////////////////////
+BOOST_AUTO_TEST_SUITE(has_operation_of_addition)
 
+	BOOST_AUTO_TEST_CASE(with_rational)
+		{
+			VerifyRational(CRational(1, 2) + CRational(1, 2), 1, 1);
+			VerifyRational(CRational(1, 1) + CRational(-1, 1), 0, 1);
+
+		}
+
+		BOOST_AUTO_TEST_CASE(with_integer)
+		{
+			VerifyRational(CRational(1, 3) + 1, 4, 3);
+			VerifyRational(1 + CRational(1, 3), 4, 3);
+		}
+
+		BOOST_AUTO_TEST_CASE(with_0)
+		{
+			VerifyRational(CRational(0) + CRational(1, 3), 1, 3);
+			VerifyRational(CRational(1, 3) + CRational(0), 1, 3);
+		}
+
+BOOST_AUTO_TEST_SUITE_END()
 
 
 
@@ -142,7 +163,26 @@ BOOST_AUTO_TEST_SUITE(Rational_number)
 //	(1/2) - 1     = (-1/2)
 //	1 - (1/2)     = (1/2)
 //////////////////////////////////////////////////////////////////////////
+BOOST_AUTO_TEST_SUITE(has_operation_of_subtraction)
+	BOOST_AUTO_TEST_CASE(with_rational)
+	{
+		VerifyRational(CRational(1, 2) - CRational(1, 2), 0, 1);
+		VerifyRational(CRational(1, 2) - CRational(1, 6), 1, 3);
+		VerifyRational(CRational(1, 6) - CRational(1, 2), -1, 3);
+	}
 
+	BOOST_AUTO_TEST_CASE(with_integer)
+	{
+		VerifyRational(CRational(1, 3) - 1, -2, 3);
+		VerifyRational(1 - CRational(1, 3), 2, 3);
+	}
+
+	BOOST_AUTO_TEST_CASE(with_0)
+	{
+		VerifyRational(CRational(0) - CRational(0), 0, 1);
+		VerifyRational(CRational(1, 3) - CRational(0), 1, 3);
+	}
+BOOST_AUTO_TEST_SUITE_END()
 
 
 
@@ -193,6 +233,19 @@ BOOST_AUTO_TEST_SUITE(Rational_number)
 //	7 * (2/3)     = (14/3)
 //////////////////////////////////////////////////////////////////////////
 
+	BOOST_AUTO_TEST_CASE(has_operation_of_multiplication)
+	{
+		VerifyRational(CRational(1, 3) * 0, 0, 1);
+		VerifyRational(0 * CRational(1, 3), 0, 1);
+
+		VerifyRational(CRational(1, 6) * 2, 1, 3);
+		VerifyRational(2 * CRational(1, 6), 1, 3);
+
+		VerifyRational(CRational(1, 6) * -2, -1, 3);
+		VerifyRational(-2 * CRational(1, 6), -1, 3);
+
+		VerifyRational(CRational(3, 6) * CRational(3, 5), 3, 10);
+	}
 
 
 
@@ -205,6 +258,17 @@ BOOST_AUTO_TEST_SUITE(Rational_number)
 //	(1/2) ⁄ 5     = (1/10)
 //	7 ⁄ (2/3)     = (21/2)
 //////////////////////////////////////////////////////////////////////////
+
+	BOOST_AUTO_TEST_CASE(has_operation_of_division)
+	{
+		VerifyRational(CRational(1, 6) / 2, 1, 12);
+		VerifyRational(2 / CRational(1, 6), 12, 1);
+
+		VerifyRational(CRational(1, 6) / -2, -1, 12);
+		VerifyRational(-2 / CRational(1, 6), -12, 1);
+
+		VerifyRational(CRational(3, 6) / CRational(3, 5), 5, 6);
+	}
 
 //////////////////////////////////////////////////////////////////////////
 // TODO: 9. Реализовать оператор *=
@@ -270,7 +334,16 @@ BOOST_AUTO_TEST_SUITE(Rational_number)
 //	(1/2) != 7     → true
 //	3 != (2/3)     → true
 //////////////////////////////////////////////////////////////////////////
+	BOOST_AUTO_TEST_CASE(has_operation_of_equivalence)
+	{
+		BOOST_CHECK(CRational(-2, 3) == CRational(-2, 3));
+		BOOST_CHECK(CRational(4, 1) == 4);
+		BOOST_CHECK(-3 == CRational(-3, 1));
 
+		BOOST_CHECK(CRational(-2, 3) != CRational(2, 3));
+		BOOST_CHECK(CRational(4, 2) != 4);
+		BOOST_CHECK(-3 != CRational(-3,7));
+	}
 
 
 
@@ -285,7 +358,18 @@ BOOST_AUTO_TEST_SUITE(Rational_number)
 //	3 <= (7/2)     → true
 //	3 >= (8/2)     → false
 //////////////////////////////////////////////////////////////////////////
+	BOOST_AUTO_TEST_CASE(has_operation_of_comparison)
+	{
+		BOOST_CHECK(!(CRational(9, 1) < 7));
+		BOOST_CHECK(-4 < CRational(-3, 1));
 
+		BOOST_CHECK(CRational(3, 1) > 2);
+
+		BOOST_CHECK(!(3 >= CRational(7, 2)));
+
+
+		BOOST_CHECK(CRational(4, 3) <= CRational(8, 6));
+	}
 
 
 
@@ -294,7 +378,19 @@ BOOST_AUTO_TEST_SUITE(Rational_number)
 //	std::ostream в формате <числитель>/<знаменатель>, 
 //	например: 7/15
 //////////////////////////////////////////////////////////////////////////
-
+	BOOST_AUTO_TEST_CASE(can_be_recorded_to_ostream)
+	{
+		{
+			std::ostringstream output;
+			output << CRational(7, 15);
+			BOOST_CHECK_EQUAL(output.str(), "7/15");
+		}
+		{
+			std::ostringstream output;
+			output << CRational(-8);
+			BOOST_CHECK_EQUAL(output.str(), "-8/1");
+		}
+	}
 
 
 
@@ -303,7 +399,55 @@ BOOST_AUTO_TEST_SUITE(Rational_number)
 //	std::istream в формате <числитель>/<знаменатель>, 
 //	например: 7/15
 //////////////////////////////////////////////////////////////////////////
+	BOOST_AUTO_TEST_CASE(can_be_introduced_from_istream)
+	{
+		{
+			CRational rational;
 
+			std::istringstream input("0");
+			input >> rational;
+			VerifyRational(rational, 0, 1);
+		}
+		{
+			CRational rational;
 
+			std::istringstream input("7/15");
+			input >> rational;
+			VerifyRational(rational, 7, 15);
+		}
+		{
+			CRational rational;
+
+			std::istringstream input("-1/1");
+			input >> rational;
+			VerifyRational(rational, -1, 1);
+		}
+		{
+			CRational rational;
+
+			std::istringstream input("not numeric string");
+			input >> rational;
+			BOOST_CHECK(input.fail());
+		}
+	}
+	BOOST_AUTO_TEST_CASE(can_be_converted_to_a_mixed_fraction)
+	{
+		{
+			CRational rationalF(9, 2);
+			std::pair <int, CRational> result = rationalF.ToCompoundFraction();
+
+			CRational rational(1, 2);
+			std::pair <int, CRational> exResult = std::make_pair(4, rational);
+			BOOST_CHECK(result == exResult);
+		}
+		{
+			CRational rationalF(-9, 2);
+			std::pair <int, CRational> result = rationalF.ToCompoundFraction();
+
+			CRational rational(1, 2);
+			std::pair <int, CRational> exResult = std::make_pair(-4, rational);
+			BOOST_CHECK(result == exResult);
+		}
+	}
 
 BOOST_AUTO_TEST_SUITE_END()
