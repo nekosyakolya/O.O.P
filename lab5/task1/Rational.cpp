@@ -91,13 +91,12 @@ const CRational CRational::operator-() const
 //////////////////////////////////////////////////////////////////////////
 const CRational & CRational::operator+=(const CRational & summand)
 {
-	if (summand.GetNumerator() == 0)
+	if (summand.GetNumerator() != 0)
 	{
-		return *this;
+		m_numerator = m_numerator * summand.GetDenominator() + m_denominator * summand.GetNumerator();
+		m_denominator = m_denominator * summand.GetDenominator();
+		Normalize();
 	}
-	m_numerator = m_numerator * summand.GetDenominator() + m_denominator * summand.GetNumerator();
-	m_denominator = m_denominator * summand.GetDenominator();
-	Normalize();
 	return *this;
 }
 
@@ -108,13 +107,12 @@ const CRational & CRational::operator+=(const CRational & summand)
 //////////////////////////////////////////////////////////////////////////
 const CRational & CRational::operator-=(const CRational & subtrahend)
 {
-	if (subtrahend.GetNumerator() == 0)
+	if (subtrahend.GetNumerator() != 0)
 	{
-		return *this;
+		m_numerator = m_numerator * subtrahend.GetDenominator() - m_denominator * subtrahend.GetNumerator();
+		m_denominator = m_denominator * subtrahend.GetDenominator();
+		Normalize();
 	}
-	m_numerator = m_numerator * subtrahend.GetDenominator() - m_denominator * subtrahend.GetNumerator();
-	m_denominator = m_denominator * subtrahend.GetDenominator();
-	Normalize();
 	return *this;
 }
 
@@ -150,8 +148,6 @@ const CRational & CRational::operator*=(const CRational & factor)
 //////////////////////////////////////////////////////////////////////////
 // TODO: 10. Реализовать оператор /=
 //////////////////////////////////////////////////////////////////////////
-
-
 
 
 //////////////////////////////////////////////////////////////////////////
