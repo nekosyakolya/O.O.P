@@ -89,7 +89,17 @@ const CRational CRational::operator-() const
 //////////////////////////////////////////////////////////////////////////
 // TODO: 5. Реализовать оператор +=
 //////////////////////////////////////////////////////////////////////////
-
+const CRational & CRational::operator+=(const CRational & summand)
+{
+	if (summand.GetNumerator() == 0)
+	{
+		return *this;
+	}
+	m_numerator = m_numerator * summand.GetDenominator() + m_denominator * summand.GetNumerator();
+	m_denominator = m_denominator * summand.GetDenominator();
+	Normalize();
+	return *this;
+}
 
 
 
