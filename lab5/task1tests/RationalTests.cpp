@@ -158,6 +158,7 @@ BOOST_AUTO_TEST_SUITE(Rational_number)
 		CRational rational(2, 13);
 		VerifyRational(rational += 0, 2, 13);
 		VerifyRational(rational += rational, 4, 13);
+		VerifyRational(rational += CRational(-4, 13), 0, 1);
 
 		VerifyRational(CRational(1, 2) += CRational(1, 6), 2, 3);
 		VerifyRational(CRational(1, 2) += 1, 3, 2);
@@ -205,10 +206,6 @@ BOOST_AUTO_TEST_SUITE(Rational_number)
 //	7 ⁄ (2/3)     = (21/2)
 //////////////////////////////////////////////////////////////////////////
 
-
-
-
-
 //////////////////////////////////////////////////////////////////////////
 // TODO: 9. Реализовать оператор *=
 // Умножает значение первого рационального числа на другое рациональное, 
@@ -216,7 +213,16 @@ BOOST_AUTO_TEST_SUITE(Rational_number)
 //	(1/2) *= (2/3) → (1/3)
 //	(1/2) *= 3     → (3/2)
 //////////////////////////////////////////////////////////////////////////
+	BOOST_AUTO_TEST_CASE(has_operation_of_multiplication_with_assignment)
+	{
+		CRational rational(2, 13);
+		VerifyRational(rational *= 0, 0, 1);
 
+		VerifyRational(CRational(1, 2) *= CRational(2, 3), 1, 3);
+		VerifyRational(CRational(1, 2) *= CRational(-2, 3), -1, 3);
+		VerifyRational(CRational(1, 2) *= 3, 3, 2);
+		VerifyRational(CRational(1, 2) *= -3, -3, 2);
+	}
 
 
 

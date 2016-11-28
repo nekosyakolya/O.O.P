@@ -137,7 +137,13 @@ const CRational & CRational::operator-=(const CRational & subtrahend)
 //////////////////////////////////////////////////////////////////////////
 // TODO: 9. Реализовать оператор *=
 //////////////////////////////////////////////////////////////////////////
-
+const CRational & CRational::operator*=(const CRational & factor)
+{
+	m_numerator *= factor.GetNumerator();
+	m_denominator *= factor.GetDenominator();
+	Normalize();
+	return *this;
+}
 
 
 
