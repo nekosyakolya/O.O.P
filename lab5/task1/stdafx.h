@@ -1,6 +1,6 @@
-п»ї// stdafx.h : include file for standard system include files,
-// or project specific include files that are used frequently, but
-// are changed infrequently
+// stdafx.h: включаемый файл для стандартных системных включаемых файлов
+// или включаемых файлов для конкретного проекта, которые часто используются, но
+// не часто изменяются
 //
 
 #pragma once
@@ -13,4 +13,6 @@
 
 #include <string>
 
-// TODO: reference additional headers your program requires here
+
+
+// TODO: Установите здесь ссылки на дополнительные заголовки, требующиеся для программы

@@ -25,7 +25,7 @@ class SpecLogFormatter :
 		m_indent += 2;
 	}
 
-	
+
 
 	virtual void test_unit_finish(ostream & /*os*/, boost::unit_test::test_unit const& /*tu*/, unsigned long /*elapsed*/) override
 	{
