@@ -57,7 +57,7 @@ unsigned GCD(unsigned a, unsigned b)
 
 
 //////////////////////////////////////////////////////////////////////////
-// TODO: 1. Реализовать метод ToDouble() согласно заданию
+// TODO: 1. вЂ“Р РµР°Р»РёР·РѕРІР°С‚СЊ РјРµС‚РѕРґ ToDouble() СЃРѕРіР»Р°СЃРЅРѕ Р·Р°РґР°РЅРёСЋ
 //////////////////////////////////////////////////////////////////////////
 double CRational::ToDouble() const
 {
@@ -67,7 +67,7 @@ double CRational::ToDouble() const
 
 
 //////////////////////////////////////////////////////////////////////////
-// TODO: 2. Реализовать унарный + и унарный -
+// TODO: 2. вЂ“Р РµР°Р»РёР·РѕРІР°С‚СЊ СѓРЅР°СЂРЅС‹Р№ + Рё СѓРЅР°СЂРЅС‹Р№ -
 //////////////////////////////////////////////////////////////////////////
 const CRational CRational::operator+() const
 {
@@ -82,7 +82,7 @@ const CRational CRational::operator-() const
 
 
 //////////////////////////////////////////////////////////////////////////
-// TODO: 3. Реализовать бинарный +
+// TODO: 3. вЂ“Р РµР°Р»РёР·РѕРІР°С‚СЊ Р±РёРЅР°СЂРЅС‹Р№ +
 //////////////////////////////////////////////////////////////////////////
 CRational const operator+(const CRational & firstSummand, const CRational & secondSummand)
 {
@@ -95,7 +95,7 @@ CRational const operator+(const CRational & firstSummand, const CRational & seco
 
 
 //////////////////////////////////////////////////////////////////////////
-// TODO: 4. Реализовать бинарный -
+// TODO: 4. вЂ“Р РµР°Р»РёР·РѕРІР°С‚СЊ Р±РёРЅР°СЂРЅС‹Р№ -
 //////////////////////////////////////////////////////////////////////////
 CRational const operator-(const CRational & minuend, const CRational & subtrahend)
 {
@@ -107,7 +107,7 @@ CRational const operator-(const CRational & minuend, const CRational & subtrahen
 
 
 //////////////////////////////////////////////////////////////////////////
-// TODO: 5. Реализовать оператор +=
+// TODO: 5. вЂ“Р РµР°Р»РёР·РѕРІР°С‚СЊ РѕРїРµСЂР°С‚РѕСЂ +=
 //////////////////////////////////////////////////////////////////////////
 const CRational & CRational::operator+=(const CRational & summand)
 {
@@ -118,7 +118,7 @@ const CRational & CRational::operator+=(const CRational & summand)
 
 
 //////////////////////////////////////////////////////////////////////////
-// TODO: 6. Реализовать оператор -=
+// TODO: 6. вЂ“Р РµР°Р»РёР·РѕРІР°С‚СЊ РѕРїРµСЂР°С‚РѕСЂ -=
 //////////////////////////////////////////////////////////////////////////
 const CRational & CRational::operator-=(const CRational & subtrahend)
 {
@@ -129,7 +129,7 @@ const CRational & CRational::operator-=(const CRational & subtrahend)
 
 
 //////////////////////////////////////////////////////////////////////////
-// TODO: 7. Реализовать оператор *
+// TODO: 7. вЂ“Р РµР°Р»РёР·РѕРІР°С‚СЊ РѕРїРµСЂР°С‚РѕСЂ *
 //////////////////////////////////////////////////////////////////////////
 CRational const operator*(const CRational & firstFactor, const CRational & secondFactor)
 {
@@ -141,7 +141,7 @@ CRational const operator*(const CRational & firstFactor, const CRational & secon
 
 
 //////////////////////////////////////////////////////////////////////////
-// TODO: 8. Реализовать оператор /
+// TODO: 8. вЂ“Р РµР°Р»РёР·РѕРІР°С‚СЊ РѕРїРµСЂР°С‚РѕСЂ /
 //////////////////////////////////////////////////////////////////////////
 CRational const operator/(const CRational & dividend, const CRational & divider)
 {
@@ -154,7 +154,7 @@ CRational const operator/(const CRational & dividend, const CRational & divider)
 
 
 //////////////////////////////////////////////////////////////////////////
-// TODO: 9. Реализовать оператор *=
+// TODO: 9. вЂ“Р РµР°Р»РёР·РѕРІР°С‚СЊ РѕРїРµСЂР°С‚РѕСЂ *=
 //////////////////////////////////////////////////////////////////////////
 const CRational & CRational::operator*=(const CRational & factor)
 {
@@ -165,7 +165,7 @@ const CRational & CRational::operator*=(const CRational & factor)
 
 
 //////////////////////////////////////////////////////////////////////////
-// TODO: 10. Реализовать оператор /=
+// TODO: 10. вЂ“Р РµР°Р»РёР·РѕРІР°С‚СЊ РѕРїРµСЂР°С‚РѕСЂ /=
 //////////////////////////////////////////////////////////////////////////
 const CRational & CRational::operator/=(const CRational & divider)
 {
@@ -174,7 +174,7 @@ const CRational & CRational::operator/=(const CRational & divider)
 }
 
 //////////////////////////////////////////////////////////////////////////
-// TODO: 11. Реализовать операторы == и !=
+// TODO: 11. вЂ“Р РµР°Р»РёР·РѕРІР°С‚СЊ РѕРїРµСЂР°С‚РѕСЂС‹ == Рё !=
 //////////////////////////////////////////////////////////////////////////
 bool const operator==(const CRational & firstRational, const CRational & secondRational)
 {
@@ -188,7 +188,7 @@ bool const operator!=(const CRational & firstRational, const CRational & secondR
 
 
 //////////////////////////////////////////////////////////////////////////
-// TODO: 12. Реализовать операторы <, >, <=, >=
+// TODO: 12. вЂ“Р РµР°Р»РёР·РѕРІР°С‚СЊ РѕРїРµСЂР°С‚РѕСЂС‹ <, >, <=, >=
 //////////////////////////////////////////////////////////////////////////
 bool const operator<(const CRational & firstRational, const CRational & secondRational)
 {
@@ -214,7 +214,7 @@ bool const operator>=(const CRational & firstRational, const CRational & secondR
 
 
 //////////////////////////////////////////////////////////////////////////
-// TODO: 13. Реализовать оператор вывода рационального числа в выходной поток 
+// TODO: 13. вЂ“Р РµР°Р»РёР·РѕРІР°С‚СЊ РѕРїРµСЂР°С‚РѕСЂ РІС‹РІРѕРґР° СЂР°С†РёРѕРЅР°Р»СЊРЅРѕРіРѕ С‡РёСЃР»Р° РІ РІС‹С…РѕРґРЅРѕР№ РїРѕС‚РѕРє 
 //////////////////////////////////////////////////////////////////////////
 
 std::ostream & operator << (std::ostream & output, const CRational & rational)
@@ -227,7 +227,7 @@ std::ostream & operator << (std::ostream & output, const CRational & rational)
 
 
 //////////////////////////////////////////////////////////////////////////
-// TODO: 14. Реализовать оператор ввода рационального числа из входного потока 
+// TODO: 14. вЂ“Р РµР°Р»РёР·РѕРІР°С‚СЊ РѕРїРµСЂР°С‚РѕСЂ РІРІРѕРґР° СЂР°С†РёРѕРЅР°Р»СЊРЅРѕРіРѕ С‡РёСЃР»Р° РёР· РІС…РѕРґРЅРѕРіРѕ РїРѕС‚РѕРєР° 
 //////////////////////////////////////////////////////////////////////////
 std::istream & operator >> (std::istream & input, CRational & rational)
 {
