@@ -87,13 +87,16 @@ bool CBodyController::CreateCylinder(std::istream & args)
 			<< "Usage: Cylinder <height> <radius> <density>\n";
 		return false;
 	}
-	else if (density <= 0.0 || radius <= 0.0 || height <= 0.0)
+	try
 	{
-		m_output << "Height, radius or density should not be negative\n";
+		shared_ptr<CBody> cylinder = make_shared<CCylinder>(height, radius, density);
+		m_bodies.push_back(cylinder);
+	}
+	catch (invalid_argument const &e)
+	{
+		m_output << e.what();
 		return false;
 	}
-	shared_ptr<CBody> cylinder = make_shared<CCylinder>(height, radius, density);
-	m_bodies.push_back(cylinder);
 	return true;
 }
 
@@ -108,13 +111,16 @@ bool CBodyController::CreateCone(std::istream & args)
 			<< "Usage: Cone <height> <radius> <density>\n";
 		return false;
 	}
-	else if (density <= 0.0 || radius <= 0.0 || height <= 0.0)
+	try
 	{
-		m_output << "Height, radius or density should not be negative\n";
+		shared_ptr<CBody> cone = make_shared<CCone>(height, radius, density);
+		m_bodies.push_back(cone);
+	}
+	catch(invalid_argument const &e)
+	{
+		m_output << e.what();
 		return false;
 	}
-	shared_ptr<CBody> cone = make_shared<CCone>(height, radius, density);
-	m_bodies.push_back(cone);
 	return true;
 }
 
@@ -128,13 +134,17 @@ bool CBodyController::CreateSphere(std::istream & args)
 			<< "Usage: Sphere <radius> <density>\n";
 		return false;
 	}
-	else if (density <= 0.0 || radius <= 0.0)
+
+	try
 	{
-		m_output << "Radius or density should not be negative\n";
+		shared_ptr<CBody> sphere = make_shared<CSphere>(radius, density);
+		m_bodies.push_back(sphere);
+	}
+	catch (invalid_argument const &e)
+	{
+		m_output << e.what();
 		return false;
 	}
-	shared_ptr<CBody> sphere = make_shared<CSphere>(radius, density);
-	m_bodies.push_back(sphere);
 	return true;
 }
 
@@ -150,13 +160,16 @@ bool CBodyController::CreateParallelepiped(std::istream & args)
 			<< "Usage: Parallelepiped <density> <width> <height> <depth>\n";
 		return false;
 	}
-	else if (density <= 0.0 || height <= 0.0 || depth <= 0.0 || width <= 0.0)
+	try
 	{
-		m_output << "Density, width, height or depth should not be negative\n";
+		shared_ptr<CBody> parallelepiped = make_shared<CParallelepiped>(density, width, height, depth);
+		m_bodies.push_back(parallelepiped);
+	}
+	catch (invalid_argument const &e)
+	{
+		m_output << e.what();
 		return false;
 	}
-	shared_ptr<CBody> parallelepiped = make_shared<CParallelepiped>(density, width, height, depth);
-	m_bodies.push_back(parallelepiped);
 	return true;
 }
 

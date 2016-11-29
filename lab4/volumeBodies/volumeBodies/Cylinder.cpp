@@ -5,13 +5,12 @@
 CCylinder::CCylinder(double height, double baseRadius, double density):
 	CBody("cylinder", density),
 	m_height(height),
-	m_radius(baseRadius)/*
+	m_radius(baseRadius)
 {
-	if (height < 0 || baseRadius < 0)
-		throw std::invalid_argument("Expected negative value");
-	m_height = height;
-	m_radius = baseRadius;*/
-{
+	if (baseRadius <= 0 || height <= 0)
+	{
+		throw std::invalid_argument("Height or radius must not be negative\n");
+	}
 }
 
 double CCylinder::GetBaseRadius() const

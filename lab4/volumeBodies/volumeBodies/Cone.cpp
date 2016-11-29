@@ -7,6 +7,10 @@ CCone::CCone(double height, double baseRadius, double density):
 	m_height(height),
 	m_radius(baseRadius)
 {
+	if (baseRadius <= 0 || height <= 0)
+	{
+		throw std::invalid_argument("Height or radius must not be negative\n");
+	}
 }
 
 double CCone::GetBaseRadius() const

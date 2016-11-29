@@ -8,7 +8,12 @@ CParallelepiped::CParallelepiped(double density, double width, double height, do
 	m_height(height),
 	m_width(width)
 {
+	if (depth <= 0 || height <= 0 || width <= 0)
+	{
+		throw std::invalid_argument("Height, width or depth must not be negative\n");
+	}
 }
+
 
 double CParallelepiped::GetDepth() const
 {

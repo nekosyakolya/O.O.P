@@ -68,6 +68,22 @@ BOOST_FIXTURE_TEST_SUITE(Parallelepiped, Parallelepiped_)
 )";
 		BOOST_CHECK_EQUAL(static_cast<const CBody &>(parallelepiped).ToString(), expectedString);
 	}
+	BOOST_AUTO_TEST_CASE(cant_have_a_negative_width)
+	{
+		BOOST_REQUIRE_THROW(CParallelepiped(1, 0, 13, 1), std::invalid_argument);
+	}
+	BOOST_AUTO_TEST_CASE(cant_have_a_negative_density)
+	{
+		BOOST_REQUIRE_THROW(CParallelepiped(0, 14, 30, 1), std::invalid_argument);
+	}
+	BOOST_AUTO_TEST_CASE(cant_have_a_negative_height)
+	{
+		BOOST_REQUIRE_THROW(CParallelepiped(4, 14, 0, 1), std::invalid_argument);
+	}
+	BOOST_AUTO_TEST_CASE(cant_have_a_negative_depth)
+	{
+		BOOST_REQUIRE_THROW(CParallelepiped(5, 14, 13, 0), std::invalid_argument);
+	}
 
 
 BOOST_AUTO_TEST_SUITE_END()

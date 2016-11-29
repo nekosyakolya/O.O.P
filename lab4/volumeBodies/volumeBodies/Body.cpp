@@ -6,6 +6,10 @@ CBody::CBody(const std::string & type, double density):
 	m_type(type),
 	m_density(density)
 {
+	if (density <= 0)
+	{
+		throw std::invalid_argument("Density must not be negative");
+	}
 }
 
 double CBody::GetMass()const

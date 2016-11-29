@@ -8,6 +8,10 @@ CSphere::CSphere(double radius, double density):
 	m_radius(radius),
 	CBody("sphere", density)
 {
+	if (radius <= 0)
+	{
+		throw std::invalid_argument("Radius must not be negative\n");
+	}
 }
 
 double CSphere::GetRadius() const

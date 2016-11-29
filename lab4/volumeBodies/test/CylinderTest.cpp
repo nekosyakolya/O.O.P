@@ -61,6 +61,18 @@ BOOST_FIXTURE_TEST_SUITE(Cylinder, Cylinder_)
 )";
 		BOOST_CHECK_EQUAL(static_cast<const CBody &>(cylinder).ToString(), expectedString);
 	}
+	BOOST_AUTO_TEST_CASE(cant_have_a_negative_radius)
+	{
+		BOOST_REQUIRE_THROW(CCylinder(1, 0, 13), std::invalid_argument);
+	}
+	BOOST_AUTO_TEST_CASE(cant_have_a_negative_density)
+	{
+		BOOST_REQUIRE_THROW(CCylinder(2, 14, 0), std::invalid_argument);
+	}
+	BOOST_AUTO_TEST_CASE(cant_have_a_negative_height)
+	{
+		BOOST_REQUIRE_THROW(CCylinder(0, 14, 13), std::invalid_argument);
+	}
 
 
 BOOST_AUTO_TEST_SUITE_END()

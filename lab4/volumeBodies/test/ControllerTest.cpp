@@ -48,6 +48,6 @@ BOOST_FIXTURE_TEST_SUITE(Controller, ControllerFixture)
 	}
 	BOOST_AUTO_TEST_CASE(can_handle_negative_values)
 	{
-		VerifyCommandHandling("Sphere -9 13", "Radius or density should not be negative\n");
+		VerifyCommandHandling("Sphere -9 13", "Radius must not be negative\n");
 	}
 BOOST_AUTO_TEST_SUITE_END()
