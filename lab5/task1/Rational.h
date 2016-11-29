@@ -23,7 +23,7 @@ public:
 	//	CRational r(3, 5)
 	//	cout << r.ToDouble(); // Должно вывести 0.6
 	//////////////////////////////////////////////////////////////////////////
-	double CRational::ToDouble() const;
+	double ToDouble() const;
 
 
 
@@ -44,8 +44,8 @@ public:
 	//  -someRational = someOtherRational;
 	//	+someRational = someOtherRational;
 	//////////////////////////////////////////////////////////////////////////
-	const CRational CRational::operator+() const;
-	const CRational CRational::operator-() const;
+	const CRational operator+() const;
+	const CRational operator-() const;
 
 
 
@@ -80,7 +80,7 @@ public:
 	//	(1/2) += (1/6)  → (2/3)
 	//	(1/2) += 1      → (3/2)
 	//////////////////////////////////////////////////////////////////////////
-	const CRational & CRational::operator+=(const CRational &);
+	const CRational & operator+=(const CRational &);
 
 
 
@@ -90,7 +90,7 @@ public:
 	// (1/2) -= (1/6)  → (1/3)
 	// (1/2) -= 1      → (-1/2)
 	//////////////////////////////////////////////////////////////////////////
-	const CRational & CRational::operator-=(const CRational &);
+	const CRational & operator-=(const CRational &);
 
 
 
@@ -127,7 +127,7 @@ public:
 	//	(1/2) *= 3     → (3/2)
 	//////////////////////////////////////////////////////////////////////////
 
-	const CRational & CRational::operator*=(const CRational &);
+	const CRational & operator*=(const CRational &);
 
 
 
@@ -138,7 +138,7 @@ public:
 	//	(1/2) /= (2/3) → (3/4)
 	//	(1/2) /= 3     → (1/6)
 	//////////////////////////////////////////////////////////////////////////
-	const CRational & CRational::operator/=(const CRational &);
+	const CRational & operator/=(const CRational &);
 
 
 

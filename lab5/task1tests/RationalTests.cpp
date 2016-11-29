@@ -487,9 +487,9 @@ BOOST_AUTO_TEST_SUITE(Rational_number)
 		{
 			CRational rational;
 
-			std::istringstream input("-1/1");
+			std::istringstream input("-4/3");
 			input >> rational;
-			VerifyRational(rational, -1, 1);
+			VerifyRational(rational, -4, 3);
 		}
 		{
 			CRational rational;
