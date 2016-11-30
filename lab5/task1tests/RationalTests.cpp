@@ -473,13 +473,6 @@ BOOST_AUTO_TEST_SUITE(Rational_number)
 		{
 			CRational rational;
 
-			std::istringstream input("0");
-			input >> rational;
-			VerifyRational(rational, 0, 1);
-		}
-		{
-			CRational rational;
-
 			std::istringstream input("7/15");
 			input >> rational;
 			VerifyRational(rational, 7, 15);
