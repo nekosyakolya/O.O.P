@@ -430,9 +430,9 @@ BOOST_AUTO_TEST_SUITE(Rational_number)
 
 		BOOST_AUTO_TEST_CASE(with_rational)
 		{
-			BOOST_CHECK(CRational(4, 3) <= CRational(8, 6));
+			BOOST_CHECK(!(CRational(8, 6) <= CRational(4, 5)));
 			BOOST_CHECK(CRational(4, 3) >= CRational(4, 3));
-			BOOST_CHECK(CRational(4, 3) > CRational(-3, 1));
+			BOOST_CHECK(!(CRational(-3, 1) > CRational(4, 3)));
 			BOOST_CHECK(!(CRational(4, 3) < CRational(-3, 1)));
 		}
 
