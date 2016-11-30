@@ -145,9 +145,8 @@ CRational const operator*(const CRational & firstFactor, const CRational & secon
 //////////////////////////////////////////////////////////////////////////
 CRational const operator/(const CRational & dividend, const CRational & divider)
 {
-	int numerator = dividend.GetNumerator() * divider.GetDenominator();
-	int denominator = dividend.GetDenominator() * divider.GetNumerator();
-	return CRational(numerator, denominator);
+	CRational resultDivider(divider.GetDenominator(), divider.GetNumerator());
+	return dividend * resultDivider;
 }
 
 
@@ -169,7 +168,7 @@ const CRational & CRational::operator*=(const CRational & factor)
 //////////////////////////////////////////////////////////////////////////
 const CRational & CRational::operator/=(const CRational & divider)
 {
-	*this = *this * (1 / divider);
+	*this = *this / divider;
 	return *this;
 }
 
