@@ -169,7 +169,7 @@ const CRational & CRational::operator*=(const CRational & factor)
 //////////////////////////////////////////////////////////////////////////
 const CRational & CRational::operator/=(const CRational & divider)
 {
-	*this = *this / divider;
+	*this = *this * (1 / divider);
 	return *this;
 }
 
@@ -203,13 +203,13 @@ bool const operator>(const CRational & firstRational, const CRational & secondRa
 
 bool const operator<=(const CRational & firstRational, const CRational & secondRational)
 {
-	return (firstRational.GetNumerator() * secondRational.GetDenominator() <= firstRational.GetDenominator() * secondRational.GetNumerator());
+	return (!(firstRational > secondRational));
 }
 
 
 bool const operator>=(const CRational & firstRational, const CRational & secondRational)
 {
-	return (firstRational.GetNumerator() * secondRational.GetDenominator() >= firstRational.GetDenominator() * secondRational.GetNumerator());
+	return (!(firstRational < secondRational));
 }
 
 
