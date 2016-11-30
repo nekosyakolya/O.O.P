@@ -145,8 +145,8 @@ CRational const operator*(const CRational & firstFactor, const CRational & secon
 //////////////////////////////////////////////////////////////////////////
 CRational const operator/(const CRational & dividend, const CRational & divider)
 {
-	CRational resultDivider(divider.GetDenominator(), divider.GetNumerator());
-	return dividend * resultDivider;
+	CRational newDivider(divider.GetDenominator(), divider.GetNumerator());
+	return dividend * newDivider;
 }
 
 
@@ -182,7 +182,7 @@ bool const operator==(const CRational & firstRational, const CRational & secondR
 
 bool const operator!=(const CRational & firstRational, const CRational & secondRational)
 {
-	return (firstRational.GetDenominator() != secondRational.GetDenominator()) || (firstRational.GetNumerator() != secondRational.GetNumerator());
+	return(!(firstRational == secondRational));
 }
 
 
