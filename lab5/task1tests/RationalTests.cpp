@@ -399,10 +399,12 @@ BOOST_AUTO_TEST_SUITE(Rational_number)
 		BOOST_CHECK(CRational(-2, 3) == CRational(-2, 3));
 		BOOST_CHECK(CRational(4, 1) == 4);
 		BOOST_CHECK(-3 == CRational(-3, 1));
+		BOOST_CHECK(!(3 == CRational(-3, 1)));
 
 		BOOST_CHECK(CRational(-2, 3) != CRational(2, 3));
 		BOOST_CHECK(CRational(4, 2) != 4);
 		BOOST_CHECK(-3 != CRational(-3, 7));
+		BOOST_CHECK(!(-3 != CRational(-3, 1)));
 	}
 
 
