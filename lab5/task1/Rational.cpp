@@ -89,14 +89,14 @@ CRational const operator-(const CRational & minuend, const CRational & subtrahen
 }
 
 
-const CRational & CRational::operator+=(const CRational & summand)
+CRational & CRational::operator+=(const CRational & summand)
 {
 	*this = *this + summand;
 	return *this;
 }
 
 
-const CRational & CRational::operator-=(const CRational & subtrahend)
+CRational & CRational::operator-=(const CRational & subtrahend)
 {
 	*this = *this - subtrahend;
 	return *this;
@@ -118,7 +118,7 @@ CRational const operator/(const CRational & dividend, const CRational & divider)
 }
 
 
-const CRational & CRational::operator*=(const CRational & factor)
+CRational & CRational::operator*=(const CRational & factor)
 {
 	*this = *this * factor;
 	return *this;
@@ -126,7 +126,7 @@ const CRational & CRational::operator*=(const CRational & factor)
 
 
 
-const CRational & CRational::operator/=(const CRational & divider)
+CRational & CRational::operator/=(const CRational & divider)
 {
 	*this = *this / divider;
 	return *this;
