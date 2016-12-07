@@ -33,7 +33,7 @@ int CRational::GetDenominator() const
 std::pair<int, CRational> CRational::ToCompoundFraction() const
 {
 	int whole = m_numerator / m_denominator;
-	int residue = abs(m_numerator % m_denominator);
+	int residue = m_numerator % m_denominator;
 	return std::make_pair(whole, CRational(residue, m_denominator));
 }
 

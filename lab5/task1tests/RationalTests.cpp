@@ -388,7 +388,7 @@ BOOST_AUTO_TEST_SUITE(Rational_number)
 			CRational rational(-9, 2);
 			std::pair <int, CRational> receivedResult = rational.ToCompoundFraction();
 
-			std::pair <int, CRational> result = std::make_pair(-4, CRational(1, 2));
+			std::pair <int, CRational> result = std::make_pair(-4, CRational(-1, 2));
 			BOOST_CHECK(result == receivedResult);
 		}
 
