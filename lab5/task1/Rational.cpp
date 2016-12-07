@@ -168,14 +168,14 @@ bool const operator>=(const CRational & firstRational, const CRational & secondR
 
 
 
-std::ostream & operator << (std::ostream & output, const CRational & rational)
+std::ostream & operator<<(std::ostream & output, const CRational & rational)
 {
 	output << std::to_string(rational.GetNumerator()) << "/" << std::to_string(rational.GetDenominator());
 	return output;
 }
 
 
-std::istream & operator >> (std::istream & input, CRational & rational)
+std::istream & operator>>(std::istream & input, CRational & rational)
 {
 	int denominator = 1;
 	int numerator = 0;

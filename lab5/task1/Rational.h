@@ -38,6 +38,4 @@ const bool operator<(const CRational &, const CRational &);
 const bool operator>(const CRational &, const CRational &);
 const bool operator<=(const CRational &, const CRational &);
 const bool operator>=(const CRational &, const CRational &);
-std::ostream & operator << (std::ostream & output, const CRational & rational);
-std::istream & operator >> (std::istream & output, CRational & rational);
 
