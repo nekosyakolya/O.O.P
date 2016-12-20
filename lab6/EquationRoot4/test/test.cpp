@@ -13,4 +13,12 @@ BOOST_AUTO_TEST_SUITE(Equation)
 		BOOST_REQUIRE_THROW(CSolve4Facade(0, 14, 4, 1, 14), std::invalid_argument);
 	}
 
+
+	BOOST_AUTO_TEST_CASE(can_have)
+	{
+		BOOST_REQUIRE_THROW(CSolve4Facade(1, 1, 1, 1, 1), std::domain_error);
+	}
+
+	
+
 BOOST_AUTO_TEST_SUITE_END()
