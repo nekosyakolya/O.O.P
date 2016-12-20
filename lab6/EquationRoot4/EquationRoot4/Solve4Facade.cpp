@@ -1,7 +1,6 @@
 #include "stdafx.h"
 #include "Solve4Facade.h"
 #include <iostream>
-#define _USE_MATH_DEFINES
 #include <math.h>
 
 CSolve4Facade::CSolve4Facade(double a, double b, double c, double d, double e)
@@ -25,6 +24,9 @@ CSolve4Facade::~CSolve4Facade()
 {
 }
 
+
+
+
 EquationRoot4 CSolve4Facade::Solve4(double a, double b, double c, double d, double e)
 {
 	if (a == 0)
@@ -36,33 +38,31 @@ EquationRoot4 CSolve4Facade::Solve4(double a, double b, double c, double d, doub
 	c /= a;
 	d /= a;
 	e /= a;
-	double p;
-	double q;
-	double r;
 
-	double s;
 
 
 	EquationRoot4 roots;
 	roots.numRoots = 0;
-	p = c - ((3 * pow(b, 2)) / 8);
-
-	q = (pow(b, 3) /8)- ((b * c)/2) + d;
-
-	r = e + ((pow(b, 2) * c) / 16) - ((b *d) / 4) - ((3 * pow(b, 4)) / 256);
-
-	s = Solve3(p, r, q);
 
 
-	p = sqrt((2 * s) - p);
+	double firstCoefficient = c - ((pow(b, 2) * 3) / 8);
+
+	double thirdCoefficient = (pow(b, 3) /8)- ((b * c)/2) + d;
+
+	double secondCoefficient = e + ((pow(b, 2) * c) / 16) - ((b *d) / 4) - ((pow(b, 4) * 3) / 256);
+
+	double rootOfCubicEquation = GetRealRootOfCubicEquation(firstCoefficient, secondCoefficient, thirdCoefficient);
 
 
-	q = (q / (2 * p));
+	firstCoefficient = sqrt((rootOfCubicEquation * 2) - firstCoefficient);
+
+
+	thirdCoefficient = (thirdCoefficient / (firstCoefficient * 2));
 
 
 
-	Solve2(1, -p, (q + s), roots, b);
-	Solve2(1, p, (-q + s), roots, b);
+	Solve2(1, -firstCoefficient, (thirdCoefficient + rootOfCubicEquation), roots, b);
+	Solve2(1, firstCoefficient, (-thirdCoefficient + rootOfCubicEquation), roots, b);
 
 
 	if (roots.numRoots == 0)
@@ -72,7 +72,7 @@ EquationRoot4 CSolve4Facade::Solve4(double a, double b, double c, double d, doub
 	return roots;
 }
 
-double CSolve4Facade::Solve3(double p, double r, double q)
+double CSolve4Facade::GetRealRootOfCubicEquation(double p, double r, double q)
 {
 	q = (((p * r) - (pow(q, 2) / 4)) / 2) ;// c
 	p /= 2;
@@ -83,9 +83,9 @@ double CSolve4Facade::Solve3(double p, double r, double q)
 	double R;
 	double S;
 
-	Q = ((pow(p, 2) - (3 * r)) / 9) ;
+	Q = ((pow(p, 2) - (r * 3)) / 9) ;
 
-	R = (((2 * pow(p, 3)) - (9 * p * r) + (27 * q)) / 54);
+	R = (((pow(p, 3) * 2) - (p * r * 9) + (q * 27)) / 54);
 
 	S = pow(Q, 3) - pow(R, 2);
 
@@ -99,8 +99,8 @@ double CSolve4Facade::Solve3(double p, double r, double q)
 
 	if (S > 0)
 	{
-		w = acos((R / sqrt(pow(Q, 3)) ))/ 3;//тут чото
-		x = (-2)* sqrt(Q) * cos(w - ((2* M_PI) / 3)) - (p/3);
+		w = acos((R / sqrt(pow(Q, 3)) ))/ 3;
+		x = (-2)* sqrt(Q) * cos(w) - (p/3);
 	}
 
 	if (S < 0)
@@ -144,9 +144,9 @@ void CSolve4Facade::Solve2(double a, double b, double c, EquationRoot4 &roots, d
 	if (d >= 0)
 	{
 		++roots.numRoots;
-		roots.roots[roots.numRoots - 1] = (-b - sqrt(d)) / (2 * a) - k /4;
+		roots.roots[roots.numRoots - 1] = (-b - sqrt(d)) / (a * 2) - k /4;
 		++roots.numRoots;
-		roots.roots[roots.numRoots - 1] = (-b + sqrt(d)) / (2 * a) - k / 4;
+		roots.roots[roots.numRoots - 1] = (-b + sqrt(d)) / (a * 2) - k / 4;
 	}
 }
 

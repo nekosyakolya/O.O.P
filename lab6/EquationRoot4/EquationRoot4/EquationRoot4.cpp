@@ -3,31 +3,34 @@
 #include <vector>
 
 
-int main()
+void ReadCoefficients(std::vector <double> &coefficients)
 {
-	//CSolve4Facade eq(1, 4, -4, -20, -5);
-	//CSolve4Facade eq(2, 5, -11, -20, 12);
-
-
-	std::vector <double> args = {0, 0, 0, 0, 0};
-
-
 	size_t i = 0;
 	double value;
 	while (std::cin >> value)
 	{
 		if (i < 5)
 		{
-			args[i] = value;
+			coefficients[i] = value;
 			++i;
 		}
 	}
+}
+
+
+int main()
+{
+	//CSolve4Facade eq(1, 4, -4, -20, -5);
+	//CSolve4Facade eq(2, 5, -11, -20, 12);
+
+
+	std::vector <double> coefficients = {0, 0, 0, 0, 0};
+	ReadCoefficients(coefficients);
 
 	try
 	{
-
-		CSolve4Facade eq(args[0], args[1], args[2], args[3], args[4]);
-		eq.PrintRoots();
+		CSolve4Facade equation(coefficients[0], coefficients[1], coefficients[2], coefficients[3], coefficients[4]);
+		equation.PrintRoots();
 	}
 	catch (const std::invalid_argument &err)
 	{
