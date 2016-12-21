@@ -34,8 +34,6 @@ CSolve4Facade::~CSolve4Facade()
 {
 }
 
-
-
 EquationRoot4 CSolve4Facade::Solve4(double a, double b, double c, double d, double e)const
 {
 	if (a == 0)
