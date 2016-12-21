@@ -1,4 +1,5 @@
 #include "stdafx.h"
+
 #include "Solve4Facade.h"
 #include <iostream>
 

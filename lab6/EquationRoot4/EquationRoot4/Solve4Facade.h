@@ -2,14 +2,12 @@
 
 #include <cmath>
 
-
 static const int BASE = 2;
-
 
 struct EquationRoot4
 {
 	int numRoots = 0;
-	double roots[BASE * 2] = {0, 0, 0, 0};
+	double roots[BASE * BASE] = {0, 0, 0, 0};
 };
 
 
