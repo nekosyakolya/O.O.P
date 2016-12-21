@@ -16,7 +16,7 @@ int CSolve4Facade::GetNumRoots()const
 	return m_roots.numRoots;
 }
 
-const double * CSolve4Facade::GetRoots()
+const double * CSolve4Facade::GetRoots()const
 {
 	return m_roots.roots;
 }
@@ -166,7 +166,7 @@ double CSolve4Facade::GetRealRootOfCubicEquation(double a, double b, double c)
 }
 
 
-void CSolve4Facade::CountTheRootsOfFourthEquation(EquationRoot4 & roots, const EquationRoot2 & equationRoot2, double k)
+void CSolve4Facade::CountTheRootsOfFourthEquation(EquationRoot4 & roots, const EquationRoot2 & equationRoot2, double k)const
 {
 
 	for (int i = 0; i < equationRoot2.numRoots; ++i)
