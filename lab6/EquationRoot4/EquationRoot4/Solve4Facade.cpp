@@ -2,6 +2,7 @@
 #include "Solve4Facade.h"
 #include <iostream>
 #include <math.h>
+#include <algorithm>
 
 CSolve4Facade::CSolve4Facade(double a, double b, double c, double d, double e)
 try
@@ -9,6 +10,13 @@ try
 catch (...)
 {
 	throw;
+}
+
+
+
+int CSolve4Facade::GetNumRoots()
+{
+	return m_roots.numRoots;
 }
 
 void CSolve4Facade::PrintRoots()
@@ -57,29 +65,27 @@ EquationRoot4 CSolve4Facade::Solve4(double a, double b, double c, double d, doub
 
 	thirdCoefficient = (thirdCoefficient / (firstCoefficient * 2));
 
-	EquationRoot2 rootSquare;
+	
 
-	rootSquare = Solve2(1, -firstCoefficient, (thirdCoefficient + rootOfCubicEquation), b);
+	EquationRoot2 rootSquare = Solve2(1, -firstCoefficient, (thirdCoefficient + rootOfCubicEquation));
 	roots.numRoots = rootSquare.numRoots;
 	if (roots.numRoots != 0)
 	{
 		for (int i = 0; i < rootSquare.numRoots; ++i)
 		{
-			roots.roots[i] = rootSquare.roots[i];
+			roots.roots[i] = rootSquare.roots[i] - b / 4;
 		}
 	}
 
-	rootSquare = Solve2(1, firstCoefficient, (rootOfCubicEquation - thirdCoefficient), b);
+	rootSquare = Solve2(1, firstCoefficient, (rootOfCubicEquation - thirdCoefficient));
 	roots.numRoots += rootSquare.numRoots;
 	if (rootSquare.numRoots != 0)
 	{
 		for (int i = 2; i < roots.numRoots; ++i)
 		{
-			roots.roots[i] = rootSquare.roots[i];
+			roots.roots[i] = rootSquare.roots[i] - b / 4;
 		}
 	}
-
-
 	if (roots.numRoots == 0)
 	{
 		throw std::domain_error("Equation has not real roots\n");
@@ -89,71 +95,68 @@ EquationRoot4 CSolve4Facade::Solve4(double a, double b, double c, double d, doub
 
 
 
-double CSolve4Facade::CountTheRootOfCubicEquation(double p, double q, double Q, double R)
+double CSolve4Facade::CountTheRootOfCubicEquation(double a, double c, double q, double r)
 {
-
-
 	double x;
 	double angle;
 	double sgn = 0;
 
-	if (R > 0) sgn = 1;
-	if (R < 0) sgn = -1;
-	if (Q == 0)
+	if (r > 0) sgn = 1;
+	if (r < 0) sgn = -1;
+	if (q == 0)
 	{
-		x = (-p / 3) - cbrt(q - (pow(p, 3) / 27));
+		x = (-a / 3) - cbrt(c - (pow(a, 3) / 27));
 	}
 
-	if (Q > 0)
+	if (q > 0)
 	{
-		angle = (acosh(abs(R) / (sqrt(pow(Q, 3)))) / 3);
+		angle = (acosh(abs(r) / (sqrt(pow(q, 3)))) / 3);
 
-		x = ((-2) * sgn * sqrt(Q) * cosh(angle)) - (p / 3);
+		x = ((-2) * sgn * sqrt(q) * cosh(angle)) - (a / 3);
 	}
 
-	if (Q < 0)
+	if (q < 0)
 	{
-		angle = (asinh(abs(R) / (sqrt(pow(abs(Q), 3)))) / 3);
+		angle = (asinh(abs(r) / (sqrt(pow(abs(q), 3)))) / 3);
 
-		x = ((-2) * sgn * sqrt(abs(Q)) * sinh(angle)) - (p / 3);
+		x = ((-2) * sgn * sqrt(abs(q)) * sinh(angle)) - (a / 3);
 	}
 
 	return x;
 }
 
 
-double CSolve4Facade::GetRealRootOfCubicEquation(double p, double r, double q)
+double CSolve4Facade::GetRealRootOfCubicEquation(double a, double b, double c)
 {
-	q = (((p * r) - (pow(q, 2) / 4)) / 2) ;// c
-	p /= 2;
-	p = -p;
-	r = -r;
+	c = (((a * b) - (pow(c, 2) / 4)) / 2) ;// c
+	a /= 2;
+	a = -a;
+	b = -b;
 
 
-	double Q = ((pow(p, 2) - (r * 3)) / 9) ;
+	double q = ((pow(a, 2) - (b * 3)) / 9) ;
 
-	double R = (((pow(p, 3) * 2) - (p * r * 9) + (q * 27)) / 54);
+	double r = (((pow(a, 3) * 2) - (a * b * 9) + (c * 27)) / 54);
 
-	double S = pow(Q, 3) - pow(R, 2);
+	double s = pow(q, 3) - pow(r, 2);
 
 	double x;
-	double angle;
 
-	if (S == 0)
+	if (s == 0)
 	{
-		x = cbrt(R) - (p / 3);
+		x = cbrt(r) - (a / 3);
 	}
 
-	if (S > 0)
+	if (s > 0)
 	{
-		angle = acos((R / sqrt(pow(Q, 3)) ))/ 3;
-		x = (-2)* sqrt(Q) * cos(angle) - (p/3);
+		double angle = acos((r / sqrt(pow(q, 3)) )) / 3;
+		x = (-2)* sqrt(q) * cos(angle) - (a / 3);
 	}
 
-	if (S < 0)
+	if (s < 0)
 	{
 
-		x = CountTheRootOfCubicEquation(p, q, Q, R);
+		x = CountTheRootOfCubicEquation(a, c, q, r);
 
 	}
 	return x;
@@ -165,16 +168,16 @@ double CSolve4Facade::GetDiscriminant(double a, double b, double c)
 	return (pow(b, 2) - 4 * a * c);
 }
 
-EquationRoot2 CSolve4Facade::Solve2(double a, double b, double c, double k)
+EquationRoot2 CSolve4Facade::Solve2(double a, double b, double c)
 {
 	EquationRoot2 rootSquare;
 	rootSquare.numRoots = 0;
 	double d = GetDiscriminant(a, b, c);
 	if (d >= 0)
 	{
-		rootSquare.roots[rootSquare.numRoots] = (-b - sqrt(d)) / (a * 2) - k / 4;
+		rootSquare.roots[rootSquare.numRoots] = (-b - sqrt(d)) / (a * 2);
 		++rootSquare.numRoots;
-		rootSquare.roots[rootSquare.numRoots] = (-b + sqrt(d)) / (a * 2) - k / 4;
+		rootSquare.roots[rootSquare.numRoots] = (-b + sqrt(d)) / (a * 2);
 		++rootSquare.numRoots;
 
 	}

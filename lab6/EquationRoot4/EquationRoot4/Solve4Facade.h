@@ -20,15 +20,16 @@ class CSolve4Facade
 {
 public:
 	CSolve4Facade(double a, double b, double c, double d, double e);
-
 	void PrintRoots();
+	int GetNumRoots();
 	~CSolve4Facade();
 private:
 	EquationRoot4 Solve4(double a, double b, double c, double d, double e);
 	double GetRealRootOfCubicEquation(double p, double r, double q);
-	double CountTheRootOfCubicEquation(double p, double q, double Q, double R);
-	EquationRoot4 m_roots;
+	double CountTheRootOfCubicEquation(double a, double c, double q, double r);
 	double GetDiscriminant(double a, double b, double c);
-	EquationRoot2 Solve2(double a, double b, double c, double k);
+	EquationRoot2 Solve2(double a, double b, double c);
+
+	EquationRoot4 m_roots;
 };
 
