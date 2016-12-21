@@ -18,10 +18,19 @@ BOOST_AUTO_TEST_SUITE(Equation)
 
 	BOOST_AUTO_TEST_CASE(could_have_all_real_roots)
 	{
-		CSolve4Facade equation(2, 5, -11, -20, 12);
-		BOOST_CHECK(equation.GetNumRoots() == 4);
-		double roots[4] = {-3, 2, -2, 0.5};
-		BOOST_CHECK(*equation.GetRoots() == *roots);
+		{ //s<0
+			CSolve4Facade equation(2, 5, -11, -20, 12);
+			BOOST_CHECK(equation.GetNumRoots() == 4);
+			double roots[4] = {-3, 2, -2, 0.5};
+			BOOST_CHECK(*equation.GetRoots() == *roots);
+		}
+
+		{//s>0
+			CSolve4Facade equation(1, 4, -4, -20, -5);
+			BOOST_CHECK(equation.GetNumRoots() == 4);
+			double roots[4] = {-3.7320508075688781, 2.2360679774997902, -2.2360679774997889, -0.26794919243112347};
+			BOOST_CHECK(*equation.GetRoots() == *roots);
+		}
 	}
 	
 	BOOST_AUTO_TEST_CASE(could_have_two_real_roots)
