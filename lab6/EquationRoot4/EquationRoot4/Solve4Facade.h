@@ -32,6 +32,8 @@ private:
 	EquationRoot4 Solve4(double a, double b, double c, double d, double e);
 	double GetRealRootOfCubicEquation(double p, double r, double q);
 	double CountTheRootOfCubicEquation(double a, double c, double q, double r);
+
+	void CountTheRootsOfFourthEquation(EquationRoot4 & roots, const EquationRoot2 &equationRoot2, double k);
 	double GetDiscriminant(double a, double b, double c);
 	EquationRoot2 Solve2(double a, double b, double c);
 

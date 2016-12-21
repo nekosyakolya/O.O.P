@@ -67,32 +67,26 @@ EquationRoot4 CSolve4Facade::Solve4(double a, double b, double c, double d, doub
 
 	
 
-	EquationRoot2 rootSquare = Solve2(1, -firstCoefficient, (thirdCoefficient + rootOfCubicEquation));
-	roots.numRoots = rootSquare.numRoots;
+	EquationRoot2 equationRoot2 = Solve2(1, -firstCoefficient, (thirdCoefficient + rootOfCubicEquation));
+	roots.numRoots = equationRoot2.numRoots;
 	if (roots.numRoots != 0)
 	{
-		for (int i = 0; i < rootSquare.numRoots; ++i)
+		CountTheRootsOfFourthEquation(roots, equationRoot2, b);
+	}
+
+	equationRoot2 = Solve2(1, firstCoefficient, (rootOfCubicEquation - thirdCoefficient));
+	roots.numRoots += equationRoot2.numRoots;
+	if (equationRoot2.numRoots != 0 && roots.numRoots == BASE * BASE)
+	{
+		for (int i = 0; i < equationRoot2.numRoots; ++i)
 		{
-			roots.roots[i] = rootSquare.roots[i] - b / 4;
+			roots.roots[i + BASE] = equationRoot2.roots[i] - b / 4;
 		}
 	}
 
-	rootSquare = Solve2(1, firstCoefficient, (rootOfCubicEquation - thirdCoefficient));
-	roots.numRoots += rootSquare.numRoots;
-	if (rootSquare.numRoots != 0 && roots.numRoots == BASE * BASE)
+	if (equationRoot2.numRoots != 0 && roots.numRoots == BASE)
 	{
-		for (int i = 0; i < rootSquare.numRoots; ++i)
-		{
-			roots.roots[i + BASE] = rootSquare.roots[i] - b / 4;
-		}
-	}
-
-	if (rootSquare.numRoots != 0 && roots.numRoots == BASE)
-	{
-		for (int i = 0; i < rootSquare.numRoots; ++i)
-		{
-			roots.roots[i] = rootSquare.roots[i] - b / 4;
-		}
+		CountTheRootsOfFourthEquation(roots, equationRoot2, b);
 	}
 
 
@@ -172,6 +166,15 @@ double CSolve4Facade::GetRealRootOfCubicEquation(double a, double b, double c)
 	return x;
 }
 
+
+void CSolve4Facade::CountTheRootsOfFourthEquation(EquationRoot4 & roots, const EquationRoot2 & equationRoot2, double k)
+{
+
+	for (int i = 0; i < equationRoot2.numRoots; ++i)
+	{
+		roots.roots[i] = equationRoot2.roots[i] - k / 4;
+	}
+}
 
 double CSolve4Facade::GetDiscriminant(double a, double b, double c)
 {
