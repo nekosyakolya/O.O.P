@@ -22,6 +22,7 @@ public:
 	CSolve4Facade(double a, double b, double c, double d, double e);
 	void PrintRoots();
 	int GetNumRoots();
+	double* GetRoots();
 	~CSolve4Facade();
 private:
 	EquationRoot4 Solve4(double a, double b, double c, double d, double e);

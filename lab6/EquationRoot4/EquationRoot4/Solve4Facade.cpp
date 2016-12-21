@@ -13,10 +13,14 @@ catch (...)
 }
 
 
-
 int CSolve4Facade::GetNumRoots()
 {
 	return m_roots.numRoots;
+}
+
+double * CSolve4Facade::GetRoots()
+{
+	return m_roots.roots;
 }
 
 void CSolve4Facade::PrintRoots()
@@ -81,9 +85,9 @@ EquationRoot4 CSolve4Facade::Solve4(double a, double b, double c, double d, doub
 	roots.numRoots += rootSquare.numRoots;
 	if (rootSquare.numRoots != 0)
 	{
-		for (int i = 2; i < roots.numRoots; ++i)
+		for (int i = 0; i < rootSquare.numRoots; ++i)
 		{
-			roots.roots[i] = rootSquare.roots[i] - b / 4;
+			roots.roots[i + 2] = rootSquare.roots[i] - b / 4;
 		}
 	}
 	if (roots.numRoots == 0)

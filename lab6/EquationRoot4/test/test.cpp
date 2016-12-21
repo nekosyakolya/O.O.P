@@ -18,8 +18,10 @@ BOOST_AUTO_TEST_SUITE(Equation)
 
 	BOOST_AUTO_TEST_CASE(could_have_all_real_roots)
 	{
-		CSolve4Facade equation(1, 4, -4, -20, -5);
+		CSolve4Facade equation(2, 5, -11, -20, 12);
 		BOOST_CHECK(equation.GetNumRoots() == 4);
+		double roots[4] = {-3, 2, -2, 0.5};
+		BOOST_CHECK(equation.GetRoots() == roots);
 	}
 	
 
