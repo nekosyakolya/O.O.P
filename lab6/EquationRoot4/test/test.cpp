@@ -21,8 +21,23 @@ BOOST_AUTO_TEST_SUITE(Equation)
 		CSolve4Facade equation(2, 5, -11, -20, 12);
 		BOOST_CHECK(equation.GetNumRoots() == 4);
 		double roots[4] = {-3, 2, -2, 0.5};
-		BOOST_CHECK(equation.GetRoots() == roots);
+		BOOST_CHECK(*equation.GetRoots() == *roots);
 	}
 	
+	BOOST_AUTO_TEST_CASE(could_have_two_real_roots)
+	{
+		{
+			CSolve4Facade equation(7, 9, 1, 2, 2);
+			BOOST_CHECK(equation.GetNumRoots() == 2);
+			double roots[4] = {-1.1996765912015668, -0.62757306265855406, static_cast<double>(0), static_cast<double>(0)};
+			BOOST_CHECK(*equation.GetRoots() == *roots);
+		}
 
+		{
+			CSolve4Facade equation(1, 2, 7, 9, 2);
+			BOOST_CHECK(equation.GetNumRoots() == 2);
+			double roots[4] = {-1.2164845038809537, -0.27836306273874734, static_cast<double>(0), static_cast<double>(0)};
+			BOOST_CHECK(*equation.GetRoots() == *roots);
+		}
+	}
 BOOST_AUTO_TEST_SUITE_END()

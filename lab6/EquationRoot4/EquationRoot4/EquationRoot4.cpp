@@ -20,10 +20,6 @@ void ReadCoefficients(std::vector <double> &coefficients)
 
 int main()
 {
-	//CSolve4Facade eq(1, 4, -4, -20, -5);
-	//CSolve4Facade eq(2, 5, -11, -20, 12);
-
-
 	std::vector <double> coefficients = {0, 0, 0, 0, 0};
 	ReadCoefficients(coefficients);
 

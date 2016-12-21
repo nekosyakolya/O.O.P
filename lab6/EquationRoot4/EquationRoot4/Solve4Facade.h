@@ -2,17 +2,21 @@
 
 #include <cmath>
 
+
+static const int BASE = 2;
+
+
 struct EquationRoot4
 {
-	int numRoots;
-	double roots[4];
+	int numRoots = 0;
+	double roots[BASE * 2] = {0, 0, 0, 0};
 };
 
 
 struct EquationRoot2
 {
-	int numRoots;
-	double roots[2];
+	int numRoots = 0;
+	double roots[BASE] = {0, 0};
 };
 
 
