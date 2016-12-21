@@ -23,19 +23,19 @@ struct EquationRoot2
 class CSolve4Facade
 {
 public:
-	CSolve4Facade(double a, double b, double c, double d, double e);
-	void PrintRoots();
-	int GetNumRoots();
-	double* GetRoots();
+	CSolve4Facade(double, double, double, double, double);
+	void PrintRoots() const;
+	int GetNumRoots() const;
+	const double* GetRoots();
 	~CSolve4Facade();
 private:
-	EquationRoot4 Solve4(double a, double b, double c, double d, double e);
-	double GetRealRootOfCubicEquation(double p, double r, double q);
-	double CountTheRootOfCubicEquation(double a, double c, double q, double r);
+	EquationRoot4 Solve4(double, double, double, double, double);
+	double GetRealRootOfCubicEquation(double, double, double);
+	double CountTheRootOfCubicEquation(double, double, double, double);
 
-	void CountTheRootsOfFourthEquation(EquationRoot4 & roots, const EquationRoot2 &equationRoot2, double k);
-	double GetDiscriminant(double a, double b, double c);
-	EquationRoot2 Solve2(double a, double b, double c);
+	void CountTheRootsOfFourthEquation(EquationRoot4 &, const EquationRoot2 &, double);
+	double GetDiscriminant(double, double, double)const;
+	EquationRoot2 Solve2(double, double, double);
 
 	EquationRoot4 m_roots;
 };

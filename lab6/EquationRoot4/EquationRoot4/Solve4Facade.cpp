@@ -11,17 +11,17 @@ catch (...)
 }
 
 
-int CSolve4Facade::GetNumRoots()
+int CSolve4Facade::GetNumRoots()const
 {
 	return m_roots.numRoots;
 }
 
-double * CSolve4Facade::GetRoots()
+const double * CSolve4Facade::GetRoots()
 {
 	return m_roots.roots;
 }
 
-void CSolve4Facade::PrintRoots()
+void CSolve4Facade::PrintRoots()const
 {
 	std::cout << m_roots.numRoots << " real roots:" << std::endl;
 	for (int i = 0; i < m_roots.numRoots; ++i)
@@ -101,9 +101,9 @@ EquationRoot4 CSolve4Facade::Solve4(double a, double b, double c, double d, doub
 
 double CSolve4Facade::CountTheRootOfCubicEquation(double a, double c, double q, double r)
 {
-	double x;
-	double angle;
-	double sgn = 0;
+	double x = 0.0;
+	double angle = 0.0;
+	double sgn = 0.0;
 
 	if (r > 0) sgn = 1;
 	if (r < 0) sgn = -1;
@@ -144,8 +144,7 @@ double CSolve4Facade::GetRealRootOfCubicEquation(double a, double b, double c)
 
 	double s = pow(q, 3) - pow(r, BASE);
 
-	double x;
-
+	double x = 0.0;
 	if (s == 0)
 	{
 		x = cbrt(r) - (a / 3);
@@ -176,7 +175,7 @@ void CSolve4Facade::CountTheRootsOfFourthEquation(EquationRoot4 & roots, const E
 	}
 }
 
-double CSolve4Facade::GetDiscriminant(double a, double b, double c)
+double CSolve4Facade::GetDiscriminant(double a, double b, double c)const
 {
 	return (pow(b, BASE) - 4 * a * c);
 }
@@ -184,7 +183,6 @@ double CSolve4Facade::GetDiscriminant(double a, double b, double c)
 EquationRoot2 CSolve4Facade::Solve2(double a, double b, double c)
 {
 	EquationRoot2 rootSquare;
-	rootSquare.numRoots = 0;
 	double d = GetDiscriminant(a, b, c);
 	if (d >= 0)
 	{
