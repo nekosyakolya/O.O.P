@@ -29,13 +29,13 @@ public:
 	const double* GetRoots()const;
 	~CSolve4Facade();
 private:
-	EquationRoot4 Solve4(double, double, double, double, double);
-	double GetRealRootOfCubicEquation(double, double, double);
-	double CountTheRootOfCubicEquation(double, double, double, double);
+	EquationRoot4 Solve4(double, double, double, double, double)const;
+	double GetRealRootOfCubicEquation(double, double, double)const;
+	double CountTheRootOfCubicEquation(double, double, double, double)const;
 
 	void CountTheRootsOfFourthEquation(EquationRoot4 &, const EquationRoot2 &, double)const;
 	double GetDiscriminant(double, double, double)const;
-	EquationRoot2 Solve2(double, double, double);
+	EquationRoot2 Solve2(double, double, double)const;
 
 	EquationRoot4 m_roots;
 };

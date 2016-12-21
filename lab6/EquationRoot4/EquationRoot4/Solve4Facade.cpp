@@ -36,7 +36,7 @@ CSolve4Facade::~CSolve4Facade()
 
 
 
-EquationRoot4 CSolve4Facade::Solve4(double a, double b, double c, double d, double e)
+EquationRoot4 CSolve4Facade::Solve4(double a, double b, double c, double d, double e)const
 {
 	if (a == 0)
 	{
@@ -99,7 +99,7 @@ EquationRoot4 CSolve4Facade::Solve4(double a, double b, double c, double d, doub
 
 
 
-double CSolve4Facade::CountTheRootOfCubicEquation(double a, double c, double q, double r)
+double CSolve4Facade::CountTheRootOfCubicEquation(double a, double c, double q, double r)const
 {
 	double x = 0.0;
 	double angle = 0.0;
@@ -130,7 +130,7 @@ double CSolve4Facade::CountTheRootOfCubicEquation(double a, double c, double q, 
 }
 
 
-double CSolve4Facade::GetRealRootOfCubicEquation(double a, double b, double c)
+double CSolve4Facade::GetRealRootOfCubicEquation(double a, double b, double c)const
 {
 	c = (((a * b) - (pow(c, BASE) / 4)) / BASE) ;
 	a /= BASE;
@@ -180,7 +180,7 @@ double CSolve4Facade::GetDiscriminant(double a, double b, double c)const
 	return (pow(b, BASE) - 4 * a * c);
 }
 
-EquationRoot2 CSolve4Facade::Solve2(double a, double b, double c)
+EquationRoot2 CSolve4Facade::Solve2(double a, double b, double c)const
 {
 	EquationRoot2 rootSquare;
 	double d = GetDiscriminant(a, b, c);
