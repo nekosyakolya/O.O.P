@@ -8,7 +8,7 @@
 
 BOOST_AUTO_TEST_SUITE(Equation)
 
-	BOOST_AUTO_TEST_CASE(cant_have_a_negative_a)
+	BOOST_AUTO_TEST_CASE(cant_have_a_negative_first_coefficient)
 	{
 		BOOST_REQUIRE_THROW(CSolve4Facade(0, 14, 4, 1, 14), std::invalid_argument);
 	}

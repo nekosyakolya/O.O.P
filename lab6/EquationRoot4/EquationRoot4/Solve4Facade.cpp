@@ -39,8 +39,6 @@ EquationRoot4 CSolve4Facade::Solve4(double a, double b, double c, double d, doub
 	d /= a;
 	e /= a;
 
-
-
 	EquationRoot4 roots;
 	roots.numRoots = 0;
 
@@ -59,10 +57,27 @@ EquationRoot4 CSolve4Facade::Solve4(double a, double b, double c, double d, doub
 
 	thirdCoefficient = (thirdCoefficient / (firstCoefficient * 2));
 
+	EquationRoot2 rootSquare;
 
+	rootSquare = Solve2(1, -firstCoefficient, (thirdCoefficient + rootOfCubicEquation), b);
+	roots.numRoots = rootSquare.numRoots;
+	if (roots.numRoots != 0)
+	{
+		for (int i = 0; i < rootSquare.numRoots; ++i)
+		{
+			roots.roots[i] = rootSquare.roots[i];
+		}
+	}
 
-	Solve2(1, -firstCoefficient, (thirdCoefficient + rootOfCubicEquation), roots, b);
-	Solve2(1, firstCoefficient, (-thirdCoefficient + rootOfCubicEquation), roots, b);
+	rootSquare = Solve2(1, firstCoefficient, (rootOfCubicEquation - thirdCoefficient), b);
+	roots.numRoots += rootSquare.numRoots;
+	if (rootSquare.numRoots != 0)
+	{
+		for (int i = 2; i < roots.numRoots; ++i)
+		{
+			roots.roots[i] = rootSquare.roots[i];
+		}
+	}
 
 
 	if (roots.numRoots == 0)
@@ -72,6 +87,41 @@ EquationRoot4 CSolve4Facade::Solve4(double a, double b, double c, double d, doub
 	return roots;
 }
 
+
+
+double CSolve4Facade::CountTheRootOfCubicEquation(double p, double q, double Q, double R)
+{
+
+
+	double x;
+	double angle;
+	double sgn = 0;
+
+	if (R > 0) sgn = 1;
+	if (R < 0) sgn = -1;
+	if (Q == 0)
+	{
+		x = (-p / 3) - cbrt(q - (pow(p, 3) / 27));
+	}
+
+	if (Q > 0)
+	{
+		angle = (acosh(abs(R) / (sqrt(pow(Q, 3)))) / 3);
+
+		x = ((-2) * sgn * sqrt(Q) * cosh(angle)) - (p / 3);
+	}
+
+	if (Q < 0)
+	{
+		angle = (asinh(abs(R) / (sqrt(pow(abs(Q), 3)))) / 3);
+
+		x = ((-2) * sgn * sqrt(abs(Q)) * sinh(angle)) - (p / 3);
+	}
+
+	return x;
+}
+
+
 double CSolve4Facade::GetRealRootOfCubicEquation(double p, double r, double q)
 {
 	q = (((p * r) - (pow(q, 2) / 4)) / 2) ;// c
@@ -79,74 +129,55 @@ double CSolve4Facade::GetRealRootOfCubicEquation(double p, double r, double q)
 	p = -p;
 	r = -r;
 
-	double Q;
-	double R;
-	double S;
 
-	Q = ((pow(p, 2) - (r * 3)) / 9) ;
+	double Q = ((pow(p, 2) - (r * 3)) / 9) ;
 
-	R = (((pow(p, 3) * 2) - (p * r * 9) + (q * 27)) / 54);
+	double R = (((pow(p, 3) * 2) - (p * r * 9) + (q * 27)) / 54);
 
-	S = pow(Q, 3) - pow(R, 2);
+	double S = pow(Q, 3) - pow(R, 2);
 
 	double x;
-	double w;
+	double angle;
 
 	if (S == 0)
 	{
-		x = cbrt(R) - (p/3);
+		x = cbrt(R) - (p / 3);
 	}
 
 	if (S > 0)
 	{
-		w = acos((R / sqrt(pow(Q, 3)) ))/ 3;
-		x = (-2)* sqrt(Q) * cos(w) - (p/3);
+		angle = acos((R / sqrt(pow(Q, 3)) ))/ 3;
+		x = (-2)* sqrt(Q) * cos(angle) - (p/3);
 	}
 
 	if (S < 0)
 	{
 
-		double sgn = 0;
-
-		if (R > 0) sgn = 1;
-		if (R < 0) sgn = -1;
-		if (Q == 0)
-		{
-			x = (-p / 3) - cbrt(q - (pow(p, 3) /27));
-		}
-
-		if (Q > 0)
-		{
-			w = (acosh(abs(R) / (sqrt(pow(Q, 3)))) / 3) ;
-
-			x = ((-2) * sgn * sqrt(Q) *cosh(w)) - (p / 3);
-		}
-
-		if (Q < 0)
-		{
-			w = (asinh(abs(R) / (sqrt(pow(abs(Q), 3)))) / 3);
-
-			x = ((-2) * sgn * sqrt(abs(Q)) *sinh(w)) - (p / 3);
-		}
+		x = CountTheRootOfCubicEquation(p, q, Q, R);
 
 	}
 	return x;
 }
+
 
 double CSolve4Facade::GetDiscriminant(double a, double b, double c)
 {
 	return (pow(b, 2) - 4 * a * c);
 }
 
-void CSolve4Facade::Solve2(double a, double b, double c, EquationRoot4 &roots, double k)
+EquationRoot2 CSolve4Facade::Solve2(double a, double b, double c, double k)
 {
+	EquationRoot2 rootSquare;
+	rootSquare.numRoots = 0;
 	double d = GetDiscriminant(a, b, c);
 	if (d >= 0)
 	{
-		++roots.numRoots;
-		roots.roots[roots.numRoots - 1] = (-b - sqrt(d)) / (a * 2) - k /4;
-		++roots.numRoots;
-		roots.roots[roots.numRoots - 1] = (-b + sqrt(d)) / (a * 2) - k / 4;
+		rootSquare.roots[rootSquare.numRoots] = (-b - sqrt(d)) / (a * 2) - k / 4;
+		++rootSquare.numRoots;
+		rootSquare.roots[rootSquare.numRoots] = (-b + sqrt(d)) / (a * 2) - k / 4;
+		++rootSquare.numRoots;
+
 	}
+	return rootSquare;
 }
 
