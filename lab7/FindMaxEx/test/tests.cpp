@@ -37,6 +37,14 @@ BOOST_AUTO_TEST_SUITE(FindMaxEx_function)
 			BOOST_CHECK(maxValue == 1);
 		}
 
+
+		{
+			float maxValue = 0.0f;
+			std::vector<float> arr = {1.54f};
+			BOOST_CHECK(FindMaxEx(arr, maxValue));
+			BOOST_CHECK(maxValue == 1.54f);
+		}
+
 		{
 			std::string maxValue = "";
 			std::vector<std::string> arr = { "new year" };
@@ -67,6 +75,13 @@ BOOST_AUTO_TEST_SUITE(FindMaxEx_function)
 		}
 
 		{
+			float maxValue = 0.0f;
+			std::vector<float> arr;
+			BOOST_CHECK(!FindMaxEx(arr, maxValue));
+			BOOST_CHECK(maxValue == 0.0f);
+		}
+
+		{
 			std::string maxValue = "";
 			std::vector<std::string> arr;
 			BOOST_CHECK(!FindMaxEx(arr, maxValue));
@@ -93,6 +108,13 @@ BOOST_AUTO_TEST_SUITE(FindMaxEx_function)
 			std::vector<int> arr = {0 , 7, 4, 42, -41};
 			BOOST_CHECK(FindMaxEx(arr, maxValue));
 			BOOST_CHECK(maxValue == 42);
+		}
+
+		{
+			float maxValue = 0.0f;
+			std::vector<float> arr = { 9.54f, -2.32f, 1.21f, -1.43f };
+			BOOST_CHECK(FindMaxEx(arr, maxValue));
+			BOOST_CHECK(maxValue == 9.54f);
 		}
 
 		{
