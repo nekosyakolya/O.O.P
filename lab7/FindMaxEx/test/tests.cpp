@@ -88,6 +88,37 @@ BOOST_AUTO_TEST_SUITE(FindMaxEx_function)
 
 	BOOST_AUTO_TEST_CASE(when_vector_has_a_size_more_1)
 	{
+		{
+			int maxValue = 0;
+			std::vector<int> arr = {0 , 7, 4, 42, -41};
+			BOOST_CHECK(FindMaxEx(arr, maxValue));
+			BOOST_CHECK(maxValue == 42);
+		}
+
+		{
+			std::string maxValue = "";
+			std::vector<std::string> arr = { "new", "87", "fir-tree", "squadron"};
+			BOOST_CHECK(FindMaxEx(arr, maxValue));
+			BOOST_CHECK(maxValue == "squadron");
+		}
+
+
+
+		{
+			Athlete Shipulin = { "Anton Shipulin", 185, 81 };
+			Athlete Garanichev = { "Eugene Garanichev", 169, 69 };
+			Athlete Be = { "Johannes Be", 187, 80 };
+
+			Athlete athlete = Shipulin;
+			std::vector<Athlete> arr = { Shipulin, Garanichev, Be };
+
+
+			BOOST_CHECK(FindMaxEx(arr, athlete, IsGrowthtLess));
+			BOOST_CHECK(AreEqual(athlete, Be));
+
+			BOOST_CHECK(FindMaxEx(arr, athlete, IsWeightLess));
+			BOOST_CHECK(AreEqual(athlete, Shipulin));
+		}
 
 	}
 BOOST_AUTO_TEST_SUITE_END()
