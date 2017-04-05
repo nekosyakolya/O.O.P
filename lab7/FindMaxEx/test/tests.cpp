@@ -10,6 +10,14 @@ struct Athlete
 };
 
 
+
+bool ThrowableFunction(const Athlete &l, const Athlete &r)
+{
+	throw std::exception("((");
+}
+
+
+
 bool IsWeightLess(const Athlete &l, const Athlete &r)
 {
 	return l.weight < r.weight;
@@ -56,7 +64,7 @@ BOOST_AUTO_TEST_SUITE(FindMaxEx_function)
 		{
 			Athlete athlete = {"Anton Shipulin", 185, 81};
 			std::vector<Athlete> arr = { athlete };
-			BOOST_CHECK(FindMaxEx(arr, athlete, IsGrowthtLess));
+
 			BOOST_CHECK(AreEqual(athlete, { "Anton Shipulin", 185, 81 }));
 
 			BOOST_CHECK(FindMaxEx(arr, athlete, IsWeightLess));
@@ -100,7 +108,6 @@ BOOST_AUTO_TEST_SUITE(FindMaxEx_function)
 		}
 	}
 
-
 	BOOST_AUTO_TEST_CASE(when_vector_has_a_size_more_1)
 	{
 		{
@@ -116,6 +123,7 @@ BOOST_AUTO_TEST_SUITE(FindMaxEx_function)
 			BOOST_CHECK(FindMaxEx(arr, maxValue));
 			BOOST_CHECK(maxValue == 9.54f);
 		}
+		
 
 		{
 			std::string maxValue = "";
@@ -140,6 +148,13 @@ BOOST_AUTO_TEST_SUITE(FindMaxEx_function)
 
 			BOOST_CHECK(FindMaxEx(arr, athlete, IsWeightLess));
 			BOOST_CHECK(AreEqual(athlete, Shipulin));
+
+			BOOST_REQUIRE_THROW(FindMaxEx(arr, athlete, ThrowableFunction), std::exception);
+
+
+			BOOST_REQUIRE_THROW(ThrowableFunction(Shipulin, Garanichev), std::exception);
+
+
 		}
 
 	}

@@ -12,6 +12,10 @@
 
 #include <iostream>
 #include <string>
+#include "CCanvas.h"
+#include "ICanvasDrawable.h"
+#include "CRectangle.h"
+#include "CTriangle.h"
 
 
 // TODO: Установите здесь ссылки на дополнительные заголовки, требующиеся для программы

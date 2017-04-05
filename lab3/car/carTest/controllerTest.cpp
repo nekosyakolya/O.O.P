@@ -11,28 +11,28 @@ using boost::none;
 
 struct CCarControllerDependencies
 {
-    CCar car;
-    stringstream input;
-    stringstream output;
+	CCar car;
+	stringstream input;
+	stringstream output;
 };
 
 struct CarControllerFixture : CCarControllerDependencies
 {
-    CCarController remoteControl;
+	CCarController remoteControl;
 
-    CarControllerFixture(): remoteControl(car, input, output)
-    {
-    }
+	CarControllerFixture(): remoteControl(car, input, output)
+	{
+	}
 
-    void VerifyCommandHandling(const string& command, const string& expectedOutput)
-    {
-        output = stringstream();
-        input = stringstream();
-        BOOST_CHECK(input << command);
-        BOOST_CHECK(remoteControl.HandleCommand());
-        BOOST_CHECK(input.eof());
-        BOOST_CHECK_EQUAL(output.str(), expectedOutput);
-    }
+	void VerifyCommandHandling(const string& command, const string& expectedOutput)
+	{
+		output = stringstream();
+		input = stringstream();
+		BOOST_CHECK(input << command);
+		BOOST_CHECK(remoteControl.HandleCommand());
+		BOOST_CHECK(input.eof());
+		BOOST_CHECK_EQUAL(output.str(), expectedOutput);
+	}
 };
 
 BOOST_FIXTURE_TEST_SUITE(Car_controller, CarControllerFixture)
@@ -41,21 +41,21 @@ BOOST_FIXTURE_TEST_SUITE(Car_controller, CarControllerFixture)
 	{
 		VerifyCommandHandling("Info", "Engine is turned off\n");
 	}
-    BOOST_AUTO_TEST_CASE(can_handle_EngineOn_command)
-    {
-        VerifyCommandHandling("EngineOn", "Engine is turned on\n");
-    }
+	BOOST_AUTO_TEST_CASE(can_handle_EngineOn_command)
+	{
+		VerifyCommandHandling("EngineOn", "Engine is turned on\n");
+	}
 	
-    BOOST_AUTO_TEST_CASE(cant_handle_EngineOn_command)
-    {
-        car.TurnOnEngine();
-        VerifyCommandHandling("EngineOn", "Engine is already on!\n");
-    }
+	BOOST_AUTO_TEST_CASE(cant_handle_EngineOn_command)
+	{
+		car.TurnOnEngine();
+		VerifyCommandHandling("EngineOn", "Engine is already on!\n");
+	}
 
 
-    BOOST_AUTO_TEST_CASE(can_print_errors_message)
-    {
-        VerifyCommandHandling("SetSpeed 13", "Engine is turned off or gear does not match current gear\n");
-    }
+	BOOST_AUTO_TEST_CASE(can_print_errors_message)
+	{
+		VerifyCommandHandling("SetSpeed 13", "Engine is turned off or speed does not match current gear\n");
+	}
 
 BOOST_AUTO_TEST_SUITE_END()

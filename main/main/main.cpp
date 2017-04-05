@@ -5,33 +5,10 @@
 #include <vector>
 #include <memory>
 
-#include "CCanvas.h"
-#include "ICanvasDrawable.h"
-#include "CRectangle.h"
-#include "CTriangle.h"
-
 using namespace std;
-
 
 // Рисует картину picture на холсте canvas
 
-void DrawTriangle()
-{
-	cout << "/\\" << endl;
-	cout << "/ \\" << endl;
-	cout << "/   \\" << endl;
-}
-
-
-void DrawRectangle()
-{
-	static const size_t SIZE = 3;
-	for (size_t i = 0; i < SIZE; ++i)
-	{
-		cout << "|   |" << endl;
-	}
-	
-}
 
 void DrawPicture(ICanvas & canvas, const vector<shared_ptr<const ICanvasDrawable>> & picture)
 {
@@ -41,19 +18,6 @@ void DrawPicture(ICanvas & canvas, const vector<shared_ptr<const ICanvasDrawable
 	{
 		pic->Draw(canvas);
 		cout << endl;
-	}
-
-	for (auto pic : picture)
-	{
-		if (pic->GetType() == "Rectangle")
-		{
-			DrawRectangle();
-		}
-		else if (pic->GetType() == "Triangle")
-		{
-			DrawTriangle();
-		}
-		cout << "-------" << endl;
 	}
 
 }
@@ -73,6 +37,8 @@ int main()
 		picture.push_back(make_shared<const CRectangle>(rectangle));
 
 		DrawPicture(canvas, picture);
+
+		Point point = triangle.GetFirstPoint();
 		
 	}
 	catch (invalid_argument const &e)

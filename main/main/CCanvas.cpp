@@ -1,8 +1,5 @@
-
-
 #include "stdafx.h"
 
-#include "CCanvas.h"
 
 void CCanvas::DrawLine(int x0, int y0, int x1, int y1)
 {

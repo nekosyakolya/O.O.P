@@ -1,15 +1,15 @@
 #include "stdafx.h"
-#include "CTriangle.h"
 
 
-CTriangle::CTriangle(int x0, int x1, int x2, int y0, int y1, int y2) :
-	m_x0(x0),
-	m_x1(x1),
-	m_x2(x2),
-	m_y0(y0),
-	m_y1(y1),
-	m_y2(y2)
+CTriangle::CTriangle(int x0, int x1, int x2, int y0, int y1, int y2)
 {
+	m_point1.x = x0;
+	m_point1.y = y0;
+	m_point2.x = x1;
+	m_point2.y = y1;
+	m_point3.x = x2;
+	m_point3.y = y2;
+
 	if (x0 < 0 || y0 < 0 || x1 < 0 || y1 < 0 || x2 < 0 || y2 < 0)
 	{
 		throw std::invalid_argument("Value must not be negative\n");
@@ -18,15 +18,26 @@ CTriangle::CTriangle(int x0, int x1, int x2, int y0, int y1, int y2) :
 
 void CTriangle::Draw(ICanvas & canvas)const
 {
-	canvas.DrawLine(m_x0, m_y0, m_x1, m_y1);
-	canvas.DrawLine(m_x1, m_y1, m_x2, m_y2);
-	canvas.DrawLine(m_x2, m_y2, m_x0, m_y0);
+	canvas.DrawLine(m_point1.x, m_point1.y, m_point2.x, m_point2.y);
+	canvas.DrawLine(m_point2.x, m_point2.y, m_point3.x, m_point3.y);
+	canvas.DrawLine(m_point3.x, m_point3.y, m_point1.x, m_point1.y);
 }
 
-std::string CTriangle::GetType() const
+Point CTriangle::GetFirstPoint() const
 {
-	return "Triangle";
+	return m_point1;
 }
+
+Point CTriangle::GetThirdPoint() const
+{
+	return m_point3;
+}
+
+Point CTriangle::GetSecondPoint() const
+{
+	return m_point2;
+}
+
 
 CTriangle::~CTriangle()
 {

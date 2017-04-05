@@ -168,8 +168,8 @@
     <ClInclude Include="targetver.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="..\dictionary\controller.cpp" />
     <ClCompile Include="..\dictionary\dictionary.cpp" />
-    <ClCompile Include="..\dictionary\user.cpp" />
     <ClCompile Include="dictionaryTest.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="stdafx.cpp">

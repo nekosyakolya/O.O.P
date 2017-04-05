@@ -17,6 +17,7 @@ void ProcessExit(Dictionary & dictionary, const std::string &nameFile)
 	}
 }
 
+// remove ed
 void AskedToSave(Dictionary &dictionary, bool & wasNewWord, const wstring & key)
 {
 	wstring value = L"";

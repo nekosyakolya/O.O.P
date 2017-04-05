@@ -20,6 +20,7 @@ public:
 	CRational & operator-=(const CRational &);
 	CRational & operator*=(const CRational &);
 	CRational & operator/=(const CRational &);
+	const CRational & operator*(CRational &);
 private:
 	int m_numerator;
 	int m_denominator;

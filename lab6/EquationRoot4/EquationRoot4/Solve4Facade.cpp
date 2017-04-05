@@ -49,7 +49,6 @@ EquationRoot4 CSolve4Facade::Solve4(double a, double b, double c, double d, doub
 
 	EquationRoot4 roots;
 
-
 	double firstCoefficient = c - ((pow(b, BASE) * 3) / 8);
 
 	double thirdCoefficient = (pow(b, 3) /8)- ((b * c)/ BASE) + d;
@@ -58,13 +57,8 @@ EquationRoot4 CSolve4Facade::Solve4(double a, double b, double c, double d, doub
 
 	double rootOfCubicEquation = GetRealRootOfCubicEquation(firstCoefficient, secondCoefficient, thirdCoefficient);
 
-
 	firstCoefficient = sqrt((rootOfCubicEquation * BASE) - firstCoefficient);
-
-
 	thirdCoefficient = (thirdCoefficient / (firstCoefficient * BASE));
-
-	
 
 	EquationRoot2 equationRoot2 = Solve2(1, -firstCoefficient, (thirdCoefficient + rootOfCubicEquation));
 	roots.numRoots = equationRoot2.numRoots;
@@ -95,8 +89,6 @@ EquationRoot4 CSolve4Facade::Solve4(double a, double b, double c, double d, doub
 	}
 	return roots;
 }
-
-
 
 double CSolve4Facade::CountTheRootOfCubicEquation(double a, double c, double q, double r)const
 {

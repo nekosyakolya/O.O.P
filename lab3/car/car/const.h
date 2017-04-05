@@ -26,19 +26,7 @@ enum struct Direction
 using Speed = std::pair<int, int>;
 
 using SpeedRange = std::map<Gear, Speed>;
-
-
-static const SpeedRange speedRange = {
-	{ Gear::REVERSE_GEAR, Speed(MIN_SPEED, 20) },
-	{ Gear::NEUTRAL_GEAR, Speed(MIN_SPEED, MAX_SPEED) },
-	{ Gear::FIRST_GEAR, Speed(0, 30) },
-	{ Gear::SECOND_GEAR, Speed(20, 50) },
-	{ Gear::THIRD_GEAR, Speed(30, 60) },
-	{ Gear::FOURTH_GEAR, Speed(40, 90) },
-	{ Gear::FIFTH_GEAR, Speed(50, MAX_SPEED) }
-};
-
-
+extern const SpeedRange speedRange;
 
 static const std::map<Direction, std::string> DIRECTION = {
 	{ Direction::STAY, "stay"},

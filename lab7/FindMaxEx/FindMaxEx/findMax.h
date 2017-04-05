@@ -21,6 +21,6 @@ bool FindMaxEx(std::vector<T> const& arr, T& maxValue, Less const& less = Less()
 		}
 	}
 
-	maxValue = *result;
+	maxValue = std::move(*result);
 	return true;
 }

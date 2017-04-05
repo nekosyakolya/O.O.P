@@ -103,13 +103,15 @@ CRational & CRational::operator-=(const CRational & subtrahend)
 }
 
 
+
+
+
 CRational const operator*(const CRational & firstFactor, const CRational & secondFactor)
 {
 	int numerator = firstFactor.GetNumerator() * secondFactor.GetNumerator();
 	int denominator = firstFactor.GetDenominator() * secondFactor.GetDenominator();
 	return CRational(numerator, denominator);
 }
-
 
 CRational const operator/(const CRational & dividend, const CRational & divider)
 {

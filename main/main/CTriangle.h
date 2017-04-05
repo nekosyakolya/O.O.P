@@ -11,13 +11,12 @@ class CTriangle : public ICanvasDrawable
 public:
 	CTriangle(int x0, int x1, int x2, int y0, int y1, int y2);
 	void Draw(ICanvas & canvas)const override;
-	std::string GetType()const override;
+	Point GetFirstPoint()const;
+	Point GetSecondPoint()const;
+	Point GetThirdPoint()const;
 	~CTriangle();
 private:
-	int m_x0;
-	int m_x1;
-	int m_x2;
-	int m_y0;
-	int m_y1;
-	int m_y2;
+	Point m_point1;
+	Point m_point2;
+	Point m_point3;
 };
